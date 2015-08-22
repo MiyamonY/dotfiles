@@ -1,3 +1,5 @@
 [user]
 	name = MIYAMOTO Yohei
 	email = y.miyamoto324@gmail.com
+[core]
+	editor = emacs
