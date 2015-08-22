@@ -26,6 +26,9 @@
 (el-get-bundle undo-tree)
 (el-get-bundle sequential-command)
 (el-get-bundle sequential-command-config)
+(el-get-bundle lispxmp)
+(el-get-bundle paredit)
+(el-get-bundle eldoc-extension)
 
 ;; load dotemacs
 (setq org-dotemacs-default-file "~/.emacs.d/init.org")

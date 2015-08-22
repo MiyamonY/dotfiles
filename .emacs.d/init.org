@@ -362,3 +362,65 @@
          ("C-e" . seq-end)))
    #+END_SRC
   
+* プログラム関連
+** lisp系
+*** lispxmp
+    プログラムの実行結果をコメントに表示させてくれるパッケージ
+**** src   
+     #+BEGIN_SRC emacs-lisp
+       (use-package lispxmp
+         :commands
+         (lispxmp)
+         :init
+         (progn
+           (bind-key "C-c C-d" 'lispxmp emacs-lisp-mode-map)
+           (bind-key "C-c C-d" 'lispxmp lisp-interaction-mode-map)))
+     #+END_SRC
+
+*** paredit
+    括弧の対応付けを行ってくれるパッケージ
+**** src
+     #+BEGIN_SRC emacs-lisp
+       (use-package paredit
+         :commands
+         (enable-paredit-mode
+          paredit-wrap-round
+          paredit-splice-sexp)
+         :init
+         (progn
+           (bind-key "M-8" 'paredit-wrap-round emacs-lisp-mode-map)
+           (bind-key "M-9" 'paredit-splice-sexp emacs-lisp-mode-map)
+           ;; paredit-modeが自動で起動するようにhookに追加
+           (init-add-fun-to-hooks 'enable-paredit-mode
+                                '(emacs-lisp-mode-hook
+                                  scheme-mode-hook
+                                  lisp-interaction-mode-hook
+                                  lisp-mode-hook
+                                  ielm-mode-hook))))
+     #+END_SRC
+*** eldoc関連
+    emacs-lispの関数の情報を表示するパッケージ
+**** src
+     #+BEGIN_SRC emacs-lisp
+       (use-package eldoc
+         :config
+         (progn
+              (require 'eldoc-extension nil t)
+              (setq eldoc-idle-delay 0.1                ; eldocをすぐ表示
+                    eldoc-echo-area-use-multiline-p t)) ; 複数行にわたって表示
+         :init
+         (progn
+           (init-add-fun-to-hooks 'turn-on-eldoc-mode
+                                  '(lisp-interaction-mode-hook
+                                    lisp-mode-hook
+                                    ielm-mode-hook
+                                    emacs-lisp-mode-hook))))
+     #+END_SRC
+*** 雑多な設定
+**** src
+     #+BEGIN_SRC emacs-lisp
+       (bind-key  "C-c f" 'describe-function emacs-lisp-mode-map)
+       (bind-key  "C-c v" 'describe-variable emacs-lisp-mode-map)
+       (set-face-foreground 'font-lock-regexp-grouping-backslash "green3")
+       (set-face-foreground 'font-lock-regexp-grouping-construct "green3")
+     #+END_SRC
