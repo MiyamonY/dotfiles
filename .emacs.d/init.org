@@ -266,3 +266,40 @@
        :init
        (popwin-mode 1))
    #+END_SRC
+* skk
+  日本語入力システム
+** src
+   #+BEGIN_SRC emacs-lisp
+     (use-package skk
+       :commands
+       (skk-mode skk-latin-mode-on)
+       :bind
+       (("<muhenkan>" . skk-mode)
+        ("<zenkaku-hankaku>" . skk-mode))
+       :config
+       (progn
+         (setq default-input-method "japanese-skk"
+               skk-kutouten-type 'en
+               skk-kuten-touten-alist '((jp . ("." . "," ))
+                                        (en . ("." . ","))); 句読点を「，．」にする
+               skk-user-directory "~/.ddskk"
+               skk-large-jisyo "~/.ddskk/SKK-JISYO.L"
+               skk-use-azik t
+               skk-azik-keyboard-type 'jp106) 
+
+
+         (skk-mode 1)                     ; 次のfaceを定義させるために必要
+
+         (set-face-attribute 'skk-emacs-hiragana-face nil
+                             :family "MigMix 2M"
+                             :foreground "pink"))
+       :init
+       (progn
+         (defun init-skk-mode-hooks ()
+           (progn
+             (skk-mode 1)
+             (skk-latin-mode-on)))
+
+         (init-add-fun-to-hooks 'init-skk-mode-hooks
+          '(find-file-hook lisp-intraction-mode-hook))))
+   #+END_SRC
