@@ -22,4 +22,5 @@
 
 ;; load dotemacs
 (setq org-dotemacs-default-file "~/.emacs.d/init.org")
-(org-dotemacs-load-default)
+(when (require 'org-dotemacs nil t)
+  (org-dotemacs-load-default))
