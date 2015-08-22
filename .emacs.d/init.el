@@ -22,6 +22,8 @@
 (el-get-bundle org-dotemacs)
 (el-get-bundle color-moccur)
 (el-get-bundle moccur-edit)
+(el-get-bundle undohist)
+(el-get-bundle undo-tree)
 
 ;; load dotemacs
 (setq org-dotemacs-default-file "~/.emacs.d/init.org")

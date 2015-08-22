@@ -329,3 +329,25 @@
            (after save-after-moccur-edit-buffer activate)
            (save-buffer))))
    #+END_SRC
+* redo/undo関連
+  * undo-tree : C-x u でundo treeを表示
+** src
+   #+BEGIN_SRC emacs-lisp
+          (use-package undohist
+            :commands
+            (undohist-initialize)
+            :config
+            (progn
+                 (setq undohist-directory "~/.undohist"
+                       undohist-ignored-files '("COMMIT_EDITMSG")))
+            :init
+            (undohist-initialize))
+
+          (use-package undo-tree
+            :bind
+            (("C-." . undo-tree-redo))
+            :commands
+            (global-undo-tree-mode)
+            :config
+            (global-undo-tree-mode))
+   #+END_SRC
