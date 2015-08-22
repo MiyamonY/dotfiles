@@ -18,6 +18,7 @@
 (el-get-bundle ddskk)
 (el-get-bundle use-package)
 (el-get-bundle nyan-mode)
+(el-get-bundle popwin)
 (el-get-bundle org-dotemacs)
 
 ;; load dotemacs
