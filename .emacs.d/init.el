@@ -24,6 +24,8 @@
 (el-get-bundle moccur-edit)
 (el-get-bundle undohist)
 (el-get-bundle undo-tree)
+(el-get-bundle sequential-command)
+(el-get-bundle sequential-command-config)
 
 ;; load dotemacs
 (setq org-dotemacs-default-file "~/.emacs.d/init.org")

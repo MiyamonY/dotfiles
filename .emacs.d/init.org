@@ -351,3 +351,13 @@
             :config
             (global-undo-tree-mode))
    #+END_SRC
+* sequential-command
+  同じキーバインドで押下回数によって動作を変えれるパッケージ
+** src
+   #+BEGIN_SRC emacs-lisp
+     (use-package sequential-command-config
+        :bind
+        (("C-a" . seq-home)
+         ("C-e" . seq-end)))
+   #+END_SRC
+  
