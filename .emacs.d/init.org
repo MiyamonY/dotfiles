@@ -241,7 +241,7 @@
 
      (defun init-open-dotemacs ()
        (interactive)
-       (find-file "~/.emacs.d/init.el"))
+       (find-file "~/.emacs.d/init.org"))
    #+END_SRC
   
 * popwin
@@ -262,6 +262,7 @@
                            ("*ack*":height 12 :position bottom)
                            ("^\*helm.+\*$" :height 20 :position bottom :regexp t)
                            ("^\*Org.+\*$" :height 20 :position bottom :regexp t)
+                           ("*Buffer List*" :height 20 :position bottom)
                            ("^\*magit.+\*$" :height 25 :position bottom :regexp t))))
        :init
        (popwin-mode 1))
