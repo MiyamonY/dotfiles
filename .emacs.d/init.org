@@ -363,6 +363,31 @@
    #+END_SRC
   
 * プログラム関連
+** tags
+*** ctags
+**** src
+     #+BEGIN_SRC emacs-lisp
+       (use-package ctags
+         :config
+         (progn
+           (setq tags-revert-without-query t
+                 ctags-command "ctags -R"))
+         :bind
+         (("<f5>" . ctags-create-or-update-tags-table))) ;tag ファイルの生成
+     #+END_SRC
+*** gtags   
+**** src
+     #+BEGIN_SRC emacs-lisp
+       (use-package gtats
+         :commands
+         (gtags-mode gtags-make-complete-list)
+         :config
+         (progn
+           (bind-key "M-t" 'gtags-find-tag gtags-mode-map)
+           (bind-key "M-r" 'gtags-find-rtag gtags-mode-map)
+           (bind-key "M-s" 'gtags-find-symbol gtags-mode-map)
+           (bind-key "C-t" 'gtags-pop-stack gtags-mode-map)))
+     #+END_SRC
 ** lisp系
 *** lispxmp
     プログラムの実行結果をコメントに表示させてくれるパッケージ

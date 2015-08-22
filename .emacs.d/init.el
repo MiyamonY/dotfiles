@@ -29,6 +29,8 @@
 (el-get-bundle lispxmp)
 (el-get-bundle paredit)
 (el-get-bundle eldoc-extension)
+(el-get-bundle ctags)
+(el-get-bundle gtags)
 
 ;; load dotemacs
 (setq org-dotemacs-default-file "~/.emacs.d/init.org")
