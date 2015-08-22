@@ -277,23 +277,6 @@
        :bind
        (("<muhenkan>" . skk-mode)
         ("<zenkaku-hankaku>" . skk-mode))
-       :config
-       (progn
-         (setq default-input-method "japanese-skk"
-               skk-kutouten-type 'en
-               skk-kuten-touten-alist '((jp . ("." . "," ))
-                                        (en . ("." . ","))); 句読点を「，．」にする
-               skk-user-directory "~/.ddskk"
-               skk-large-jisyo "~/.ddskk/SKK-JISYO.L"
-               skk-use-azik t
-               skk-azik-keyboard-type 'jp106) 
-
-
-         (skk-mode 1)                     ; 次のfaceを定義させるために必要
-
-         (set-face-attribute 'skk-emacs-hiragana-face nil
-                             :family "MigMix 2M"
-                             :foreground "pink"))
        :init
        (progn
          (defun init-skk-mode-hooks ()
@@ -302,7 +285,24 @@
              (skk-latin-mode-on)))
 
          (init-add-fun-to-hooks 'init-skk-mode-hooks
-          '(find-file-hook lisp-intraction-mode-hook))))
+                                '(find-file-hook lisp-intraction-mode-hook)
+                                )
+         (setq skk-user-directory "~/.ddskk"))
+       :config
+       (progn
+         (setq default-input-method "japanese-skk"
+               skk-kutouten-type 'en
+               skk-kuten-touten-alist '((jp . ("." . "," ))
+                                        (en . ("." . ","))); 句読点を「，．」にする
+               skk-large-jisyo "~/.ddskk/SKK-JISYO.L"
+               skk-use-azik t
+               skk-azik-keyboard-type 'jp106) 
+
+         (skk-mode 1)                     ; 次のfaceを定義させるために必要
+
+         (set-face-attribute 'skk-emacs-hiragana-face nil
+                             :family "MigMix 2M"
+                             :foreground "pink")))
    #+END_SRC
 * moccur関連
   grep検索可能になるパッケージ
@@ -449,3 +449,4 @@
        (set-face-foreground 'font-lock-regexp-grouping-backslash "green3")
        (set-face-foreground 'font-lock-regexp-grouping-construct "green3")
      #+END_SRC
+
