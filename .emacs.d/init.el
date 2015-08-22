@@ -20,6 +20,8 @@
 (el-get-bundle nyan-mode)
 (el-get-bundle popwin)
 (el-get-bundle org-dotemacs)
+(el-get-bundle color-moccur)
+(el-get-bundle moccur-edit)
 
 ;; load dotemacs
 (setq org-dotemacs-default-file "~/.emacs.d/init.org")
