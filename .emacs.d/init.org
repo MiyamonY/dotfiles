@@ -450,6 +450,19 @@
        (set-face-foreground 'font-lock-regexp-grouping-construct "green3")
      #+END_SRC
 
+** c言語
+*** src
+    #+BEGIN_SRC emacs-lisp
+      (defun init-c-mode-common-hook ()
+        (progn
+          (gtags-mode 1)                              ;gtags モードに入るようにする
+          (gtags-make-complete-list)
+          (hide-ifdef-mode)
+          (setq gdb-many-windows t) ; gdbのバッファを良い感じにする
+          ))
+
+      (add-hook 'c-mode-common-hook 'init-c-mode-common-hook)
+    #+END_SRC
 * 文章関連(Lightweight Markup etc.)
 ** rst
 *** src
