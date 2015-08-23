@@ -1,5 +1,7 @@
 [user]
 	name = MIYAMOTO Yohei
 	email = y.miyamoto324@gmail.com
+[include]
+	path = .gitconfig.local
 [core]
 	editor = emacs
