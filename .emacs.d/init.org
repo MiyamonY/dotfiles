@@ -450,3 +450,107 @@
        (set-face-foreground 'font-lock-regexp-grouping-construct "green3")
      #+END_SRC
 
+* 文章関連(Lightweight Markup etc.)
+** rst
+*** src
+    #+BEGIN_SRC emacs-lisp
+      (use-package rst
+        :mode ("\\.rst$" . rst-mode)
+        :config
+        (progn
+          ; 背景が黒い場合はこうしないと見出しが見づらい
+          (setq frame-background-mode 'dark)))
+    #+END_SRC
+** markdown
+*** src
+    #+BEGIN_SRC emacs-lisp
+      (use-package markdown-mode
+        :mode ("\\.md$" . markdown-mode))
+    #+END_SRC
+** TODO latex
+*** src
+    #+BEGIN_SRC emacs-lisp
+      (setq tex-compile-commands
+            '(("ptex2pdf -l -ot '-synctex=1' %f")))
+
+      (setq pdf-latex-command "ptex2pdf")
+
+      (setq TeX-default-mode 'japanese-latex-mode)
+
+      (setq japanese-LaTeX-default-style "jarticle")
+      (setq TeX-output-view-style '(("^dvi$" "." "xdvi '%d'")))
+      (setq preview-image-type 'dvipng)
+      (add-hook 'LaTeX-mode-hook (function (lambda ()
+        (add-to-list 'TeX-command-list
+          '("pTeX" "%(PDF)ptex %`%S%(PDFout)%(mode)%' %t"
+           TeX-run-TeX nil (plain-tex-mode) :help "Run ASCII pTeX"))
+        (add-to-list 'TeX-command-list
+          '("pLaTeX" "%(PDF)platex %`%S%(PDFout)%(mode)%' %t"
+           TeX-run-TeX nil (latex-mode) :help "Run ASCII pLaTeX"))
+        (add-to-list 'TeX-command-list
+          '("acroread" "acroread '%s.pdf' " TeX-run-command t nil))
+        (add-to-list 'TeX-command-list
+          '("pdf" "dvipdfmx -V 4 '%s' " TeX-run-command t nil))
+        (load "beamer")
+        )))
+
+      (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+      (setq reftex-plug-into-AUCTeX t)
+
+      (setq TeX-auto-save t)
+      (setq TeX-parse-self t)
+      (setq-default TeX-master nil)
+
+      (add-hook 'LaTeX-mode-hook 'visual-line-mode)
+      ;; (add-hook 'LaTeX-mode-hook 'flyspell-mode)
+      (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+
+      ;; Change key bindings
+      (add-hook 'reftex-mode-hook
+       '(lambda ()
+                     (define-key reftex-mode-map (kbd "\C-cr") 'reftex-reference)
+                     (define-key reftex-mode-map (kbd "\C-cl") 'reftex-label)
+                     (define-key reftex-mode-map (kbd "\C-cc") 'reftex-citation)
+      ))
+
+      ;; 数式のラベル作成時にも自分でラベルを入力できるようにする
+      (setq reftex-insert-label-flags '("s" "sfte"))
+
+      ;; \eqrefを使う
+      (setq reftex-label-alist
+            '(
+              (nil ?e nil "\\eqref{%s}" nil nil)
+              ))
+
+      ; RefTeXで使用するbibファイルの位置を指定する
+      (setq reftex-default-bibliography '("~/tex/biblio.bib" "~/tex/biblio2.bib"))    
+    #+END_SRC
+** org-mode
+*** src
+    #+BEGIN_SRC emacs-lisp
+      (use-package ox-latex
+        :init
+        (progn
+          (setq org-latex-pdf-process
+                '("platex %f"
+                  "platex %f"
+                  "bibtex %b"
+                  "platex %f"
+                  "platex %f"
+                  "dvipdfmx %b.dvi"))
+          (setq org-export-latex-coding-system 'euc-jp-unix)
+          (setq org-export-latex-date-format "%Y-%m-%d")
+          (setq org-export-latex-classes nil)
+          )
+        :config
+        (progn
+          (add-to-list 'org-latex-classes
+                       '("jarticle"
+                         "\\documentclass[a4j]{jarticle}"
+                         ("\\section{%s}" . "\\section*{%s}")
+                         ("\\subsection{%s}" . "\\subsection*{%s}")
+                         ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                         ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                         ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+          (setq org-latex-default-class "jarticle")))
+    #+END_SRC

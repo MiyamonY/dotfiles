@@ -31,6 +31,8 @@
 (el-get-bundle eldoc-extension)
 (el-get-bundle ctags)
 (el-get-bundle gtags)
+(el-get-bundle rst-mode)
+(el-get-bundle markdown-mode)
 
 ;; load dotemacs
 (setq org-dotemacs-default-file "~/.emacs.d/init.org")
