@@ -352,6 +352,18 @@
        (progn
          (add-hook 'find-file-hooks 'auto-insert)))
    #+END_SRC
+* multi-term
+  シェルモード
+** src
+   #+BEGIN_SRC emacs-lisp
+     (use-package multi-term
+       :commands
+       (multi-term)
+       :config
+       (progn
+         (setq multi-term-program "/bin/bash")
+         (defalias 'shell 'multi-term)))
+   #+END_SRC
 * moccur関連
   grep検索可能になるパッケージ
 ** src
