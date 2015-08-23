@@ -287,7 +287,7 @@
          (init-add-fun-to-hooks 'init-skk-mode-hooks
                                 '(find-file-hook lisp-intraction-mode-hook)
                                 )
-         (setq skk-user-directory "~/.ddskk"))
+         (setq skk-user-directory "~/.emacs.d/local/.ddskk"))
        :config
        (progn
          (setq default-input-method "japanese-skk"
@@ -334,23 +334,24 @@
   * undo-tree : C-x u でundo treeを表示
 ** src
    #+BEGIN_SRC emacs-lisp
-          (use-package undohist
-            :commands
-            (undohist-initialize)
-            :config
-            (progn
-                 (setq undohist-directory "~/.undohist"
-                       undohist-ignored-files '("COMMIT_EDITMSG")))
-            :init
-            (undohist-initialize))
+     (use-package undohist
+       :commands
+       (undohist-initialize)
+       :config
+       (progn
+            (setq undohist-ignored-files '("COMMIT_EDITMSG")))
+       :init
+       (progn
+         (setq undohist-directory "~/.emacs.d/local/.undohist")
+         (undohist-initialize)))
 
-          (use-package undo-tree
-            :bind
-            (("C-." . undo-tree-redo))
-            :commands
-            (global-undo-tree-mode)
-            :config
-            (global-undo-tree-mode))
+     (use-package undo-tree
+       :bind
+       (("C-." . undo-tree-redo))
+       :commands
+       (global-undo-tree-mode)
+       :config
+       (global-undo-tree-mode))
    #+END_SRC
 * sequential-command
   同じキーバインドで押下回数によって動作を変えれるパッケージ
