@@ -32,7 +32,7 @@
   #+END_SRC
 
 * init用の関数定義
-** src  
+** src
    #+BEGIN_SRC emacs-lisp
      (defun init-add-autoload (file list)
        ;; add autoload function from list
@@ -61,7 +61,7 @@
       (defmacro use-package (&rest args)))
 
   #+END_SRC
-  
+
 * 文字コード/ファイル名の設定
   ロケールやosによってデフォルトのコーディングを変える
 
@@ -85,7 +85,7 @@
 * elscreen
   emacs上でタブが使えるようになるパッケージ
 
-** src  
+** src
   #+BEGIN_SRC emacs-lisp
     (use-package elscreen
       :commands
@@ -243,7 +243,7 @@
        (interactive)
        (find-file "~/.emacs.d/init.org"))
    #+END_SRC
-  
+
 * popwin
   下からバッファがポップアップするパッケージ
 ** src
@@ -296,7 +296,7 @@
                                         (en . ("." . ","))); 句読点を「，．」にする
                skk-large-jisyo "~/.ddskk/SKK-JISYO.L"
                skk-use-azik t
-               skk-azik-keyboard-type 'jp106) 
+               skk-azik-keyboard-type 'jp106)
 
          (skk-mode 1)                     ; 次のfaceを定義させるために必要
 
@@ -361,7 +361,7 @@
         (("C-a" . seq-home)
          ("C-e" . seq-end)))
    #+END_SRC
-  
+
 * プログラム関連
 ** tags
 *** ctags
@@ -375,7 +375,7 @@
          :bind
          (("<f5>" . ctags-create-or-update-tags-table))) ;tag ファイルの生成
      #+END_SRC
-*** gtags   
+*** gtags
 **** src
      #+BEGIN_SRC emacs-lisp
        (use-package gtats
@@ -391,7 +391,7 @@
 ** lisp系
 *** lispxmp
     プログラムの実行結果をコメントに表示させてくれるパッケージ
-**** src   
+**** src
      #+BEGIN_SRC emacs-lisp
        (use-package lispxmp
          :commands
@@ -523,7 +523,7 @@
               ))
 
       ; RefTeXで使用するbibファイルの位置を指定する
-      (setq reftex-default-bibliography '("~/tex/biblio.bib" "~/tex/biblio2.bib"))    
+      (setq reftex-default-bibliography '("~/tex/biblio.bib" "~/tex/biblio2.bib"))
     #+END_SRC
 ** org-mode
 *** src
@@ -554,3 +554,10 @@
                          ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
           (setq org-latex-default-class "jarticle")))
     #+END_SRC
+* フックの設定
+** src
+   #+BEGIN_SRC emacs-lisp
+     (add-hook 'after-save-hook
+               'executable-make-buffer-file-executable-if-script-p) ;ファイルが#! から始まる場合, +x を付ける
+     (add-hook 'before-save-hook 'delete-trailing-whitespace)
+   #+END_SRC
