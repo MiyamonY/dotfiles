@@ -603,3 +603,12 @@
                'executable-make-buffer-file-executable-if-script-p) ;ファイルが#! から始まる場合, +x を付ける
      (add-hook 'before-save-hook 'delete-trailing-whitespace)
    #+END_SRC
+* バックアップファイルの設定
+** src
+   #+BEGIN_SRC emacs-lisp
+     (setq backup-directory-alist
+           `((".*" . ,temporary-file-directory))) ; tmp フォルダにバックアップファイルを保存
+     (setq auto-save-file-name-transforms
+           `((".*" ,temporary-file-directory t))) ; tmp フォルダにバックアップファイルを保存
+
+   #+END_SRC
