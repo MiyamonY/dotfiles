@@ -8,3 +8,4 @@ ln -s ${CURDIR}/.emacs.d ${HOME}/
 ln -s ${CURDIR}/.gitconfig ${HOME}/
 ln -s ${CURDIR}/.ddskk ${HOME}/
 ln -s ${CURDIR}/.Brewfile ${HOME}/
+ln -s ${CURDIR}/.latexmk ${HOME}/
