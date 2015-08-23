@@ -333,6 +333,25 @@
                              :family "MigMix 2M"
                              :foreground "pink")))
    #+END_SRC
+* auto-insert
+  ファイルを開いた際に自動的にテンプレートを挿入するパッケージ
+** src
+   #+BEGIN_SRC emacs-lisp
+     (use-package autoinsert
+       :commands
+       (auto-insert)
+       :config
+       (progn
+         (auto-insert-mode 1)
+         (setq auto-insert-directory "~/.emacs.d/conf/autoinsert" ; テンプレートファイルの場所
+               auto-insert-query nil ; テンプレートを挿入するか聞かない
+               auto-insert-alist ; 拡張子とテンプレートを対応づける
+               '(("\\.py$" . "python.template")
+                 ("\\.org$" . "org.template"))))
+       :init
+       (progn
+         (add-hook 'find-file-hooks 'auto-insert)))
+   #+END_SRC
 * moccur関連
   grep検索可能になるパッケージ
 ** src
