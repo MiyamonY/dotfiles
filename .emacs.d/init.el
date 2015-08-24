@@ -35,6 +35,8 @@
 (el-get-bundle markdown-mode)
 (el-get-bundle pretty-mode)
 (el-get-bundle organic-green-theme)
+(el-get-bundle helm)
+(el-get-bundle ac-helm)
 
 ;; load dotemacs
 (setq org-dotemacs-default-file "~/.emacs.d/init.org")

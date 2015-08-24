@@ -274,29 +274,6 @@
        (find-file "~/.emacs.d/init.org"))
    #+END_SRC
 
-* popwin
-  下からバッファがポップアップするパッケージ
-** src
-   #+BEGIN_SRC emacs-lisp
-     (use-package popwin
-       :commands
-       (popwin-mode)
-       :config
-       (progn
-         (setq popwin:close-popup-window-timer-interval 0.05)
-         (append-to-list popwin:special-display-config
-                         '(("*Help*" :height 20 :position bottom :noselect t)
-                           (" *auto-async-byte-compile*" :height 12 :position bottom :noselect t)
-                           ("*sdic*" :height 12 :position bottom :noselect t)
-                           ("*Backtrace*":height 12 :position bottom :noselect t)
-                           ("*ack*":height 12 :position bottom)
-                           ("^\*helm.+\*$" :height 20 :position bottom :regexp t)
-                           ("^\*Org.+\*$" :height 20 :position bottom :regexp t)
-                           ("*Buffer List*" :height 20 :position bottom)
-                           ("^\*magit.+\*$" :height 25 :position bottom :regexp t))))
-       :init
-       (popwin-mode 1))
-   #+END_SRC
 * skk
   日本語入力システム
 ** src
@@ -393,6 +370,29 @@
          ("C-e" . seq-end)))
    #+END_SRC
 
+* auto-complete
+** src
+   #+BEGIN_SRC emacs-lisp
+     (global-auto-complete-mode t)
+     (ac-config-default)
+   #+END_SRC
+* helm
+** src
+   #+BEGIN_SRC emacs-lisp
+     (use-package helm-config
+       :config
+       (progn
+         (helm-mode 1)
+         (setq helm-ff-skip-boring-files t
+               helm-exit-idle-delay 0)
+         (append-to-list
+          helm-boring-file-regexp-list
+          '("\\.omc$" "\\.o$" "\\.cmx$" "\\.cmi$" "\\.cmt$" "\\.omakedb" "\\.pyc$" "\\.hi$" "\\.DS_Store"))))
+
+     (use-package ac-helm
+       :bind
+       (("C-:" . ac-complete-with-helm)))
+   #+END_SRC
 * プログラム関連
 ** tags
 *** ctags
