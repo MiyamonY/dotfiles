@@ -6,6 +6,9 @@ tap caskroom/cask
 brew brew-cask
 cask alfred
 cask iterm2
+cask karabiner
+cask opera-mail
+cask opera
 
 ## rcmdnk/file
 tap rcmdnk/file
