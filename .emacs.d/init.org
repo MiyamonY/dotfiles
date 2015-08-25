@@ -322,19 +322,21 @@
          (init-add-fun-to-hooks 'init-skk-mode-hooks
                                 '(find-file-hook lisp-intraction-mode-hook))
 
-         (setq skk-user-directory (concat (file-name-as-directory init-emacs-local-files) ".ddskk"))
+         (setq skk-user-directory (file-name-as-directory (concat (file-name-as-directory init-emacs-local-files) ".ddskk")))
 
-         (defun init-check-jisyo-file (dirname)
+         (defun init-check-jisyo-file ()
            (unless (file-exists-p
-                    (concat (file-name-as-directory dirname) "SKK-JISYO.L"))
+                    (concat skk-user-directory "SKK-JISYO.L"))
+             (unless (file-exists-p skk-user-directory)
+               (make-directory skk-user-directory))
              (message "Downloading SKK-JISYO.L")
              (url-copy-file "http://openlab.jp/skk/dic/SKK-JISYO.L.gz" "SKK-JISYO.L.gz")
              (message "Decompressing SKK-JISYO.L")
              (call-process-shell-command "gzip -d SKK-JISYO.L.gz")
              (message "Move SKK-JISYO.L")
-             (call-process-shell-command (format "mv ./SKK-JISYO.L %s" (file-name-as-directory dirname)))))
+             (call-process-shell-command (format "mv SKK-JISYO.L %s" skk-user-directory))))
 
-         (init-check-jisyo-file skk-user-directory))
+         (init-check-jisyo-file))
        :config
        (progn
          (setq default-input-method "japanese-skk"
