@@ -51,7 +51,12 @@
      (defmacro append-to-list (to lst)
        `(setq ,to (append ,lst ,to)))
    #+END_SRC
-
+* 定数の設定
+  * init-emacs-local-files : ローカルで使用するファイルの置き場所(ex. undohist)
+** src
+   #+BEGIN_SRC emacs-lisp
+     (defvar init-emacs-local-files "~/.emacs.d/local")
+   #+END_SRC
 * use package
   init.elが書きやすくなるマクロを定義したパッケージ
 
@@ -317,7 +322,7 @@
          (init-add-fun-to-hooks 'init-skk-mode-hooks
                                 '(find-file-hook lisp-intraction-mode-hook))
 
-         (setq skk-user-directory "~/.emacs.d/local/.ddskk")
+         (setq skk-user-directory (concat (file-name-as-directory init-emacs-local-files) ".ddskk"))
 
          (defun init-check-jisyo-file (dirname)
            (unless (file-exists-p
@@ -329,7 +334,6 @@
              (message "Move SKK-JISYO.L")
              (call-process-shell-command (format "mv ./SKK-JISYO.L %s" (file-name-as-directory dirname)))))
 
-
          (init-check-jisyo-file skk-user-directory))
        :config
        (progn
@@ -337,7 +341,7 @@
                skk-kutouten-type 'en
                skk-kuten-touten-alist '((jp . ("." . "," ))
                                         (en . ("." . ","))); 句読点を「，．」にする
-               skk-large-jisyo "~/.emacs.d/local/.ddskk/SKK-JISYO.L"
+               skk-large-jisyo (concat (file-name-as-directory skk-user-directory) "SKK-JISYO.L")
                skk-use-azik t
                skk-azik-keyboard-type 'jp106)
 
@@ -385,7 +389,7 @@
             (setq undohist-ignored-files '("COMMIT_EDITMSG")))
        :init
        (progn
-         (setq undohist-directory "~/.emacs.d/local/.undohist")
+         (setq undohist-directory (concat (file-name-as-directory init-emacs-local-files) ".undohist"))
          (undohist-initialize)))
 
      (use-package undo-tree
