@@ -11,7 +11,7 @@ ln -s ${CURDIR}/.Brewfile ${HOME}/
 ln -s ${CURDIR}/.latexmk ${HOME}/
 ln -s ${CURDIR}/.zshrc ${HOME}/
 
-if [ ! -e ${HOME}/.gitconfig ]; then
+if [ ! -e ${HOME}/.gitconfig.local ]; then
    cp ${CURDIR}/.gitconfig.local ${HOME}/
 fi
 
