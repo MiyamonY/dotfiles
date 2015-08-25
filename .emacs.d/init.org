@@ -315,16 +315,29 @@
              (skk-latin-mode-on)))
 
          (init-add-fun-to-hooks 'init-skk-mode-hooks
-                                '(find-file-hook lisp-intraction-mode-hook)
-                                )
-         (setq skk-user-directory "~/.emacs.d/local/.ddskk"))
+                                '(find-file-hook lisp-intraction-mode-hook))
+
+         (setq skk-user-directory "~/.emacs.d/local/.ddskk")
+
+         (defun init-check-jisyo-file (dirname)
+           (unless (file-exists-p
+                    (concat (file-name-as-directory dirname) "SKK-JISYO.L"))
+             (message "Downloading SKK-JISYO.L")
+             (url-copy-file "http://openlab.jp/skk/dic/SKK-JISYO.L.gz" "SKK-JISYO.L.gz")
+             (message "Decompressing SKK-JISYO.L")
+             (call-process-shell-command "gzip -d SKK-JISYO.L.gz")
+             (message "Move SKK-JISYO.L")
+             (call-process-shell-command (format "mv ./SKK-JISYO.L %s" (file-name-as-directory dirname)))))
+
+
+         (init-check-jisyo-file skk-user-directory))
        :config
        (progn
          (setq default-input-method "japanese-skk"
                skk-kutouten-type 'en
                skk-kuten-touten-alist '((jp . ("." . "," ))
                                         (en . ("." . ","))); 句読点を「，．」にする
-               skk-large-jisyo "~/.ddskk/SKK-JISYO.L"
+               skk-large-jisyo "~/.emacs.d/local/.ddskk/SKK-JISYO.L"
                skk-use-azik t
                skk-azik-keyboard-type 'jp106)
 
