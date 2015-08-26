@@ -376,6 +376,21 @@
          ("C-e" . seq-end)))
    #+END_SRC
 
+* 矩形編集
+  cua modeを使用する
+** src
+   #+BEGIN_SRC emacs-lisp
+     (use-package cua-base
+       :bind
+       (("C-x SPC" . cua-set-rectangle-mark)
+        ("C-x C-SPC" . cua-set-rectangle-mark))
+       :config
+       (progn
+         ; cuaのキーバインドを禁止
+         (setq cua-enable-cua-keys nil))
+       :init
+       (cua-mode 1))
+   #+END_SRC
 * auto-complete
 ** src
    #+BEGIN_SRC emacs-lisp
