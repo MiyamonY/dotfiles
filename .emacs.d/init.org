@@ -1,3 +1,9 @@
+* Emacsの設定
+  * GCを行う閾値の設定をする
+** src
+   #+BEGIN_SRC emacs-lisp
+     (setq gc-cons-threshold (* 2 1024 1024))
+   #+END_SRC
 * OS固有の設定
 ** src
   #+BEGIN_SRC emacs-lisp
