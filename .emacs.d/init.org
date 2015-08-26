@@ -591,6 +591,13 @@
                          ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
           (setq org-latex-default-class "jarticle")))
     #+END_SRC
+** open-junk-file
+*** src
+    #+BEGIN_SRC emacs-lisp
+      (use-package open-junk-file
+        :bind
+        (("C-c C-j" . open-junk-file)))
+    #+END_SRC
 * フックの設定
 ** src
    #+BEGIN_SRC emacs-lisp

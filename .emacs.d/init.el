@@ -37,6 +37,7 @@
 (el-get-bundle organic-green-theme)
 (el-get-bundle helm)
 (el-get-bundle ac-helm)
+(el-get-bundle open-junk-file)
 
 ;; load dotemacs
 (setq org-dotemacs-default-file "~/.emacs.d/init.org")
