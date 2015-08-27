@@ -242,6 +242,19 @@
         (load-theme 'organic-green t nil)
         (set-face-foreground 'font-lock-builtin-face "magenta"))
     #+END_SRC
+** 括弧のハイライト
+*** src
+    #+BEGIN_SRC emacs-lisp
+      (use-package paren
+        :config
+        (progn
+          (setq show-paren-delay 0.1   ;括弧のハイライトを表示するまでの時間
+                show-paren-style 'expression) ;括弧の中もハイライト
+          (set-face-background 'show-paren-match-face nil) ;バックグランドフェイスを消す
+          (set-face-underline 'show-paren-match-face "green")) ;下線の色をつける
+        :init
+        (show-paren-mode t))
+    #+END_SRC
 ** pretty-mode
    lambdaや<=などの文字列をλなどの記号に置き換える.
 *** 内容
