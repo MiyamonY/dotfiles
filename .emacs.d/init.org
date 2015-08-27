@@ -611,3 +611,17 @@
                'executable-make-buffer-file-executable-if-script-p) ;ファイルが#! から始まる場合, +x を付ける
      (add-hook 'before-save-hook 'delete-trailing-whitespace)
    #+END_SRC
+* ace-mode
+** ace-mode
+   #+BEGIN_SRC emacs-lisp
+     (use-package ace-jump-buffer
+       :bind
+       (("C-x b" . ace-jump-buffer)))
+
+     (use-package ace-window
+       :bind
+       (("C-t" . ace-window))
+       :init
+       (progn
+         (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))))
+   #+END_SRC
