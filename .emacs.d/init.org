@@ -443,6 +443,7 @@
 ** ace-mode
    #+BEGIN_SRC emacs-lisp
      (use-package ace-jump-buffer
+       :disabled t
        :bind
        (("C-x b" . ace-jump-buffer)))
 
