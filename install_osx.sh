@@ -34,3 +34,4 @@ brew file install
 # for python
 pip install virtualenv
 pip install virtualenvwrapper
+pip install pylint
