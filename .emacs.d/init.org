@@ -4,27 +4,6 @@
    #+BEGIN_SRC emacs-lisp
      (setq gc-cons-threshold (* 2 1024 1024))
    #+END_SRC
-* OS固有の設定
-** src
-  #+BEGIN_SRC emacs-lisp
-    (cond
-     ((eq system-type 'darwin)              ;mac
-      (defvar init-proofgeneral-path "/usr/share/usr/bin/emacs/site-lisp/site-start.d")
-      (setq ns-command-modifier (quote meta)) ; comanndキーにmetaキー
-      (setq ns-alternate-modifier (quote super))
-      (setq use-dialog-box nil)             ; プロンプトを使用しない
-      (let ((path-from-shell                ; PATHの設定
-             (replace-regexp-in-string
-              "[ \t\n]*$" ""
-              (shell-command-to-string "$SHELL --login -i -c 'echo $PATH'"))))
-        (setenv "PATH" path-from-shell)
-        (setq exec-path (split-string path-from-shell path-separator)))
-                                            ;(define-key global-map [?¥] [?\\])
-      )
-     (t                                     ; linux
-      (defvar init-proofgeneral-path "/usr/share/emacs/site-lisp/site-start.d")))
-  #+END_SRC
-
 * Emacs Versionの設定
   変数emacs-major-version, emacs-minor-versionを設定する
 
@@ -463,9 +442,19 @@
          (helm-mode 1)
          (setq helm-ff-skip-boring-files t
                helm-exit-idle-delay 0)
-         (append-to-list
-          helm-boring-file-regexp-list
-          '("\\.omc$" "\\.o$" "\\.cmx$" "\\.cmi$" "\\.cmt$" "\\.omakedb" "\\.pyc$" "\\.hi$" "\\.DS_Store"))))
+         (append-to-list helm-boring-file-regexp-list
+                         '("\\.omc$" "\\.o$" "\\.cmx$" "\\.cmi$" "\\.cmt$" "\\.omakedb" "\\.pyc$"
+                           "\\.hi$" "\\.DS_Store"))
+
+         (defun my-filter-dired-buffers (buffer-list)
+           (delq nil (mapcar
+                    (lambda (buffer)
+                      (if (eq (with-current-buffer buffer major-mode)  'dired-mode)
+                          nil
+                        buffer))
+                    buffer-list)))
+
+         (advice-add 'helm-skip-boring-buffers :filter-return 'my-filter-dired-buffers)))
 
      (use-package ac-helm
        :bind
@@ -567,6 +556,38 @@
          :mode
          (("CMakeLists.txt" . cmake-mode) ))
      #+END_SRC
+** flycheck
+*** src
+    #+BEGIN_SRC emacs-lisp
+      (use-package flycheck
+        :config
+        (progn
+          (defvar omake-program-arguments "-P -w --verbose")
+          (flycheck-define-checker ocaml-checker
+            "flychecker for ocaml"
+            :command ("ocamlc" "-c" source)
+            :error-patterns
+            ((error line-start "File \"" (file-name) "\", line "
+                    line ", " (minimal-match (one-or-more not-newline)) ":\n" (message) line-end))
+            :modes (tuareg-mode))
+
+          (add-to-list 'flycheck-checkers 'ocaml-checker)
+          (setq flycheck-display-errors-function #'flycheck-pos-tip-error-messages
+                flycheck-pos-tip-timeout 10))
+        :init
+        (progn
+          (add-hook 'after-init-hook #'global-flycheck-mode)))
+
+      (use-package flycheck-color-mode-line
+        :config
+        (progn
+          (set-face-attribute 'flycheck-color-mode-line-warning-face nil
+                              :foreground "orange")
+
+          (set-face-attribute 'flycheck-color-mode-line-error-face nil
+                              :foreground "tomato")
+          (add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode)))
+    #+END_SRC
 * 文章関連(Lightweight Markup etc.)
 ** rst
 *** src
