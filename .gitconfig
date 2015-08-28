@@ -6,3 +6,6 @@
 	insteadOf = git://
 [push]
 	default = simple
+[color]
+	status = auto
+	branch = auto
