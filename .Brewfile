@@ -5,6 +5,7 @@
 tap caskroom/cask
 brew brew-cask
 cask alfred
+cask dropbox
 cask iterm2
 cask karabiner
 cask opera-mail
@@ -15,19 +16,22 @@ tap rcmdnk/file
 brew brew-file
 
 # Other Homebrew packages
+brew cmake
 brew emacs --with-cocoa
+brew gdbm
 brew global
 brew mercurial
 brew openssl
 brew pkg-config
+brew python
+brew readline
+brew sqlite
 brew xz
 
 # App Store applications
 appstore GarageBand
 appstore iMovie
-appstore Install OS X Yosemite
 appstore Keynote
-appstore Kindle
 appstore LINE
 appstore Numbers
 appstore Pages
