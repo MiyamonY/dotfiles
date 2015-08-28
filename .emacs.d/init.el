@@ -41,6 +41,7 @@
 (el-get-bundle helm)
 (el-get-bundle ac-helm)
 (el-get-bundle open-junk-file)
+(el-get-bundle cmake-mode)
 
 ;; load dotemacs
 (setq org-dotemacs-default-file "~/.emacs.d/init.org")

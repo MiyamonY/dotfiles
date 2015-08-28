@@ -558,6 +558,14 @@
        (set-face-foreground 'font-lock-regexp-grouping-construct "green3")
      #+END_SRC
 
+** make関連
+*** cmake
+**** src
+     #+BEGIN_SRC emacs-lisp
+       (use-package cmake-mode
+         :mode
+         (("CMakeLists.txt" . cmake-mode) ))
+     #+END_SRC
 * 文章関連(Lightweight Markup etc.)
 ** rst
 *** src
