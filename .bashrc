@@ -22,3 +22,9 @@ if [ -f $(brew --prefix)/etc/brew-wrap ];then
 fi
 
 export HOMEBREW_BREWFILE=~/.Brewfile
+
+# virtualenvwrapper for python
+if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
+    export WORKON_HOME=$HOME/.virtualenvs
+    source /usr/local/bin/virtualenvwrapper.sh
+fi

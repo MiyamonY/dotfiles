@@ -30,3 +30,7 @@ chmod +x .bashrc
 # install apps
 brew file install
 
+
+# for python
+pip install virtualenv
+pip install virtualenvwrapper
