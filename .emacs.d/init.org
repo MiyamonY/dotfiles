@@ -1,3 +1,9 @@
+* Emacsの設定
+  * GCを行う閾値の設定をする
+** src
+   #+BEGIN_SRC emacs-lisp
+     (setq gc-cons-threshold (* 2 1024 1024))
+   #+END_SRC
 * OS固有の設定
 ** src
   #+BEGIN_SRC emacs-lisp
@@ -241,6 +247,19 @@
         (load-theme 'organic-green t nil)
         (set-face-foreground 'font-lock-builtin-face "magenta"))
     #+END_SRC
+** 括弧のハイライト
+*** src
+    #+BEGIN_SRC emacs-lisp
+      (use-package paren
+        :config
+        (progn
+          (setq show-paren-delay 0.1   ;括弧のハイライトを表示するまでの時間
+                show-paren-style 'expression) ;括弧の中もハイライト
+          (set-face-background 'show-paren-match-face nil) ;バックグランドフェイスを消す
+          (set-face-underline 'show-paren-match-face "green")) ;下線の色をつける
+        :init
+        (show-paren-mode t))
+    #+END_SRC
 ** pretty-mode
    lambdaや<=などの文字列をλなどの記号に置き換える.
 *** 内容
@@ -279,29 +298,6 @@
        (find-file "~/.emacs.d/init.org"))
    #+END_SRC
 
-* popwin
-  下からバッファがポップアップするパッケージ
-** src
-   #+BEGIN_SRC emacs-lisp
-     (use-package popwin
-       :commands
-       (popwin-mode)
-       :config
-       (progn
-         (setq popwin:close-popup-window-timer-interval 0.05)
-         (append-to-list popwin:special-display-config
-                         '(("*Help*" :height 20 :position bottom :noselect t)
-                           (" *auto-async-byte-compile*" :height 12 :position bottom :noselect t)
-                           ("*sdic*" :height 12 :position bottom :noselect t)
-                           ("*Backtrace*":height 12 :position bottom :noselect t)
-                           ("*ack*":height 12 :position bottom)
-                           ("^\*helm.+\*$" :height 20 :position bottom :regexp t)
-                           ("^\*Org.+\*$" :height 20 :position bottom :regexp t)
-                           ("*Buffer List*" :height 20 :position bottom)
-                           ("^\*magit.+\*$" :height 25 :position bottom :regexp t))))
-       :init
-       (popwin-mode 1))
-   #+END_SRC
 * skk
   日本語入力システム
 ** src
@@ -412,6 +408,68 @@
          ("C-e" . seq-end)))
    #+END_SRC
 
+* dired mode
+** src
+   #+BEGIN_SRC emacs-lisp
+     (use-package dired
+       :config
+       (progn
+         (bind-key "C-t" 'ace-window dired-mode-map)
+         (require 'dired-x nil t)))
+
+   #+END_SRC
+* 矩形編集
+  cua modeを使用する
+** src
+   #+BEGIN_SRC emacs-lisp
+     (use-package cua-base
+       :bind
+       (("C-x SPC" . cua-set-rectangle-mark)
+        ("C-x C-SPC" . cua-set-rectangle-mark))
+       :config
+       (progn
+         ; cuaのキーバインドを禁止
+         (setq cua-enable-cua-keys nil))
+       :init
+       (cua-mode 1))
+   #+END_SRC
+* auto-complete
+** src
+   #+BEGIN_SRC emacs-lisp
+     (global-auto-complete-mode t)
+     (ac-config-default)
+   #+END_SRC
+* ace-mode
+** ace-mode
+   #+BEGIN_SRC emacs-lisp
+     (use-package ace-jump-buffer
+       :bind
+       (("C-x b" . ace-jump-buffer)))
+
+     (use-package ace-window
+       :bind
+       (("C-t" . ace-window))
+       :init
+       (progn
+         (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))))
+   #+END_SRC
+* helm
+** src
+   #+BEGIN_SRC emacs-lisp
+     (use-package helm-config
+       :config
+       (progn
+         (helm-mode 1)
+         (setq helm-ff-skip-boring-files t
+               helm-exit-idle-delay 0)
+         (append-to-list
+          helm-boring-file-regexp-list
+          '("\\.omc$" "\\.o$" "\\.cmx$" "\\.cmi$" "\\.cmt$" "\\.omakedb" "\\.pyc$" "\\.hi$" "\\.DS_Store"))))
+
+     (use-package ac-helm
+       :bind
+       (("C-:" . ac-complete-with-helm)))
+   #+END_SRC
 * プログラム関連
 ** tags
 *** ctags
@@ -578,6 +636,81 @@
 ** org-mode
 *** src
     #+BEGIN_SRC emacs-lisp
+      (use-package org
+        :commands
+        (org-present-big org-present-small org-remove-inline-images org-display-inline-images)
+        :config
+        (progn
+          (setq org-directory "~/Dropbox/Org/"
+                org-default-notes-file (concat org-directory "agenda.org") ; ディレクトリの設定
+                org-startup-truncated nil ; 表示を打ち切らない
+                org-export-htmlize-output-type 'css ; HTML出力したときコードハイライトcssを分離する
+                org-return-follows-link t
+                org-use-fast-todo-selection t
+                org-display-custom-times "<%Y-%m-%d %H:%M:%S>" ; 日付けの設定
+                org-time-stamp-custom-formats "<%Y-%m-%d %H:%M:%S>" ; 日付けの設定
+                org-agenda-files '("~/Dropbox/Org/gtd.org"))
+
+          ;; org-babelの設定
+          (org-babel-do-load-languages
+           'org-babel-load-languages
+           '((python . t)
+             (ocaml . t)
+             (haskell . t)
+             (sh .t)
+             (latex .t)))
+
+          (setq org-todo-keywords
+                '((sequence "TODO(t!)" "STARTED(s!)" "WAITING(w!)"
+                            "|" "DONE(x!)" "CANCEL(c!)"))
+                org-tag-alist
+                '(("PROJECT" . ?p) ("BOOK" . ?b)))
+
+          (set-face-attribute 'org-todo nil
+                              :foreground "selectedMenuItemColor"
+                              :box t )
+          (set-face-attribute 'org-done nil
+                              :box t)
+          (setq org-todo-keyword-faces
+                '(("STARTED" . (:foreground "Orange" :box t)))))
+        :init
+        (progn
+          (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+
+          (add-hook 'org-mode-hook
+                    (lambda ()
+                      (auto-fill-mode 1)))
+
+          (add-hook 'org-present-mode-hook
+                    (lambda ()
+                      (org-present-big)
+                      (setq org-present-text-scale 4)
+                      (org-display-inline-images)))
+
+          (add-hook 'org-present-mode-quit-hook
+                    (lambda ()
+                      (org-present-small)
+                      (org-remove-inline-images))))
+        )
+
+      (use-package org-capture
+        :commands
+        (org-agenda org-capture)
+        :bind
+        (("C-c a" . org-agenda)
+         ("C-c m" . org-capture))
+        :config
+        (progn
+          (setq org-capture-templates
+                '(("t" "Task" entry (file+headline nil "Inbox")
+                   "* TODO  %?\n %T\n %a\n %i\n")
+                  ("m" "Memo" entry (file+headline nil "Memo")
+                   "* %?\n %T\n %a\n %i\n")
+                  ("b" "Bug" entry (file+headline nil "Inbox")
+                   "* TODO %?   :bug:\n  %T\n %a\n %i\n")
+                  ("i" "Idea" entry (file+headline nil "Idea")
+                   "* %?\n %U\n %i\n %a\n %i\n")))))
+
       (use-package ox-latex
         :init
         (progn
@@ -604,24 +737,17 @@
                          ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
           (setq org-latex-default-class "jarticle")))
     #+END_SRC
+** open-junk-file
+*** src
+    #+BEGIN_SRC emacs-lisp
+      (use-package open-junk-file
+        :bind
+        (("C-c C-j" . open-junk-file)))
+    #+END_SRC
 * フックの設定
 ** src
    #+BEGIN_SRC emacs-lisp
      (add-hook 'after-save-hook
                'executable-make-buffer-file-executable-if-script-p) ;ファイルが#! から始まる場合, +x を付ける
      (add-hook 'before-save-hook 'delete-trailing-whitespace)
-   #+END_SRC
-* ace-mode
-** ace-mode
-   #+BEGIN_SRC emacs-lisp
-     (use-package ace-jump-buffer
-       :bind
-       (("C-x b" . ace-jump-buffer)))
-
-     (use-package ace-window
-       :bind
-       (("C-t" . ace-window))
-       :init
-       (progn
-         (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))))
    #+END_SRC

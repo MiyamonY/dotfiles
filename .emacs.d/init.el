@@ -38,6 +38,9 @@
 (el-get-bundle ace-jump-buffer)
 (el-get-bundle ace-isearch)
 (el-get-bundle ace-window)
+(el-get-bundle helm)
+(el-get-bundle ac-helm)
+(el-get-bundle open-junk-file)
 
 ;; load dotemacs
 (setq org-dotemacs-default-file "~/.emacs.d/init.org")
