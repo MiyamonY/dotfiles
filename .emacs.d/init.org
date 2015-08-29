@@ -548,6 +548,16 @@
        (set-face-foreground 'font-lock-regexp-grouping-construct "green3")
      #+END_SRC
 
+** python
+*** src
+    #+BEGIN_SRC emacs-lisp
+      (use-package virtualwrapper
+        :config
+        (progn
+          ((venv-initialize-interactive-shells)
+           (venv-initialize-eshell)
+           (setq venv-location (getenv "WORKON_HOME")))))
+    #+END_SRC
 ** make関連
 *** cmake
 **** src
@@ -788,4 +798,32 @@
      (setq ediff-window-setup-function 'ediff-setup-windows-plain)
      ;; diffのバッファを上下ではなく左右に並べる
      (setq ediff-split-window-function 'split-window-horizontally)
+   #+END_SRC
+* yasnippet
+** src
+   #+BEGIN_SRC emacs-lisp
+     (use-package yasnippet
+       :defer t
+       :commands
+       (yas-global-mode)
+       :config
+       (progn
+         (bind-keys :map yas-minor-mode-map
+                    ("C-x i n" . yas-new-snippet)
+                    ("C-x i i" . yas-insert-snippet)
+                    ("C-x i v" . yas-visit-snippet-file)
+                    ("TAB" . yas-next-field)
+                    ("<tab>" . nil)
+                    ("C-i" . nil)))
+       :init
+       (setq yas-snippet-dirs '("~/.emacs.d/conf/snippets"))
+       (yas-global-mode 1))
+
+     (use-package helm-c-yasnippet
+       :commands (helm-yas-complete)
+       :bind ("C-o" . helm-yas-complete)
+       :config
+       (progn
+         (setq helm-yas-space-match-any-greedy t)))
+
    #+END_SRC

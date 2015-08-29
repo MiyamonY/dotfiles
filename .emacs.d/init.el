@@ -61,6 +61,9 @@
 (el-get-bundle flycheck)
 (el-get-bundle flycheck-color-mode-line)
 (el-get-bundle flycheck-pos-tip)
+(el-get-bundle virtualenvwrapper)
+(el-get-bundle yasnippet)
+(el-get-bundle pcre2el)
 
 ;; load dotemacs
 (setq org-dotemacs-default-file "~/.emacs.d/init.org")

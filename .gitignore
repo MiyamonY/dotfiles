@@ -2,4 +2,5 @@
 .emacs.d/*
 !init.el
 !init.org
+!.emacs.d/conf/
 !.emacs.d/local/
