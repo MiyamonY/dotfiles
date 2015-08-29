@@ -1,9 +1,5 @@
-# for all
-.DS_store
-~*
-*~
-
 # .emacs.d
 .emacs.d/*
 !init.el
 !init.org
+!.emacs.d/local/

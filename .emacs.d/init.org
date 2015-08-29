@@ -1,24 +1,9 @@
-* OS固有の設定
+* Emacsの設定
+  * GCを行う閾値の設定をする
 ** src
-  #+BEGIN_SRC emacs-lisp
-    (cond
-     ((eq system-type 'darwin)              ;mac
-      (defvar init-proofgeneral-path "/usr/share/usr/bin/emacs/site-lisp/site-start.d")
-      (setq ns-command-modifier (quote meta)) ; comanndキーにmetaキー
-      (setq ns-alternate-modifier (quote super))
-      (setq use-dialog-box nil)             ; プロンプトを使用しない
-      (let ((path-from-shell                ; PATHの設定
-             (replace-regexp-in-string
-              "[ \t\n]*$" ""
-              (shell-command-to-string "$SHELL --login -i -c 'echo $PATH'"))))
-        (setenv "PATH" path-from-shell)
-        (setq exec-path (split-string path-from-shell path-separator)))
-                                            ;(define-key global-map [?¥] [?\\])
-      )
-     (t                                     ; linux
-      (defvar init-proofgeneral-path "/usr/share/emacs/site-lisp/site-start.d")))
-  #+END_SRC
-
+   #+BEGIN_SRC emacs-lisp
+     (setq gc-cons-threshold (* 2 1024 1024))
+   #+END_SRC
 * Emacs Versionの設定
   変数emacs-major-version, emacs-minor-versionを設定する
 
@@ -51,7 +36,12 @@
      (defmacro append-to-list (to lst)
        `(setq ,to (append ,lst ,to)))
    #+END_SRC
-
+* 定数の設定
+  * init-emacs-local-files : ローカルで使用するファイルの置き場所(ex. undohist)
+** src
+   #+BEGIN_SRC emacs-lisp
+     (defvar init-emacs-local-files "~/.emacs.d/local")
+   #+END_SRC
 * use package
   init.elが書きやすくなるマクロを定義したパッケージ
 
@@ -255,6 +245,49 @@
      (init-mode-line-setup)
    #+END_SRC
 
+* 表示関係
+** Theme
+*** src
+    #+BEGIN_SRC emacs-lisp
+      (defvar init-load-theme-path "~/.emacs.d/el-get/organic-green-theme/")
+      (when (file-exists-p init-load-theme-path)
+        (add-to-list 'custom-theme-load-path init-load-theme-path)
+        (load-theme 'organic-green t nil)
+        (set-face-foreground 'font-lock-builtin-face "magenta"))
+    #+END_SRC
+** 括弧のハイライト
+*** src
+    #+BEGIN_SRC emacs-lisp
+      (use-package paren
+        :config
+        (progn
+          (setq show-paren-delay 0.1   ;括弧のハイライトを表示するまでの時間
+                show-paren-style 'expression) ;括弧の中もハイライト
+          (set-face-background 'show-paren-match-face nil) ;バックグランドフェイスを消す
+          (set-face-underline 'show-paren-match-face "green")) ;下線の色をつける
+        :init
+        (show-paren-mode t))
+    #+END_SRC
+** pretty-mode
+   lambdaや<=などの文字列をλなどの記号に置き換える.
+*** 内容
+    - racket-modeをscheme-modeの置き換えに対応付ける
+    - ∅(pretty-modeでは:nilのgroup)を表示させない
+    - プログラム関係のファイルのフック(prog-mode-hook)に掛ける
+
+*** TODO src
+    #+BEGIN_SRC emacs-lisp
+      (use-package pretty-mode
+        :init
+        (progn
+          (setq pretty-active-groups
+                '((coq-mode . (:greek))
+                  (racket-mode . ()))))
+        :config
+        (progn
+          (global-pretty-mode 1)))
+
+    #+END_SRC
 * キーバインドの設定
 ** src
    #+BEGIN_SRC emacs-lisp
@@ -273,29 +306,6 @@
        (find-file "~/.emacs.d/init.org"))
    #+END_SRC
 
-* popwin
-  下からバッファがポップアップするパッケージ
-** src
-   #+BEGIN_SRC emacs-lisp
-     (use-package popwin
-       :commands
-       (popwin-mode)
-       :config
-       (progn
-         (setq popwin:close-popup-window-timer-interval 0.05)
-         (append-to-list popwin:special-display-config
-                         '(("*Help*" :height 20 :position bottom :noselect t)
-                           (" *auto-async-byte-compile*" :height 12 :position bottom :noselect t)
-                           ("*sdic*" :height 12 :position bottom :noselect t)
-                           ("*Backtrace*":height 12 :position bottom :noselect t)
-                           ("*ack*":height 12 :position bottom)
-                           ("^\*helm.+\*$" :height 20 :position bottom :regexp t)
-                           ("^\*Org.+\*$" :height 20 :position bottom :regexp t)
-                           ("*Buffer List*" :height 20 :position bottom)
-                           ("^\*magit.+\*$" :height 25 :position bottom :regexp t))))
-       :init
-       (popwin-mode 1))
-   #+END_SRC
 * skk
   日本語入力システム
 ** src
@@ -314,16 +324,30 @@
              (skk-latin-mode-on)))
 
          (init-add-fun-to-hooks 'init-skk-mode-hooks
-                                '(find-file-hook lisp-intraction-mode-hook)
-                                )
-         (setq skk-user-directory "~/.ddskk"))
+                                '(find-file-hook lisp-intraction-mode-hook))
+
+         (setq skk-user-directory (file-name-as-directory (concat (file-name-as-directory init-emacs-local-files) ".ddskk")))
+
+         (defun init-check-jisyo-file ()
+           (unless (file-exists-p
+                    (concat skk-user-directory "SKK-JISYO.L"))
+             (unless (file-exists-p skk-user-directory)
+               (make-directory skk-user-directory))
+             (message "Downloading SKK-JISYO.L")
+             (url-copy-file "http://openlab.jp/skk/dic/SKK-JISYO.L.gz" "SKK-JISYO.L.gz")
+             (message "Decompressing SKK-JISYO.L")
+             (call-process-shell-command "gzip -d SKK-JISYO.L.gz")
+             (message "Move SKK-JISYO.L")
+             (call-process-shell-command (format "mv SKK-JISYO.L %s" skk-user-directory))))
+
+         (init-check-jisyo-file))
        :config
        (progn
          (setq default-input-method "japanese-skk"
                skk-kutouten-type 'en
                skk-kuten-touten-alist '((jp . ("." . "," ))
                                         (en . ("." . ","))); 句読点を「，．」にする
-               skk-large-jisyo "~/.ddskk/SKK-JISYO.L"
+               skk-large-jisyo (concat (file-name-as-directory skk-user-directory) "SKK-JISYO.L")
                skk-use-azik t
                skk-azik-keyboard-type 'jp106)
 
@@ -394,23 +418,24 @@
   * undo-tree : C-x u でundo treeを表示
 ** src
    #+BEGIN_SRC emacs-lisp
-          (use-package undohist
-            :commands
-            (undohist-initialize)
-            :config
-            (progn
-                 (setq undohist-directory "~/.undohist"
-                       undohist-ignored-files '("COMMIT_EDITMSG")))
-            :init
-            (undohist-initialize))
+     (use-package undohist
+       :commands
+       (undohist-initialize)
+       :config
+       (progn
+            (setq undohist-ignored-files '("COMMIT_EDITMSG")))
+       :init
+       (progn
+         (setq undohist-directory (concat (file-name-as-directory init-emacs-local-files) ".undohist"))
+         (undohist-initialize)))
 
-          (use-package undo-tree
-            :bind
-            (("C-." . undo-tree-redo))
-            :commands
-            (global-undo-tree-mode)
-            :config
-            (global-undo-tree-mode))
+     (use-package undo-tree
+       :bind
+       (("C-." . undo-tree-redo))
+       :commands
+       (global-undo-tree-mode)
+       :config
+       (global-undo-tree-mode))
    #+END_SRC
 * sequential-command
   同じキーバインドで押下回数によって動作を変えれるパッケージ
@@ -422,6 +447,69 @@
          ("C-e" . seq-end)))
    #+END_SRC
 
+* dired mode
+** src
+   #+BEGIN_SRC emacs-lisp
+     (use-package dired
+       :config
+       (progn
+         (bind-key "C-t" 'ace-window dired-mode-map)
+         (require 'dired-x nil t)))
+
+   #+END_SRC
+* 矩形編集
+  cua modeを使用する
+** src
+   #+BEGIN_SRC emacs-lisp
+     (use-package cua-base
+       :bind
+       (("C-x SPC" . cua-set-rectangle-mark)
+        ("C-x C-SPC" . cua-set-rectangle-mark))
+       :config
+       (progn
+         ; cuaのキーバインドを禁止
+         (setq cua-enable-cua-keys nil))
+       :init
+       (cua-mode 1))
+   #+END_SRC
+* auto-complete
+** src
+   #+BEGIN_SRC emacs-lisp
+     (global-auto-complete-mode t)
+     (ac-config-default)
+   #+END_SRC
+* ace-mode
+** ace-mode
+   #+BEGIN_SRC emacs-lisp
+     (use-package ace-jump-buffer
+       :disabled t
+       :bind
+       (("C-x b" . ace-jump-buffer)))
+
+     (use-package ace-window
+       :bind
+       (("C-t" . ace-window))
+       :init
+       (progn
+         (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))))
+   #+END_SRC
+* helm
+** src
+   #+BEGIN_SRC emacs-lisp
+     (use-package helm-config
+       :config
+       (progn
+         (helm-mode 1)
+         (setq helm-ff-skip-boring-files t
+               helm-exit-idle-delay 0)
+         (append-to-list
+          helm-boring-file-regexp-list
+          '("\\.omc$" "\\.o$" "\\.cmx$" "\\.cmi$" "\\.cmt$" "\\.omakedb" "\\.pyc$" "\\.hi$" "\\.DS_Store"))))
+
+     (use-package ac-helm
+       :bind
+       (("C-:" . ac-complete-with-helm)))
+   #+END_SRC
 * プログラム関連
 ** tags
 *** ctags
@@ -511,17 +599,57 @@
      #+END_SRC
 
 ** c言語
+** src
+   #+BEGIN_SRC emacs-lisp
+          (defun init-c-mode-common-hook ()
+            (progn
+              (gtags-mode 1)                              ;gtags モードに入るようにする
+              (gtags-make-complete-list)
+              (hide-ifdef-mode)
+              (setq gdb-many-windows t) ; gdbのバッファを良い感じにする
+     ))
+     (add-hook 'c-mode-common-hook 'init-c-mode-common-hook)
+
+   #+END_SRC
+** make関連
+*** cmake
+**** src
+     #+BEGIN_SRC emacs-lisp
+       (use-package cmake-mode
+         :mode
+         (("CMakeLists.txt" . cmake-mode) ))
+     #+END_SRC
+** flycheck
 *** src
     #+BEGIN_SRC emacs-lisp
-      (defun init-c-mode-common-hook ()
-        (progn
-          (gtags-mode 1)                              ;gtags モードに入るようにする
-          (gtags-make-complete-list)
-          (hide-ifdef-mode)
-          (setq gdb-many-windows t) ; gdbのバッファを良い感じにする
-          ))
+            (use-package flycheck
+              :config
+              (progn
+                (defvar omake-program-arguments "-P -w --verbose")
+                (flycheck-define-checker ocaml-checker
+                  "flychecker for ocaml"
+                  :command ("ocamlc" "-c" source)
+                  :error-patterns
+                  ((error line-start "File \"" (file-name) "\", line "
+                          line ", " (minimal-match (one-or-more not-newline)) ":\n" (message) line-end))
+                  :modes (tuareg-mode))
 
-      (add-hook 'c-mode-common-hook 'init-c-mode-common-hook)
+                (add-to-list 'flycheck-checkers 'ocaml-checker)
+                (setq flycheck-display-errors-function #'flycheck-pos-tip-error-messages
+                      flycheck-pos-tip-timeout 10))
+              :init
+              (progn
+                (add-hook 'after-init-hook #'global-flycheck-mode)))
+            (use-package flycheck-color-mode-line
+              :config
+              (progn
+                (set-face-attribute 'flycheck-color-mode-line-warning-face nil
+                                    :foreground "orange")
+
+                (set-face-attribute 'flycheck-color-mode-line-error-face nil
+                                    :foreground "tomato")
+                (add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode)))
+
     #+END_SRC
 * 文章関連(Lightweight Markup etc.)
 ** rst
@@ -601,6 +729,81 @@
 ** org-mode
 *** src
     #+BEGIN_SRC emacs-lisp
+      (use-package org
+        :commands
+        (org-present-big org-present-small org-remove-inline-images org-display-inline-images)
+        :config
+        (progn
+          (setq org-directory "~/Dropbox/Org/"
+                org-default-notes-file (concat org-directory "agenda.org") ; ディレクトリの設定
+                org-startup-truncated nil ; 表示を打ち切らない
+                org-export-htmlize-output-type 'css ; HTML出力したときコードハイライトcssを分離する
+                org-return-follows-link t
+                org-use-fast-todo-selection t
+                org-display-custom-times "<%Y-%m-%d %H:%M:%S>" ; 日付けの設定
+                org-time-stamp-custom-formats "<%Y-%m-%d %H:%M:%S>" ; 日付けの設定
+                org-agenda-files '("~/Dropbox/Org/gtd.org"))
+
+          ;; org-babelの設定
+          (org-babel-do-load-languages
+           'org-babel-load-languages
+           '((python . t)
+             (ocaml . t)
+             (haskell . t)
+             (sh .t)
+             (latex .t)))
+
+          (setq org-todo-keywords
+                '((sequence "TODO(t!)" "STARTED(s!)" "WAITING(w!)"
+                            "|" "DONE(x!)" "CANCEL(c!)"))
+                org-tag-alist
+                '(("PROJECT" . ?p) ("BOOK" . ?b)))
+
+          (set-face-attribute 'org-todo nil
+                              :foreground "selectedMenuItemColor"
+                              :box t )
+          (set-face-attribute 'org-done nil
+                              :box t)
+          (setq org-todo-keyword-faces
+                '(("STARTED" . (:foreground "Orange" :box t)))))
+        :init
+        (progn
+          (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+
+          (add-hook 'org-mode-hook
+                    (lambda ()
+                      (auto-fill-mode 1)))
+
+          (add-hook 'org-present-mode-hook
+                    (lambda ()
+                      (org-present-big)
+                      (setq org-present-text-scale 4)
+                      (org-display-inline-images)))
+
+          (add-hook 'org-present-mode-quit-hook
+                    (lambda ()
+                      (org-present-small)
+                      (org-remove-inline-images))))
+        )
+
+      (use-package org-capture
+        :commands
+        (org-agenda org-capture)
+        :bind
+        (("C-c a" . org-agenda)
+         ("C-c m" . org-capture))
+        :config
+        (progn
+          (setq org-capture-templates
+                '(("t" "Task" entry (file+headline nil "Inbox")
+                   "* TODO  %?\n %T\n %a\n %i\n")
+                  ("m" "Memo" entry (file+headline nil "Memo")
+                   "* %?\n %T\n %a\n %i\n")
+                  ("b" "Bug" entry (file+headline nil "Inbox")
+                   "* TODO %?   :bug:\n  %T\n %a\n %i\n")
+                  ("i" "Idea" entry (file+headline nil "Idea")
+                   "* %?\n %U\n %i\n %a\n %i\n")))))
+
       (use-package ox-latex
         :init
         (progn
@@ -627,6 +830,13 @@
                          ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
           (setq org-latex-default-class "jarticle")))
     #+END_SRC
+** open-junk-file
+*** src
+    #+BEGIN_SRC emacs-lisp
+      (use-package open-junk-file
+        :bind
+        (("C-c C-j" . open-junk-file)))
+    #+END_SRC
 * フックの設定
 ** src
    #+BEGIN_SRC emacs-lisp
@@ -634,12 +844,11 @@
                'executable-make-buffer-file-executable-if-script-p) ;ファイルが#! から始まる場合, +x を付ける
      (add-hook 'before-save-hook 'delete-trailing-whitespace)
    #+END_SRC
-* バックアップファイルの設定
+* ediffの設定
 ** src
    #+BEGIN_SRC emacs-lisp
-     (setq backup-directory-alist
-           `((".*" . ,temporary-file-directory))) ; tmp フォルダにバックアップファイルを保存
-     (setq auto-save-file-name-transforms
-           `((".*" ,temporary-file-directory t))) ; tmp フォルダにバックアップファイルを保存
-
+     ;; コントロール用のバッファを同一フレーム内に表示
+     (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+     ;; diffのバッファを上下ではなく左右に並べる
+     (setq ediff-split-window-function 'split-window-horizontally)
    #+END_SRC
