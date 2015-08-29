@@ -387,6 +387,25 @@
          ("C-e" . seq-end)))
    #+END_SRC
 
+* 正規表現
+** pcre2el
+   emacs上でpcre(perl正規表現)が使える
+*** 参考url
+    - http://rubikitch.com/2015/04/25/pcre2el/
+*** key-bind
+    - C-c / / :: rxt-explain emacsの正規表現をpcreで解説
+    - C-c / c :: rxt-convert-syntax Emacs/PCRE間の変換し、kill-ringへ
+    - C-c / x :: rxt-convert-to-rx rxへの変換
+    - C-c / ′ :: rxt-convert-to-strings 文字列集合へ分解
+*** src
+    #+BEGIN_SRC emacs-lisp
+      (use-package pcre2el
+        :config
+        (progn
+          (add-hook 'prog-mode-hook 'rxt-mode)
+          (add-hook 'reb-mode-hook 'rxt-mode)
+          (setq reb-re-syntax 'pcre)))
+    #+END_SRC
 * dired mode
 ** src
    #+BEGIN_SRC emacs-lisp
