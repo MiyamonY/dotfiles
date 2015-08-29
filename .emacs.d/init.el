@@ -65,7 +65,8 @@
 (el-get-bundle virtualenvwrapper)
 (el-get-bundle yasnippet)
 (el-get-bundle pcre2el)
-
+(el-get-bundle helm-c-yasnippet)
+(el-get-bundle helm-descbinds)
 
 ;; load dotemacs
 (setq org-dotemacs-default-file "~/.emacs.d/init.org")

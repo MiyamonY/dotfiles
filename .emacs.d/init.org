@@ -512,35 +512,47 @@
          (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))))
    #+END_SRC
 * helm
-** TODO helm buffer
+** TODO helm
    - helm-boring-buffer-regexp-list :: switch to bufferで表示される
         bufferを制限する
+*** src
+    #+BEGIN_SRC emacs-lisp
+      (use-package helm-config
+        :config
+        (progn
+          (helm-mode 1)
+          (setq helm-ff-skip-boring-files t
+                helm-exit-idle-delay 0)
+          (append-to-list helm-boring-file-regexp-list
+                          '("\\.omc$" "\\.o$" "\\.cmx$" "\\.cmi$" "\\.cmt$" "\\.omakedb" "\\.pyc$"
+                            "\\.hi$" "\\.DS_Store"))
 
-** src
+          (defun my-filter-dired-buffers (buffer-list)
+            (delq nil (mapcar
+                     (lambda (buffer)
+                       (if (eq (with-current-buffer buffer major-mode)  'dired-mode)
+                           nil
+                         buffer))
+                     buffer-list)))
+
+          (advice-add 'helm-skip-boring-buffers :filter-return 'my-filter-dired-buffers)))
+
+    #+END_SRC
+** helm-descbinds
+   M-x describe-bindinsで表示させるkey-bindをhelmで使える
+*** src
+    #+BEGIN_SRC emacs-lisp
+      (use-package helm-descbinds
+        (helm-descbinds-mode))
+    #+END_SRC
+** ac-helm
+   auto completeをhelmで使える
+*** src
    #+BEGIN_SRC emacs-lisp
-     (use-package helm-config
-       :config
-       (progn
-         (helm-mode 1)
-         (setq helm-ff-skip-boring-files t
-               helm-exit-idle-delay 0)
-         (append-to-list helm-boring-file-regexp-list
-                         '("\\.omc$" "\\.o$" "\\.cmx$" "\\.cmi$" "\\.cmt$" "\\.omakedb" "\\.pyc$"
-                           "\\.hi$" "\\.DS_Store"))
-
-         (defun my-filter-dired-buffers (buffer-list)
-           (delq nil (mapcar
-                    (lambda (buffer)
-                      (if (eq (with-current-buffer buffer major-mode)  'dired-mode)
-                          nil
-                        buffer))
-                    buffer-list)))
-
-         (advice-add 'helm-skip-boring-buffers :filter-return 'my-filter-dired-buffers)))
-
      (use-package ac-helm
        :bind
        (("C-:" . ac-complete-with-helm)))
+
    #+END_SRC
 * プログラム関連
 ** tags
@@ -664,33 +676,34 @@
 ** flycheck
 *** src
     #+BEGIN_SRC emacs-lisp
-            (use-package flycheck
-              :config
-              (progn
-                (defvar omake-program-arguments "-P -w --verbose")
-                (flycheck-define-checker ocaml-checker
-                  "flychecker for ocaml"
-                  :command ("ocamlc" "-c" source)
-                  :error-patterns
-                  ((error line-start "File \"" (file-name) "\", line "
-                          line ", " (minimal-match (one-or-more not-newline)) ":\n" (message) line-end))
-                  :modes (tuareg-mode))
+      (use-package flycheck
+        :config
+        (progn
+          (defvar omake-program-arguments "-P -w --verbose")
+          (flycheck-define-checker ocaml-checker
+            "flychecker for ocaml"
+            :command ("ocamlc" "-c" source)
+            :error-patterns
+            ((error line-start "File \"" (file-name) "\", line "
+                    line ", " (minimal-match (one-or-more not-newline)) ":\n" (message) line-end))
+            :modes (tuareg-mode))
 
-                (add-to-list 'flycheck-checkers 'ocaml-checker)
-                (setq flycheck-display-errors-function #'flycheck-pos-tip-error-messages
-                      flycheck-pos-tip-timeout 10))
-              :init
-              (progn
-                (add-hook 'after-init-hook #'global-flycheck-mode)))
-            (use-package flycheck-color-mode-line
-              :config
-              (progn
-                (set-face-attribute 'flycheck-color-mode-line-warning-face nil
-                                    :foreground "orange")
+          (add-to-list 'flycheck-checkers 'ocaml-checker)
+          (setq flycheck-display-errors-function #'flycheck-pos-tip-error-messages
+                flycheck-pos-tip-timeout 10))
+        :init
+        (progn
+          (add-hook 'after-init-hook #'global-flycheck-mode)))
+      (use-package flycheck-color-mode-line
+        :config
+        (progn
+          (set-face-attribute 'flycheck-color-mode-line-warning-face nil
+                              :foreground "orange")
 
-                (set-face-attribute 'flycheck-color-mode-line-error-face nil
-                                    :foreground "tomato")
-                (add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode)))
+          (set-face-attribute 'flycheck-color-mode-line-error-face nil
+                              :foreground "tomato")
+
+          (add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode)))
 
     #+END_SRC
 * 文章関連(Lightweight Markup etc.)
