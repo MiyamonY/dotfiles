@@ -453,6 +453,10 @@
          (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))))
    #+END_SRC
 * helm
+** TODO helm buffer
+   - helm-boring-buffer-regexp-list :: switch to bufferで表示される
+        bufferを制限する
+
 ** src
    #+BEGIN_SRC emacs-lisp
      (use-package helm-config
