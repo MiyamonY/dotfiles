@@ -84,8 +84,7 @@
            case-fold-search t            ;
            completion-ignore-case t      ; 補完時に大文字小文字を区別しない
            kill-whole-line t             ; 先頭でkillしたら行を消去
-           completion-ignore-case t      ; ファイル検索時大文字小文字を区別しない
-           gc-cons-threshold (* 10 gc-cons-threshold)) ; gcの設定
+           completion-ignore-case t)      ; ファイル検索時大文字小文字を区別しない
      (fset 'yes-or-no-p 'y-or-n-p)       ; y
      (auto-image-file-mode t)            ; バッファ内で画像ファイルを表示する
      (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))
