@@ -49,6 +49,7 @@
 (el-get-bundle gtags)
 (el-get-bundle rst-mode)
 (el-get-bundle markdown-mode)
+(el-get-bundle multi-term)
 (el-get-bundle pretty-mode)
 (el-get-bundle organic-green-theme)
 (el-get-bundle ace-jump-buffer)
@@ -64,6 +65,7 @@
 (el-get-bundle virtualenvwrapper)
 (el-get-bundle yasnippet)
 (el-get-bundle pcre2el)
+
 
 ;; load dotemacs
 (setq org-dotemacs-default-file "~/.emacs.d/init.org")

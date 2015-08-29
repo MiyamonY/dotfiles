@@ -72,6 +72,35 @@
 
   #+END_SRC
 
+* misc
+  雑多な設定
+** src
+   #+BEGIN_SRC emacs-lisp
+     (tool-bar-mode -1)                  ; ツールバーの消去
+     (electric-pair-mode)                ; 自動的に括弧のペアを挿入
+     (setq inhibit-startup-message t     ; 起動時の初期バッファーを表示させない
+           frame-title-format "%f"       ; タイトルバーにファイルのフルパスを表示
+           line-move-visual t            ; 論理行に対し表示行のように扱う
+           case-fold-search t            ;
+           completion-ignore-case t      ; 補完時に大文字小文字を区別しない
+           kill-whole-line t             ; 先頭でkillしたら行を消去
+           completion-ignore-case t      ; ファイル検索時大文字小文字を区別しない
+           gc-cons-threshold (* 10 gc-cons-threshold)) ; gcの設定
+     (fset 'yes-or-no-p 'y-or-n-p)       ; y
+     (auto-image-file-mode t)            ; バッファ内で画像ファイルを表示する
+     (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))
+     (scroll-bar-mode -1)
+
+     ;;; バッファローカル変数のデフォルト設定
+     (setq-default show-trailing-whitespace t) ; 不要な空白文字を表示
+     (setq-default bidi-display-reordering nil) ; 文字を右から左に表示させない
+     (setq-default tab-width 2)          ; タブの設定
+     (setq-default indent-tabs-mode nil)     ; タブを使用しない
+     (setq-default fill-column 80)       ; auto fillを80文字で設定
+
+     ;;; カーソルの変更
+     (blink-cursor-mode 0)                   ; 点滅させない
+   #+END_SRC
 * elscreen
   emacs上でタブが使えるようになるパッケージ
 
@@ -328,6 +357,37 @@
                              :family "MigMix 2M"
                              :foreground "pink")))
    #+END_SRC
+* auto-insert
+  ファイルを開いた際に自動的にテンプレートを挿入するパッケージ
+** src
+   #+BEGIN_SRC emacs-lisp
+     (use-package autoinsert
+       :commands
+       (auto-insert)
+       :config
+       (progn
+         (auto-insert-mode 1)
+         (setq auto-insert-directory "~/.emacs.d/conf/autoinsert" ; テンプレートファイルの場所
+               auto-insert-query nil ; テンプレートを挿入するか聞かない
+               auto-insert-alist ; 拡張子とテンプレートを対応づける
+               '(("\\.py$" . "python.template")
+                 ("\\.org$" . "org.template"))))
+       :init
+       (progn
+         (add-hook 'find-file-hooks 'auto-insert)))
+   #+END_SRC
+* multi-term
+  シェルモード
+** src
+   #+BEGIN_SRC emacs-lisp
+     (use-package multi-term
+       :commands
+       (multi-term)
+       :config
+       (progn
+         (setq multi-term-program "/bin/bash")
+         (defalias 'shell 'multi-term)))
+   #+END_SRC
 * moccur関連
   grep検索可能になるパッケージ
 ** src
@@ -570,7 +630,6 @@
        (set-face-foreground 'font-lock-regexp-grouping-backslash "green3")
        (set-face-foreground 'font-lock-regexp-grouping-construct "green3")
      #+END_SRC
-
 ** python
 *** src
     #+BEGIN_SRC emacs-lisp
@@ -581,6 +640,20 @@
            (venv-initialize-eshell)
            (setq venv-location (getenv "WORKON_HOME")))))
     #+END_SRC
+
+** c言語
+** src
+   #+BEGIN_SRC emacs-lisp
+          (defun init-c-mode-common-hook ()
+            (progn
+              (gtags-mode 1)                              ;gtags モードに入るようにする
+              (gtags-make-complete-list)
+              (hide-ifdef-mode)
+              (setq gdb-many-windows t) ; gdbのバッファを良い感じにする
+     ))
+     (add-hook 'c-mode-common-hook 'init-c-mode-common-hook)
+
+   #+END_SRC
 ** make関連
 *** cmake
 **** src
@@ -592,34 +665,34 @@
 ** flycheck
 *** src
     #+BEGIN_SRC emacs-lisp
-      (use-package flycheck
-        :config
-        (progn
-          (defvar omake-program-arguments "-P -w --verbose")
-          (flycheck-define-checker ocaml-checker
-            "flychecker for ocaml"
-            :command ("ocamlc" "-c" source)
-            :error-patterns
-            ((error line-start "File \"" (file-name) "\", line "
-                    line ", " (minimal-match (one-or-more not-newline)) ":\n" (message) line-end))
-            :modes (tuareg-mode))
+            (use-package flycheck
+              :config
+              (progn
+                (defvar omake-program-arguments "-P -w --verbose")
+                (flycheck-define-checker ocaml-checker
+                  "flychecker for ocaml"
+                  :command ("ocamlc" "-c" source)
+                  :error-patterns
+                  ((error line-start "File \"" (file-name) "\", line "
+                          line ", " (minimal-match (one-or-more not-newline)) ":\n" (message) line-end))
+                  :modes (tuareg-mode))
 
-          (add-to-list 'flycheck-checkers 'ocaml-checker)
-          (setq flycheck-display-errors-function #'flycheck-pos-tip-error-messages
-                flycheck-pos-tip-timeout 10))
-        :init
-        (progn
-          (add-hook 'after-init-hook #'global-flycheck-mode)))
+                (add-to-list 'flycheck-checkers 'ocaml-checker)
+                (setq flycheck-display-errors-function #'flycheck-pos-tip-error-messages
+                      flycheck-pos-tip-timeout 10))
+              :init
+              (progn
+                (add-hook 'after-init-hook #'global-flycheck-mode)))
+            (use-package flycheck-color-mode-line
+              :config
+              (progn
+                (set-face-attribute 'flycheck-color-mode-line-warning-face nil
+                                    :foreground "orange")
 
-      (use-package flycheck-color-mode-line
-        :config
-        (progn
-          (set-face-attribute 'flycheck-color-mode-line-warning-face nil
-                              :foreground "orange")
+                (set-face-attribute 'flycheck-color-mode-line-error-face nil
+                                    :foreground "tomato")
+                (add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode)))
 
-          (set-face-attribute 'flycheck-color-mode-line-error-face nil
-                              :foreground "tomato")
-          (add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode)))
     #+END_SRC
 * 文章関連(Lightweight Markup etc.)
 ** rst
