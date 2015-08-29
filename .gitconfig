@@ -9,3 +9,5 @@
 [color]
 	status = auto
 	branch = auto
+[http]
+	sslVerify = false
