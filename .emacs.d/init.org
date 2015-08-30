@@ -516,6 +516,17 @@
        (progn
          (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))))
    #+END_SRC
+** ace-isearch
+*** 参考url
+    http://rubikitch.com/2014/10/08/ace-isearch/
+*** src
+    #+BEGIN_SRC emacs-lisp
+      (use-package ace-isearch
+        :config
+        (progn
+          (setq ace-isearch-input-length 4)
+          (global-ace-isearch-mode 1)))
+    #+END_SRC
 * helm
 ** helm config
 *** src
