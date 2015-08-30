@@ -512,12 +512,17 @@
          (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))))
    #+END_SRC
 * helm
-** TODO helm
-   - helm-boring-buffer-regexp-list :: switch to bufferで表示される
-        bufferを制限する
+** helm config
 *** src
     #+BEGIN_SRC emacs-lisp
       (use-package helm-config
+        :bind
+        (("C-x b" . helm-mini)
+         ("C-x C-b" . helm-mini)
+         ("M-x" . helm-M-x)
+         ("C-x f" . helm-find-files)
+         ("C-x C-f" . helm-find-files)
+         ("M-y" . helm-show-kill-ring))
         :config
         (progn
           (helm-mode 1)
