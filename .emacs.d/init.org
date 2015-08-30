@@ -526,16 +526,7 @@
           (append-to-list helm-boring-file-regexp-list
                           '("\\.omc$" "\\.o$" "\\.cmx$" "\\.cmi$" "\\.cmt$" "\\.omakedb" "\\.pyc$"
                             "\\.hi$" "\\.DS_Store"))
-
-          (defun my-filter-dired-buffers (buffer-list)
-            (delq nil (mapcar
-                     (lambda (buffer)
-                       (if (eq (with-current-buffer buffer major-mode)  'dired-mode)
-                           nil
-                         buffer))
-                     buffer-list)))
-
-          (advice-add 'helm-skip-boring-buffers :filter-return 'my-filter-dired-buffers)))
+          (global-set-key (kbd "C-x b") 'helm-mini)))
 
     #+END_SRC
 ** helm-descbinds
@@ -543,7 +534,9 @@
 *** src
     #+BEGIN_SRC emacs-lisp
       (use-package helm-descbinds
-        (helm-descbinds-mode))
+        :config
+        (progn
+          (helm-descbinds-mode)))
     #+END_SRC
 ** ac-helm
    auto completeをhelmで使える
