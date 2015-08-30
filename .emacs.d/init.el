@@ -28,6 +28,7 @@
   (defvar init-proofgeneral-path "/usr/share/emacs/site-lisp/site-start.d")))
 
 ;; パッケージの設定
+(el-get-bundle exec-path-from-shell)
 (el-get-bundle auto-complete)
 (el-get-bundle elscreen)
 (el-get-bundle magit)
@@ -68,6 +69,13 @@
 (el-get-bundle helm-c-yasnippet)
 (el-get-bundle helm-descbinds)
 (el-get-bundle helm-swoop)
+(el-get-bundle helm-migemo)
+(el-get-bundle ace-isearch)
+(el-get-bundle highlight-symbol)
+(el-get-bundle python)
+(el-get-bundle ipython)
+(el-get-bundle viewer)
+(el-get-bundle visual-regexp-steroids)
 
 ;; load dotemacs
 (setq org-dotemacs-default-file "~/.emacs.d/init.org")
