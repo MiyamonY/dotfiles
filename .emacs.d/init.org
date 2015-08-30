@@ -704,6 +704,26 @@
           (add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode)))
 
     #+END_SRC
+* popwin
+** src
+   #+BEGIN_SRC emacs-lisp
+     (use-package popwin
+       :commands
+       (popwin-mode)
+       :config
+       (progn
+         (setq popwin:close-popup-window-timer-interval 0.05)
+         (append-to-list popwin:special-display-config
+                         '(("*Help*" :height 20 :position bottom)
+                           ("*Backtrace*":height 12 :position bottom :noselect t)
+                           ("*ack*":height 12 :position bottom)
+                           ("^\*Org.+\*$" :height 20 :position bottom :regexp t)
+                           ("^\*magit.+\*$" :height 25 :position bottom :regexp t)
+                           ("*ocaml-libraries*" :height 25 :position bottom :regexp t))))
+       :init
+       (popwin-mode 1))
+
+   #+END_SRC
 * 文章関連(Lightweight Markup etc.)
 ** rst
 *** src
