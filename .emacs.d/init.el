@@ -67,6 +67,7 @@
 (el-get-bundle pcre2el)
 (el-get-bundle helm-c-yasnippet)
 (el-get-bundle helm-descbinds)
+(el-get-bundle helm-swoop)
 
 ;; load dotemacs
 (setq org-dotemacs-default-file "~/.emacs.d/init.org")

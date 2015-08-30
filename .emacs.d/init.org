@@ -552,6 +552,17 @@
        (("C-:" . ac-complete-with-helm)))
 
    #+END_SRC
+** helm swoop
+   - color-moccurのような検索ができる
+   - isearchの後にM-iでhelm-swoopもできる
+
+   - M-x helm-swoop :: 検索を行う
+*** 参考url
+    http://rubikitch.com/2014/12/25/helm-swoop/
+*** src
+    #+BEGIN_SRC emacs-lisp
+      (use-package helm-swoop)
+    #+END_SRC
 * プログラム関連
 ** tags
 *** ctags
