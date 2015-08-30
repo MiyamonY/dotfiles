@@ -450,7 +450,6 @@
             (define-key org-mode-map (kbd "C-a") 'org-seq-home)
             (define-key org-mode-map (kbd "C-e") 'org-seq-end))))
    #+END_SRC
-
 * 正規表現
 ** pcre2el
    emacs上でpcre(perl正規表現)が使える
@@ -469,6 +468,21 @@
           (add-hook 'prog-mode-hook 'rxt-mode)
           (add-hook 'reb-mode-hook 'rxt-mode)
           (setq reb-re-syntax 'pcre)))
+    #+END_SRC
+** visutal-regexp-streoids
+   perl/pythonの正規表現でisearchが可能になる
+*** src
+    #+BEGIN_SRC emacs-lisp
+      (use-package visual-regexp-steroids
+        :disabled t
+        :bind
+        (("M-%" . vr/query-replace)
+         ("C-M-r" . vr/isearch-backward)
+         (""C-M-s"" . vr/isearch-forward))
+        :config
+        (progn
+          (setq vr/engine 'python)                ;python regexpならばこれ
+          ))
     #+END_SRC
 * dired mode
 ** src
@@ -568,6 +582,12 @@
        (("C-:" . ac-complete-with-helm)))
 
    #+END_SRC
+** helm migemo
+*** src
+    #+BEGIN_SRC emacs-lisp
+      (use-package helm-migemo)
+    #+END_SRC
+
 ** helm swoop
    - color-moccurのような検索ができる
    - isearchの後にM-iでhelm-swoopもできる
@@ -670,13 +690,23 @@
 *** src
     #+BEGIN_SRC emacs-lisp
       (use-package virtualwrapper
+        :init
+        (progn
+          (exec-path-from-shell-copy-envs '("WORKON_HOME"))
+          (setq venv-location (getenv "WORKON_HOME"))
+          (setq venv-executables-dir "/usr/local/bin/")))
         :config
         (progn
-          ((venv-initialize-interactive-shells)
-           (venv-initialize-eshell)
-           (setq venv-location (getenv "WORKON_HOME")))))
-    #+END_SRC
+          (venv-initialize-interactive-shells)
+          (venv-initialize-eshell))
 
+      (use-package python
+        :mode
+        (("\\.py\\'" . python-mode)))
+
+      (when (executable-find "ipython")
+        (use-package ipython))
+    #+END_SRC
 ** c言語
 ** src
    #+BEGIN_SRC emacs-lisp
@@ -731,6 +761,19 @@
           (add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode)))
 
     #+END_SRC
+** highlight symbol
+   識別子をハイライトするパッケージ
+
+*** src
+   #+BEGIN_SRC emacs-lisp
+     (use-package highlight-symbol
+       :config
+       (progn
+         (setq highlight-symbol-idle-delay 0.1))
+       :init
+       (progn
+         (add-hook 'prog-mode-hook 'highlight-symbol-mode)))
+   #+END_SRC
 * popwin
 ** src
    #+BEGIN_SRC emacs-lisp
