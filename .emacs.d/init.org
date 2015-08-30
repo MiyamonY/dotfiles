@@ -937,6 +937,26 @@
         :bind
         (("C-c C-j" . open-junk-file)))
     #+END_SRC
+** viewer
+*** src
+    #+BEGIN_SRC emacs-lisp
+      (use-package viewer
+        :commands
+        (viewer-stay-in-setup)
+        :config
+        (progn
+          (setq viewer-modeline-color-unwritable "tomato"
+                viewer-modeline-color-view "orange")
+          (viewer-change-modeline-color-setup)
+          (bind-keys :map view-mode-map
+                     ("m" . bm-toggle)
+                     ("[" . bm-previous)
+                     ("]" . bm-next)))
+        :init
+        (progn
+          (setq view-read-only t)
+          (viewer-stay-in-setup)))
+    #+END_SRC
 * フックの設定
 ** src
    #+BEGIN_SRC emacs-lisp
