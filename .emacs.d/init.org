@@ -365,12 +365,12 @@
        (auto-insert)
        :config
        (progn
-         (auto-insert-mode 1)
-         (setq auto-insert-directory "~/.emacs.d/conf/insert" ; テンプレートファイルの場所
+         (setq auto-insert-directory "~/.emacs.d/conf/insert/" ; テンプレートファイルの場所
                auto-insert-query nil ; テンプレートを挿入するか聞かない
                auto-insert-alist ; 拡張子とテンプレートを対応づける
                '(("\\.py$" . "python.template")
-                 ("\\.org$" . "org.template"))))
+                 ("\\.org$" . "org.template")))
+         (auto-insert-mode 1))
        :init
        (progn
          (add-hook 'find-file-hooks 'auto-insert)))
@@ -1099,3 +1099,14 @@
       (progn
         (global-git-gutter-mode t)))
   #+END_SRC
+* hilight-symbol
+** src
+   #+BEGIN_SRC emacs-lisp
+     (use-package highlight-symbol
+       :config
+       (progn
+         (setq highlight-symbol-idle-delay 0.1))
+       :init
+       (progn
+         (add-hook 'prog-mode-hook 'highlight-symbol-mode)))
+   #+END_SRC
