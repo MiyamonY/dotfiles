@@ -1090,3 +1090,12 @@
          (bind-key "C-c p" 'eww)
          ))
    #+END_SRC
+* git gutter
+  gitのdiffを表示させる
+** src
+  #+BEGIN_SRC emacs-lisp
+    (use-package git-gutter
+      :config
+      (progn
+        (global-git-gutter-mode t)))
+  #+END_SRC

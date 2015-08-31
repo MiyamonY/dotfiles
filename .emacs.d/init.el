@@ -76,6 +76,7 @@
 (el-get-bundle ipython)
 (el-get-bundle viewer)
 (el-get-bundle visual-regexp-steroids)
+(el-get-bundle git-gutter)
 
 ;; load dotemacs
 (setq org-dotemacs-default-file "~/.emacs.d/init.org")
