@@ -366,7 +366,7 @@
        :config
        (progn
          (auto-insert-mode 1)
-         (setq auto-insert-directory "~/.emacs.d/conf/autoinsert" ; テンプレートファイルの場所
+         (setq auto-insert-directory "~/.emacs.d/conf/insert" ; テンプレートファイルの場所
                auto-insert-query nil ; テンプレートを挿入するか聞かない
                auto-insert-alist ; 拡張子とテンプレートを対応づける
                '(("\\.py$" . "python.template")
