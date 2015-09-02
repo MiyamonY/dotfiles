@@ -77,6 +77,7 @@
 (el-get-bundle viewer)
 (el-get-bundle visual-regexp-steroids)
 (el-get-bundle git-gutter)
+(el-get-bundle jinja2-mode)
 
 ;; load dotemacs
 (setq org-dotemacs-default-file "~/.emacs.d/init.org")
