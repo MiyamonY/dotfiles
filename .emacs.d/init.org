@@ -981,7 +981,7 @@
         (("C-c C-j" . open-junk-file))
         :config
         (progn
-          (setq open-junk-file-format "~/Documents/junk/%Y-%m-%d")))
+          (setq open-junk-file-format "~/Documents/junk/%Y-%m-%d.")))
     #+END_SRC
 ** viewer
 *** src
