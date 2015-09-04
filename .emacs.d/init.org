@@ -978,7 +978,10 @@
     #+BEGIN_SRC emacs-lisp
       (use-package open-junk-file
         :bind
-        (("C-c C-j" . open-junk-file)))
+        (("C-c C-j" . open-junk-file))
+        :config
+        (progn
+          (setq open-junk-file-format "~/Documents/junk/%Y-%m-%d")))
     #+END_SRC
 ** viewer
 *** src
