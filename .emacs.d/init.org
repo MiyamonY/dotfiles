@@ -1108,7 +1108,7 @@
      (use-package highlight-symbol
        :config
        (progn
-         (setq highlight-symbol-idle-delay 0.1))
+         (setq highlight-symbol-idle-delay 0.2))
        :init
        (progn
          (add-hook 'prog-mode-hook 'highlight-symbol-mode)))
