@@ -1089,7 +1089,7 @@
              (setq show-trailing-whitespace nil)))
 
          (add-hook 'eww-mode-hook 'eww-mode-init)
-
+         (bind-key "<backtab>" 'shr-previous-link eww-mode-map)
          (bind-key "C-c p" 'eww)
          ))
    #+END_SRC
