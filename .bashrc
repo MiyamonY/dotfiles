@@ -28,3 +28,5 @@ if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
     export WORKON_HOME=$HOME/.virtualenvs
     source /usr/local/bin/virtualenvwrapper.sh
 fi
+
+export PATH="$PATH:/Applications/microchip/xc8/v1.35/bin"
