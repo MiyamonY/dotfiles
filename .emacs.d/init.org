@@ -1113,3 +1113,13 @@
        (progn
          (add-hook 'prog-mode-hook 'highlight-symbol-mode)))
    #+END_SRC
+* window関連
+** quit-window
+   *Help*などでqを押したときにbufferを閉じる
+** src
+   #+BEGIN_SRC emacs-lisp
+     (defadvice quit-window (before quit-window-always-kill)
+       "When running `quit-window', always kill the buffer."
+       (ad-set-arg 0 t))
+     (ad-activate 'quit-window)
+   #+END_SRC
