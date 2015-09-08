@@ -78,6 +78,9 @@
 (el-get-bundle visual-regexp-steroids)
 (el-get-bundle git-gutter)
 (el-get-bundle jinja2-mode)
+(el-get-bundle hl-line+)
+(el-get-bundle bm)
+(el-get-bundle helm-project)
 
 ;; load dotemacs
 (setq org-dotemacs-default-file "~/.emacs.d/init.org")
