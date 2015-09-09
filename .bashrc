@@ -30,5 +30,10 @@ if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
     source /usr/local/bin/virtualenvwrapper.sh
 fi
 
+PIP_DOWNLOAD_CACHE=~/.pip_cache
+if [ -e ${WORKON_HOME} ]; then
+    cp -f ~/projects/dotfiles/python/postmkvirtualenv ${WORKON_HOME}/
+fi
+
 ### for pic micon
 export PATH="$PATH:/Applications/microchip/xc8/v1.35/bin"
