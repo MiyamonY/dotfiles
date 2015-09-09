@@ -49,7 +49,6 @@
 (el-get-bundle ctags)
 (el-get-bundle gtags)
 (el-get-bundle rst-mode)
-(el-get-bundle markdown-mode)
 (el-get-bundle multi-term)
 (el-get-bundle pretty-mode)
 (el-get-bundle organic-green-theme)
