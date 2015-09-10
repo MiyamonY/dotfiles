@@ -531,7 +531,20 @@
      (ac-config-default)
    #+END_SRC
 * ace-mode
-** ace-mode
+** ace-jump-mode
+*** src
+    #+BEGIN_SRC emacs-lisp
+      (use-package ace-jump-mode
+        :bind
+        (("C-@" . ace-jump-char-mode))
+        :init
+        (progn
+          (setq ace-jump-mode-move-keys
+                (append "asdfghjkl;:]qwertyuiop@zxcvbnm,." nil))
+          (setq ace-jump-word-mode-use-query-char nil)))
+    #+END_SRC
+** ace-jump-buffer
+*** src
    #+BEGIN_SRC emacs-lisp
      (use-package ace-jump-buffer
        :disabled t
