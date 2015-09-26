@@ -8,7 +8,7 @@ ln -s ${CURDIR}/.emacs.d ${HOME}/
 ln -s ${CURDIR}/.gitconfig ${HOME}/
 ln -s ${CURDIR}/.gitignore_global ${HOME}/
 ln -s ${CURDIR}/.Brewfile ${HOME}/
-ln -s ${CURDIR}/.latexmk ${HOME}/
+ln -s ${CURDIR}/.latexmkrc ${HOME}/
 ln -s ${CURDIR}/.zshrc ${HOME}/
 
 if [ ! -e ${HOME}/.gitconfig.local ]; then
