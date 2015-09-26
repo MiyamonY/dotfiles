@@ -1166,3 +1166,10 @@
        (ad-set-arg 0 t))
      (ad-activate 'quit-window)
    #+END_SRC
+* magit
+** src
+   #+BEGIN_SRC emacs-lisp
+     (use-package magit
+       :bind
+       (("C-c C-g" . magit-status)))
+   #+END_SRC
