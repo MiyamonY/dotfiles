@@ -598,13 +598,12 @@
          ("M-y" . helm-show-kill-ring))
         :config
         (progn
-          (helm-mode 1)
           (setq helm-ff-skip-boring-files t
                 helm-exit-idle-delay 0)
           (append-to-list helm-boring-file-regexp-list
                           '("\\.omc$" "\\.o$" "\\.cmx$" "\\.cmi$" "\\.cmt$" "\\.omakedb" "\\.pyc$"
                             "\\.hi$" "\\.DS_Store"))
-          (global-set-key (kbd "C-x b") 'helm-mini)))
+          (helm-mode 1)))
 
     #+END_SRC
 ** helm-descbinds
