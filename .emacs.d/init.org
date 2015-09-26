@@ -357,10 +357,10 @@
          (init-check-jisyo-file))
        :config
        (progn
+         (setq-default skk-kutouten-type 'en)
          (setq default-input-method "japanese-skk"
-               skk-kutouten-type 'en
-               skk-kuten-touten-alist '((jp . ("." . "," ))
-                                        (en . ("." . ","))); 句読点を「，．」にする
+               ;; skk-kuten-touten-alist '((jp . ("." . "," ))
+               ;;                          (en . ("." . ","))); 句読点を「，．」にする
                skk-large-jisyo (concat (file-name-as-directory skk-user-directory) "SKK-JISYO.L")
                skk-use-azik t
                skk-azik-keyboard-type 'jp106)
