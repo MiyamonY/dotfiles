@@ -80,6 +80,9 @@
 (el-get-bundle hl-line+)
 (el-get-bundle bm)
 (el-get-bundle helm-project)
+(el-get-bundle wanderlust)
+(el-get-bundle csharp-mode)
+(el-get-bundle helm-ls-git)
 
 ;; load dotemacs
 (setq org-dotemacs-default-file "~/.emacs.d/init.org")
