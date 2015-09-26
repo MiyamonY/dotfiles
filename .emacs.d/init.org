@@ -642,6 +642,13 @@
     #+BEGIN_SRC emacs-lisp
       (use-package helm-swoop)
     #+END_SRC
+** helm ls git
+*** src
+    #+BEGIN_SRC emacs-lisp
+      (use-package helm-ls-git
+        :bind
+        (("C-x C-d" . helm-browse-project)))
+    #+END_SRC
 * プログラム関連
 ** tags
 *** ctags
