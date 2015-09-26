@@ -1180,6 +1180,9 @@
        (("C-c C-g" . magit-status)))
    #+END_SRC
 * which key
+  プレフィクスキーの次のキーを教えてくれるパッケージ
+** 参考url
+   http://rubikitch.com/2015/09/14/which-key/
 ** src
    #+BEGIN_SRC emacs-lisp
      (use-package which-key
