@@ -83,6 +83,7 @@
 (el-get-bundle wanderlust)
 (el-get-bundle csharp-mode)
 (el-get-bundle helm-ls-git)
+(el-get-bundle which-key)
 
 ;; load dotemacs
 (setq org-dotemacs-default-file "~/.emacs.d/init.org")
