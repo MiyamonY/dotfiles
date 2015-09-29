@@ -37,8 +37,6 @@
 (el-get-bundle nyan-mode)
 (el-get-bundle popwin)
 (el-get-bundle org-dotemacs)
-(el-get-bundle color-moccur)
-(el-get-bundle moccur-edit)
 (el-get-bundle undohist)
 (el-get-bundle undo-tree)
 (el-get-bundle sequential-command)
