@@ -84,6 +84,7 @@
 (el-get-bundle csharp-mode)
 (el-get-bundle helm-ls-git)
 (el-get-bundle which-key)
+(el-get-bundle helm-ag)
 
 ;; load dotemacs
 (setq org-dotemacs-default-file "~/.emacs.d/init.org")

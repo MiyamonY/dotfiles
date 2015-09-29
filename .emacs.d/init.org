@@ -417,32 +417,6 @@
          (setq multi-term-program "/bin/bash")
          (defalias 'shell 'multi-term)))
    #+END_SRC
-* moccur関連
-  grep検索可能になるパッケージ
-** src
-   #+BEGIN_SRC emacs-lisp
-     (use-package color-moccur
-       :bind
-       (("C-c s" . moccur-grep-find))
-       :config
-       (progn
-         (setq moccur-split-word t
-               moccur-kill-moccur-buffer t
-               moccur-grep-default-word-near-point t)
-
-         (append-to-list dmoccur-exclusion-mask
-                         '("\\.DS_Store" "^#.+#$"
-                           ".gitignore") ; ディレクトリ検索するとき除外するファイル
-                         )))
-
-     (use-package moccur-edit
-       :config
-       (progn
-         ;; moccur-edit-finish-edit と同時にファイルを保存する
-         (defadvice moccur-edit-change-file
-           (after save-after-moccur-edit-buffer activate)
-           (save-buffer))))
-   #+END_SRC
 * redo/undo関連
   * undo-tree : C-x u でundo treeを表示
 ** src
@@ -652,6 +626,14 @@
       (use-package helm-ls-git
         :bind
         (("C-x C-d" . helm-browse-project)))
+    #+END_SRC
+** helm ag
+   検索コマンドagを使った一括検索
+*** src
+    #+BEGIN_SRC emacs-lisp
+      (use-package helm-ag
+        :bind
+        (("C-c s" . helm-ag)))
     #+END_SRC
 * プログラム関連
 ** tags
