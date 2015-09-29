@@ -70,12 +70,13 @@
            (set-file-name-coding-system 'cp932) ; ファイル名も sjis
            (setq locale-coding-system 'cp932)))
 
-    (set-face-attribute 'default nil :family "Menlo" :height 140)
-    (set-fontset-font (frame-parameter nil 'font)
+    (when (eq system-type 'darwin)
+      (set-face-attribute 'default nil :family "Menlo" :height 140)
+      (set-fontset-font (frame-parameter nil 'font)
                       'japanese-jisx0208
                       (font-spec :family "Hiragino Kaku Gothic ProN"))
-    (add-to-list 'face-font-rescale-alist
-                 '(".*Hiragino Kaku Gothic ProN.*" . 1.2))
+      (add-to-list 'face-font-rescale-alist
+                   '(".*Hiragino Kaku Gothic ProN.*" . 1.2)))
 
   #+END_SRC
 
