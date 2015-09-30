@@ -2,8 +2,6 @@
 	path = .gitconfig.local
 [core]
 	editor = emacs
-[url "https://"]
-	insteadOf = git://
 [push]
 	default = simple
 [color]
