@@ -38,6 +38,6 @@ fi
 ### for pic micon
 export PATH="$PATH:/Applications/microchip/xc8/v1.35/bin"
 
-if [ -e .bash_local ] ; then
+if [ -e .bashrc_local ] ; then
    . ./.bashrc_local
 fi
