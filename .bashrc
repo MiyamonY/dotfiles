@@ -25,6 +25,14 @@ fi
 
 ### for python
 ## virtualenvwrapper for python
+function frameworkpython {
+    if [[ ! -z "$VIRTUAL_ENV" ]]; then
+        PYTHONHOME=$VIRTUAL_ENV /usr/local/bin/python "$@"
+    else
+        /usr/local/bin/python "$@"
+    fi
+}
+
 if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
     export WORKON_HOME=$HOME/.virtualenvs
     source /usr/local/bin/virtualenvwrapper.sh
@@ -41,3 +49,8 @@ export PATH="$PATH:/Applications/microchip/xc8/v1.35/bin"
 if [ -e .bashrc_local ] ; then
    . ./.bashrc_local
 fi
+
+export JAVA_HOME=$(/usr/libexec/java_home -v 1.6.0)
+
+export PATH="$PATH:/Applications/microchip/xc8/v1.37/bin"
+export PATH="$PATH:/Users/ymiyamoto/.bin/gcc-marm-none-eabi-5_3/bin"

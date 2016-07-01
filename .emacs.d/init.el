@@ -50,11 +50,11 @@
 (el-get-bundle multi-term)
 (el-get-bundle pretty-mode)
 (el-get-bundle organic-green-theme)
-(el-get-bundle ace-jump-mode)
-(el-get-bundle ace-jump-buffer)
+;; (el-get-bundle ace-jump-buffer)
 (el-get-bundle ace-isearch)
 (el-get-bundle ace-window)
 (el-get-bundle helm)
+(el-get-bundle helm-git)
 (el-get-bundle ac-helm)
 (el-get-bundle open-junk-file)
 (el-get-bundle cmake-mode)
@@ -83,8 +83,34 @@
 (el-get-bundle helm-ls-git)
 (el-get-bundle which-key)
 (el-get-bundle helm-ag)
+(el-get-bundle markdown-mode)
+(el-get-bundle tuareg-mode)
+(el-get-bundle ac-html)
+(el-get-bundle emmet-mode)
+(el-get-bundle helm-c-flycheck)
+(el-get-bundle swift-mode)
+(el-get-bundle gtags)
+(el-get-bundle helm-gtags)
+(el-get-bundle clang-format)
+(el-get-bundle irony-mode)
+(el-get-bundle flycheck-irony)
+(el-get-bundle ghc-mod)
+(el-get-bundle yaml-mode)
+(el-get-bundle php-mode)
 
 ;; load dotemacs
 (setq org-dotemacs-default-file "~/.emacs.d/init.org")
 (when (require 'org-dotemacs nil t)
   (org-dotemacs-load-default))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(org-agenda-files nil))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

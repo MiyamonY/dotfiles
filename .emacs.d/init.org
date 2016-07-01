@@ -478,16 +478,16 @@
    perl/pythonの正規表現でisearchが可能になる
 *** src
     #+BEGIN_SRC emacs-lisp
-      (use-package visual-regexp-steroids
-        :disabled t
-        :bind
-        (("M-%" . vr/query-replace)
-         ("C-M-r" . vr/isearch-backward)
-         (""C-M-s"" . vr/isearch-forward))
-        :config
-        (progn
-          (setq vr/engine 'python)                ;python regexpならばこれ
-          ))
+      ;; (use-package visual-regexp-steroids
+      ;;   :disabled t
+      ;;   :bind
+      ;;   (("M-%" . vr/query-replace)
+      ;;    ("C-M-r" . vr/isearch-backward)
+      ;;    (""C-M-s"" . vr/isearch-forward))
+      ;;   :config
+      ;;   (progn
+      ;;     (setq vr/engine 'python)                ;python regexpならばこれ
+      ;;     ))
     #+END_SRC
 * dired mode
 ** src
@@ -556,7 +556,6 @@
       (use-package ace-isearch
         :config
         (progn
-          (setq ace-isearch-input-length 4)
           (global-ace-isearch-mode 1)))
     #+END_SRC
 * helm
@@ -582,9 +581,20 @@
                           '("\\.omc$" "\\.o$" "\\.cmx$" "\\.cmi$" "\\.cmt$" "\\.omakedb" "\\.pyc$"
                             "\\.hi$" "\\.DS_Store"))
           (append-to-list helm-boring-buffer-regexp-list
-                          '("*magit")))
-        )
+                          '("\\*magit"))))
 
+    #+END_SRC
+** helm-git
+*** src
+    #+BEGIN_SRC emacs-lisp
+      (use-package helm-ls-git
+        :config
+        (progn
+          (setq helm-ls-git-show-abs-or-relative 'relative)
+          (setq helm-ls-git-default-sources '(helm-source-ls-git-buffers
+                                              helm-source-ls-git
+                                              helm-source-ls-git-status
+                                              ))))
     #+END_SRC
 ** helm-descbinds
    M-x describe-bindinsで表示させるkey-bindをhelmで使える
@@ -619,7 +629,20 @@
     http://rubikitch.com/2014/12/25/helm-swoop/
 *** src
     #+BEGIN_SRC emacs-lisp
-      (use-package helm-swoop)
+      (use-package helm-swoop
+        :bind
+        (("C-s" . helm-swoop)
+         ("C-r" . helm-swoop-back-to-last-point))
+        :config
+        (progn
+          (setq helm-swoop-use-line-number-face t)
+          (setq helm-swoop-split-window-function 'helm-default-display-buffer)
+          (setq helm-swoop-split-window-function '(lambda ($buf) (display-buffer $buf)))
+          (define-key helm-swoop-map (kbd "C-r") 'helm-previous-line)
+          (define-key helm-swoop-map (kbd "C-s") 'helm-next-line)
+          (define-key helm-multi-swoop-map (kbd "C-r") 'helm-previous-line)
+          (define-key helm-multi-swoop-map (kbd "C-s") 'helm-next-line)
+          (setq helm-swoop-use-line-number-face t)))
     #+END_SRC
 ** helm ls git
 *** src
@@ -634,7 +657,11 @@
     #+BEGIN_SRC emacs-lisp
       (use-package helm-ag
         :bind
-        (("C-c s" . helm-ag)))
+        (("C-c s" . helm-ag)
+         ("C-c C-s" . helm-ag-project-root))
+        :init
+        (progn
+          (setq helm-ag-insert-at-point t)))
     #+END_SRC
 * プログラム関連
 ** tags
@@ -652,15 +679,14 @@
 *** gtags
 **** src
      #+BEGIN_SRC emacs-lisp
-       (use-package gtats
-         :commands
-         (gtags-mode gtags-make-complete-list)
+       (use-package helm-gtags
          :config
          (progn
-           (bind-key "M-t" 'gtags-find-tag gtags-mode-map)
-           (bind-key "M-r" 'gtags-find-rtag gtags-mode-map)
-           (bind-key "M-s" 'gtags-find-symbol gtags-mode-map)
-           (bind-key "C-t" 'gtags-pop-stack gtags-mode-map)))
+           (bind-key "M-t" 'helm-gtags-find-tag)
+           (bind-key "M-r" 'helm-gtags-find-rtag)
+           (bind-key "M-s" 'helm-gtags-find-symbol)
+           (bind-key "M-u" 'helm-gtags-pop-stack)))
+
      #+END_SRC
 ** lisp系
 *** lispxmp
@@ -745,12 +771,11 @@
         (use-package ipython))
     #+END_SRC
 ** c言語
-** src
+*** src
    #+BEGIN_SRC emacs-lisp
           (defun init-c-mode-common-hook ()
             (progn
               (gtags-mode 1)                              ;gtags モードに入るようにする
-              (gtags-make-complete-list)
               (hide-ifdef-mode)
               (setq gdb-many-windows t) ; gdbのバッファを良い感じにする
      ))
@@ -769,6 +794,7 @@
 *** src
     #+BEGIN_SRC emacs-lisp
       (use-package flycheck
+        :disabled t
         :config
         (progn
           (defvar omake-program-arguments "-P -w --verbose")
@@ -780,7 +806,7 @@
                     line ", " (minimal-match (one-or-more not-newline)) ":\n" (message) line-end))
             :modes (tuareg-mode))
 
-          (add-to-list 'flycheck-checkers 'ocaml-checker)
+          ;; (add-to-list 'flycheck-checkers 'ocaml-checker)
           (setq flycheck-display-errors-function #'flycheck-pos-tip-error-messages
                 flycheck-pos-tip-timeout 10))
         :init
@@ -795,9 +821,26 @@
           (set-face-attribute 'flycheck-color-mode-line-error-face nil
                               :foreground "tomato")
 
-          (add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode)))
+
+          (add-hook 'flycheck-mode-hook 'flycheck-irony-setup)
+          ))
 
     #+END_SRC
+** swift
+*** src
+    #+BEGIN_SRC emacs-lisp
+      (add-to-list 'flycheck-checkers 'swift)
+      (setq flycheck-swift-sdk-path
+             (replace-regexp-in-string
+              "\n+$" "" (shell-command-to-string
+                         "xcrun --show-sdk-path --sdk macosx")))
+
+      (use-package swift-mode
+        :config
+        (progn
+          ))
+    #+END_SRC
+
 ** highlight symbol
    識別子をハイライトするパッケージ
 
@@ -811,6 +854,16 @@
        (progn
          (add-hook 'prog-mode-hook 'highlight-symbol-mode)))
    #+END_SRC
+
+** obj-c
+*** src
+    #+BEGIN_SRC elisp
+      (use-package clang-format
+        :config
+        (progn
+          (setq clang-format-style "Google")
+          (bind-key "C-c SPC" 'clang-format-region objc-mode-map)))
+    #+END_SRC
 * popwin
 ** src
    #+BEGIN_SRC emacs-lisp
@@ -847,6 +900,23 @@
     #+BEGIN_SRC emacs-lisp
       (use-package markdown-mode
         :mode ("\\.md$" . markdown-mode))
+    #+END_SRC
+** html
+*** src
+    #+BEGIN_SRC emacs-lisp
+      (use-package emmet-mode
+        :init
+        (progn
+          (add-hook 'sgml-mode-hook 'emmet-mode) ;; マークアップ言語全部で使う
+          (add-hook 'css-mode-hook  'emmet-mode) ;; CSSにも使う
+          )
+        :config
+        (progn
+          (add-hook 'emmet-mode-hook (lambda () (setq emmet-indentation 2))) ;; indent はスペース2個
+          (keyboard-translate ?\C-i ?\H-i) ;;C-i と Tabの被りを回避
+          (define-key emmet-mode-keymap (kbd "C-j") nil);; C-j は newline のままにしておく
+          (define-key emmet-mode-keymap (kbd "C-i") 'emmet-expand-line) ;; C-i で展開
+         ))
     #+END_SRC
 ** TODO latex
 *** src
@@ -914,7 +984,7 @@
         (org-present-big org-present-small org-remove-inline-images org-display-inline-images)
         :config
         (progn
-          (setq org-directory "~/Dropbox/Org/"
+          (setq org-directory "~/projects/memo/"
                 org-default-notes-file (concat org-directory "agenda.org") ; ディレクトリの設定
                 org-startup-truncated nil ; 表示を打ち切らない
                 org-export-htmlize-output-type 'css ; HTML出力したときコードハイライトcssを分離する
@@ -922,7 +992,7 @@
                 org-use-fast-todo-selection t
                 org-display-custom-times "<%Y-%m-%d %H:%M:%S>" ; 日付けの設定
                 org-time-stamp-custom-formats "<%Y-%m-%d %H:%M:%S>" ; 日付けの設定
-                org-agenda-files '("~/Dropbox/Org/gtd.org"))
+                org-agenda-files '("~/projects/memo/agenda.org"))
 
           ;; org-babelの設定
           (org-babel-do-load-languages
@@ -1018,7 +1088,8 @@
         (("C-c C-j" . open-junk-file))
         :config
         (progn
-          (setq open-junk-file-format "~/Documents/junk/%Y-%m-%d.")))
+          (setq open-junk-file-format "~/projects/memo/junk/%Y-%m-%d.")))
+
     #+END_SRC
 ** viewer
 *** src
@@ -1165,7 +1236,12 @@
    #+BEGIN_SRC emacs-lisp
      (use-package magit
        :bind
-       (("C-c C-g" . magit-status)))
+       (("C-c C-g" . magit-status))
+       :config
+       (progn
+         (magit-log-arguments '("--graph" "--decorate"))
+         (append-to-list magit-diff-arguments '("--ignore-all-space"))
+         ))
    #+END_SRC
 * which key
   プレフィクスキーの次のキーを教えてくれるパッケージ
@@ -1178,4 +1254,66 @@
        (progn
          (which-key-setup-side-window-bottom)
          (which-key-mode 1)))
+   #+END_SRC
+* wanderlust
+** src
+   #+BEGIN_SRC emacs-lisp
+     (use-package wl
+       :init
+       (progn
+         (setq elmo-imap4-default-server "imap.gmail.com"
+               elmo-imap4-default-user "y.miyamoto324@gmail.com"
+               elmo-imap4-default-authenticate-type 'clear
+               elmo-imap4-default-port '993
+               elmo-imap4-default-stream-type 'ssl
+
+               ;;for non ascii-characters in folder-names
+               elmo-imap4-use-modified-utf7 t)
+
+         (setq wl-smtp-connection-type 'starttls
+               wl-smtp-posting-port 587
+               wl-smtp-authenticate-type "plain"
+               wl-smtp-posting-user "Yohei MIYAMOTO"
+               wl-smtp-posting-server "smtp.gmail.com"
+               wl-local-domain "gmail.com"
+               wl-message-id-domain "smtp.gmail.com")
+
+         (setq wl-from "Yohei MIYAMOTO <myname@gmail.com>"
+
+               ;;all system folders (draft, trash, spam, etc) are placed in the
+               ;;[Gmail]-folder, except inbox. "%" means it's an IMAP-folder
+               wl-default-folder "%inbox"
+               wl-draft-folder   "%[Gmail]/Drafts"
+               wl-trash-folder   "%[Gmail]/Trash"
+               wl-fcc            "%[Gmail]/Sent"
+
+               ;; mark sent messages as read (sent messages get sent back to you and
+               ;; placed in the folder specified by wl-fcc)
+               wl-fcc-force-as-read    t
+
+               ;;for when auto-compleating foldernames
+               wl-default-spec "%")
+         ))
+   #+END_SRC
+* カーソル
+** bm
+   #+BEGIN_SRC emacs-lisp
+     (use-package bm
+       :bind
+       (("M-p" . bm-toggle))
+       )
+   #+END_SRC
+* tramp
+** src
+   #+BEGIN_SRC elisp
+     (use-package tramp
+       :config
+       (setq tramp-default-method "scp")
+       (add-to-list 'tramp-default-proxies-alist
+                  '(nil "\\`root\\'" "/ssh:%h:"))
+       (add-to-list 'tramp-default-proxies-alist
+                    '("localhost" nil nil))
+       (add-to-list 'tramp-default-proxies-alist
+                    '((regexp-quote (system-name)) nil nil))
+       )
    #+END_SRC
