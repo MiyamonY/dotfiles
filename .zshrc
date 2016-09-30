@@ -105,7 +105,7 @@ alias ls="ls -GF"                # カラー表示
 alias gcc="gcc-4.9"             # gcc
 
 ### opam
-. /Users/y.miyamoto/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+eval `opam config env`
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
@@ -115,3 +115,4 @@ if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
     export WORKON_HOME=$HOME/.virtualenvs
     source /usr/local/bin/virtualenvwrapper.sh
 fi
+export PATH=~/.cabal/bin:${PATH}
