@@ -25,6 +25,8 @@
 
 ;; パッケージの設定
 (el-get-bundle auto-complete)
+(el-get-bundle recentf-ext)
+(el-get-bundle sync-recentf)
 (el-get-bundle elscreen)
 (el-get-bundle magit)
 (el-get-bundle ddskk)

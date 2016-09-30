@@ -1,3 +1,13 @@
+* マクロ・関数の設定
+** src
+   #+BEGIN_SRC emacs-lisp
+     (defmacro with-suppressed-message (&rest body)
+       "Suppress new messages temporarily in the echo area and the `*Messages*' buffer while BODY is evaluated."
+       (declare (indent 0))
+       (let ((message-log-max nil))
+         `(with-temp-message (or (current-message) "") ,@body)))
+   #+END_SRC
+
 * Emacsの設定
   * GCを行う閾値の設定をする
 ** src
@@ -393,11 +403,15 @@
      (use-package recentf
        :init
        (progn
-         (setq recentf-max-saved-items 2000)
          (setq recentf-save-file "~/.emacs.d/local/recentf/.recentf")
+         (setq recentf-max-saved-items 2000)
          (setq recentf-exclude '(".recentf"))
          (setq recentf-auto-save-timer
-               (run-with-idle-timer 30 t 'recentf-save-list))))
+               (run-with-idle-timer 30 t 'recentf-save-list))
+         (setq recentf-auto-cleanup 60)
+         (recentf-mode 1)))
+     (use-package recentf-ext)
+     (use-package sync-recentf)
    #+END_SRC
 * auto-insert
   ファイルを開いた際に自動的にテンプレートを挿入するパッケージ
