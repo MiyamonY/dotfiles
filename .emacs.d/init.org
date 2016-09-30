@@ -264,11 +264,10 @@
 ** Theme
 *** src
     #+BEGIN_SRC emacs-lisp
-      (defvar init-load-theme-path "~/.emacs.d/el-get/organic-green-theme/")
+      (setq init-load-theme-path "~/.emacs.d/el-get/dracula-theme/")
       (when (file-exists-p init-load-theme-path)
         (add-to-list 'custom-theme-load-path init-load-theme-path)
-        (load-theme 'organic-green t nil)
-        (set-face-foreground 'font-lock-builtin-face "magenta"))
+        (load-theme 'dracula t nil))
     #+END_SRC
 ** 括弧のハイライト
 *** src

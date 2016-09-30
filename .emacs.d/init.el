@@ -44,8 +44,8 @@
 (el-get-bundle rst-mode)
 (el-get-bundle multi-term)
 (el-get-bundle pretty-mode)
-(el-get-bundle organic-green-theme)
-;; (el-get-bundle ace-jump-buffer)
+(el-get-bundle dracula/emacs :name dracula-theme)
+(el-get-bundle ace-jump-buffer)
 (el-get-bundle ace-isearch)
 (el-get-bundle ace-window)
 (el-get-bundle helm)
@@ -96,6 +96,7 @@
 (el-get-bundle jedi)
 (el-get-bundle py-autopep8)
 (el-get-bundle emacs-fish)
+(el-get-bundle adoc-mode)
 
 ;; load dotemacs
 (setq org-dotemacs-default-file "~/.emacs.d/init.org")
