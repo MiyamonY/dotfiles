@@ -18,17 +18,12 @@
   (setq ns-command-modifier (quote meta)) ; comanndキーにmetaキー
   (setq ns-alternate-modifier (quote super))
   (setq use-dialog-box nil)             ; プロンプトを使用しない
-  (let ((path-from-shell                ; PATHの設定
-	 (replace-regexp-in-string
-	  "[ \t\n]*$" ""
-	  (shell-command-to-string "$SHELL --login -i -c 'echo $PATH'"))))
-    (setenv "PATH" path-from-shell)
-    (setq exec-path (split-string path-from-shell path-separator))))
+  (el-get-bundle exec-path-from-shell)
+  (exec-path-from-shell-initialize))
  (t                                     ; linux
   (defvar init-proofgeneral-path "/usr/share/emacs/site-lisp/site-start.d")))
 
 ;; パッケージの設定
-(el-get-bundle exec-path-from-shell)
 (el-get-bundle auto-complete)
 (el-get-bundle elscreen)
 (el-get-bundle magit)
@@ -97,11 +92,17 @@
 (el-get-bundle ghc-mod)
 (el-get-bundle yaml-mode)
 (el-get-bundle php-mode)
+(el-get-bundle magit-gitflow)
+(el-get-bundle jedi)
+(el-get-bundle py-autopep8)
+(el-get-bundle emacs-fish)
 
 ;; load dotemacs
 (setq org-dotemacs-default-file "~/.emacs.d/init.org")
 (when (require 'org-dotemacs nil t)
   (org-dotemacs-load-default))
+
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

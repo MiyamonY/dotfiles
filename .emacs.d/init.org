@@ -95,7 +95,6 @@
            completion-ignore-case t)      ; ファイル検索時大文字小文字を区別しない
      (fset 'yes-or-no-p 'y-or-n-p)       ; y
      (auto-image-file-mode t)            ; バッファ内で画像ファイルを表示する
-     (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))
      (scroll-bar-mode -1)
 
      ;;; バッファローカル変数のデフォルト設定
@@ -111,6 +110,7 @@
 ** バックアップファイルの設定
 *** src
     #+BEGIN_SRC emacs-lisp
+      (setq auto-save-list-file-prefix (concat temporary-file-directory "auto-save-list/.saves-"))
       (setq backup-directory-alist
             `((".*" . ,temporary-file-directory)))
       (setq auto-save-file-name-transforms
@@ -321,7 +321,7 @@
 * キーバインドの設定
 ** src
    #+BEGIN_SRC emacs-lisp
-     (keyboard-translate ?\C-h ?\C-?)                                                ; C-hをBackSpaceキーに変更
+     (define-key key-translation-map (kbd "C-h") (kbd "<DEL>")) ; C-hをBackSpaceキーに変更
      (bind-key "\C-h" nil)
      (bind-key "C-m" 'newline-and-indent)            ; C-m に改行 インデントを割り当てる(
      (bind-key "C-c l" 'toggle-truncate-lines)       ; C-c l に折り返しを割り当てる
@@ -386,6 +386,19 @@
          (set-face-attribute 'skk-emacs-hiragana-face nil
                              :family "MigMix 2M"
                              :foreground "pink")))
+   #+END_SRC
+* recentf
+  最近開いたファイルを保存する
+** src
+   #+BEGIN_SRC emacs-lisp
+     (use-package recentf
+       :init
+       (progn
+         (setq recentf-max-saved-items 2000)
+         (setq recentf-save-file "~/.emacs.d/local/recentf/.recentf")
+         (setq recentf-exclude '(".recentf"))
+         (setq recentf-auto-save-timer
+               (run-with-idle-timer 30 t 'recentf-save-list))))
    #+END_SRC
 * auto-insert
   ファイルを開いた際に自動的にテンプレートを挿入するパッケージ
@@ -611,8 +624,10 @@
    #+BEGIN_SRC emacs-lisp
      (use-package ac-helm
        :bind
-       (("C-:" . ac-complete-with-helm)))
-
+       (("C-:" . ac-complete-with-helm))
+       :init
+       (progn
+         (setq ac-comphist-file "~/.emacs.d/local/ac-comphist/ac-comphist.dat")))
    #+END_SRC
 ** helm migemo
 *** src
@@ -638,10 +653,10 @@
           (setq helm-swoop-use-line-number-face t)
           (setq helm-swoop-split-window-function 'helm-default-display-buffer)
           (setq helm-swoop-split-window-function '(lambda ($buf) (display-buffer $buf)))
-          (define-key helm-swoop-map (kbd "C-r") 'helm-previous-line)
-          (define-key helm-swoop-map (kbd "C-s") 'helm-next-line)
-          (define-key helm-multi-swoop-map (kbd "C-r") 'helm-previous-line)
-          (define-key helm-multi-swoop-map (kbd "C-s") 'helm-next-line)
+          ;; (define-key helm-swoop-map (kbd "C-r") 'helm-previous-line)
+          ;; (define-key helm-swoop-map (kbd "C-s") 'helm-next-line)
+          ;; (define-key helm-multi-swoop-map (kbd "C-r") 'helm-previous-line)
+          ;; (define-key helm-multi-swoop-map (kbd "C-s") 'helm-next-line)
           (setq helm-swoop-use-line-number-face t)))
     #+END_SRC
 ** helm ls git
@@ -750,7 +765,8 @@
        (set-face-foreground 'font-lock-regexp-grouping-construct "green3")
      #+END_SRC
 ** python
-*** src
+*** 一般
+**** src
     #+BEGIN_SRC emacs-lisp
       (use-package virtualwrapper
         :init
@@ -770,6 +786,39 @@
       (when (executable-find "ipython")
         (use-package ipython))
     #+END_SRC
+
+*** jedi
+    pythonの文法を汲んで補完するパッケージ
+**** src
+     #+BEGIN_SRC emacs-lisp
+       (use-package jedi
+         :init
+         (progn
+           (jedi:setup))
+         :config
+         (progn
+           (setq jedi:complete-on-dot t)
+           (setq ac-sources
+                 (delete 'ac-source-words-in-same-mode-buffers ac-sources)) ;;jediの補完候補だけでいい
+           (add-to-list 'ac-sources 'ac-source-filename)
+           (add-to-list 'ac-sources 'ac-source-jedi-direct))
+         (define-key jedi-mode-map (kbd "<C-tab>") nil) ;;C-tabはウィンドウの移動に用いる
+         (define-key python-mode-map "\C-ct" 'jedi:goto-definition)
+         (define-key python-mode-map "\C-cb" 'jedi:goto-definition-pop-marker)
+         (define-key python-mode-map "\C-cr" 'helm-jedi-related-names))
+
+     #+END_SRC
+*** autopep8
+    自動的にpepに合せてソースコードを変更してくれる
+**** src
+     #+BEGIN_SRC emacs-lisp
+       (use-package py-autopep8
+         :config
+         (progn
+           (setq py-autopep8-options '("--max-line-length=200"))
+           (setq flycheck-flake8-maximum-line-length 200)
+           (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)))
+     #+END_SRC
 ** c言語
 *** src
    #+BEGIN_SRC emacs-lisp
@@ -794,24 +843,21 @@
 *** src
     #+BEGIN_SRC emacs-lisp
       (use-package flycheck
-        :disabled t
         :config
         (progn
-          (defvar omake-program-arguments "-P -w --verbose")
-          (flycheck-define-checker ocaml-checker
-            "flychecker for ocaml"
-            :command ("ocamlc" "-c" source)
-            :error-patterns
-            ((error line-start "File \"" (file-name) "\", line "
-                    line ", " (minimal-match (one-or-more not-newline)) ":\n" (message) line-end))
-            :modes (tuareg-mode))
+          (flycheck-define-checker python-pyflakes
+              "A Python syntax and style checker using the pyflakes utility.
+      See URL `http://pypi.python.org/pypi/pyflakes'."
+              :command ("pyflakes" source-inplace)
+              :error-patterns
+              ((error line-start (file-name) ":" line ":" (message) line-end))
+              :modes python-mode)
 
-          ;; (add-to-list 'flycheck-checkers 'ocaml-checker)
-          (setq flycheck-display-errors-function #'flycheck-pos-tip-error-messages
-                flycheck-pos-tip-timeout 10))
+          (add-to-list 'flycheck-checkers 'python-pyflakes))
         :init
         (progn
-          (add-hook 'after-init-hook #'global-flycheck-mode)))
+          (global-flycheck-mode)))
+
       (use-package flycheck-color-mode-line
         :config
         (progn
@@ -1174,19 +1220,36 @@
            "Rename eww browser's buffer so sites open in new page."
            (rename-buffer "eww" t))
 
-         (defun eww-disable-images ()
-           "eww で画像表示させない"
+         (defvar eww-disable-colorize t)
+         (defun shr-colorize-region--disable (orig start end fg &optional bg &rest _)
+           (unless eww-disable-colorize
+             (funcall orig start end fg)))
+         (advice-add 'shr-colorize-region :around 'shr-colorize-region--disable)
+         (advice-add 'eww-colorize-region :around 'shr-colorize-region--disable)
+
+         (defun eww-disable-color ()
+           "ewwで文字色を反映させない"
            (interactive)
-           (setq-local shr-put-image-function 'shr-put-image-alt)
+           (setq-local eww-disable-colorize t)
            (eww-reload))
-         (defun eww-enable-images ()
-           "eww で画像表示させる"
+         (defun eww-enable-color ()
+           "ewwで文字色を反映させる"
            (interactive)
-           (setq-local shr-put-image-function 'shr-put-image)
+           (setq-local eww-disable-colorize nil)
            (eww-reload))
+
+         ;; (defun eww-disable-images ()
+         ;;   "eww で画像表示させない"
+         ;;   (interactive)
+         ;;   (setq-local shr-put-image-function 'shr-put-image-alt)
+         ;;   (eww-reload))
+         ;; (defun eww-enable-images ()
+         ;;   "eww で画像表示させる"
+         ;;   (interactive)
+         ;;   (setq-local shr-put-image-function 'shr-put-image)
+         ;;   (eww-reload))
          (defun shr-put-image-alt (spec alt &optional flags)
-           (insert alt))
-         ;; はじめから非表示
+            (insert alt))
          (defun eww-mode-hook--disable-image ()
            (setq-local shr-put-image-function 'shr-put-image-alt))
 
@@ -1241,6 +1304,7 @@
        (progn
          (magit-log-arguments '("--graph" "--decorate"))
          (append-to-list magit-diff-arguments '("--ignore-all-space"))
+         (add-hook 'magit-mode-hook 'turn-on-magit-gitflow)
          ))
    #+END_SRC
 * which key
@@ -1308,6 +1372,7 @@
    #+BEGIN_SRC elisp
      (use-package tramp
        :config
+       (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))
        (setq tramp-default-method "scp")
        (add-to-list 'tramp-default-proxies-alist
                   '(nil "\\`root\\'" "/ssh:%h:"))
