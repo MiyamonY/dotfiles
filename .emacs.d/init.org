@@ -501,6 +501,7 @@
           (add-hook 'reb-mode-hook 'rxt-mode)
           (setq reb-re-syntax 'pcre)))
     #+END_SRC
+
 ** visutal-regexp-streoids
    perl/pythonの正規表現でisearchが可能になる
 *** src
@@ -642,11 +643,6 @@
        (progn
          (setq ac-comphist-file "~/.emacs.d/local/ac-comphist/ac-comphist.dat")))
    #+END_SRC
-** helm migemo
-*** src
-    #+BEGIN_SRC emacs-lisp
-      (use-package helm-migemo)
-    #+END_SRC
 
 ** helm swoop
    - color-moccurのような検索ができる
@@ -665,13 +661,32 @@
         (progn
           (setq helm-swoop-use-line-number-face t)
           (setq helm-swoop-split-window-function 'helm-default-display-buffer)
-          (setq helm-swoop-split-window-function '(lambda ($buf) (display-buffer $buf)))
-          ;; (define-key helm-swoop-map (kbd "C-r") 'helm-previous-line)
-          ;; (define-key helm-swoop-map (kbd "C-s") 'helm-next-line)
-          ;; (define-key helm-multi-swoop-map (kbd "C-r") 'helm-previous-line)
-          ;; (define-key helm-multi-swoop-map (kbd "C-s") 'helm-next-line)
-          (setq helm-swoop-use-line-number-face t)))
+
+          (bind-keys :map helm-swoop-map
+                           ("C-r" . helm-previous-line)
+                           ("C-s" . helm-next-line))
+
+          (bind-keys :map helm-swoop-map
+                     ("C-r" . helm-previous-line)
+                     ("C-s" . helm-next-line))
+
+          ;; If there is no symbol at the cursor, use the last used words instead.
+          (setq helm-swoop-pre-input-function
+            (lambda ()
+              (let (($pre-input (thing-at-point 'symbol)))
+                (if (eq (length $pre-input) 0)
+                    helm-swoop-pattern ;; this variable keeps the last used words
+                  $pre-input))))
+
+          (use-package migemo
+            :init
+            (progn
+              (setq migemo-command "cmigemo")
+              (setq migemo-options '("-q" "--emacs"))
+              (migemo-init)
+              (helm-migemo-mode 1)))))
     #+END_SRC
+
 ** helm ls git
 *** src
     #+BEGIN_SRC emacs-lisp

@@ -68,7 +68,6 @@
 (el-get-bundle helm-c-yasnippet)
 (el-get-bundle helm-descbinds)
 (el-get-bundle helm-swoop)
-(el-get-bundle helm-migemo)
 (el-get-bundle highlight-symbol)
 (el-get-bundle python)
 (el-get-bundle ipython)
@@ -105,6 +104,7 @@
 (el-get-bundle auto-complete)
 (el-get-bundle ac-helm)
 (el-get-bundle doc-mode)
+(el-get-bundle migemo)
 
 ;; load dotemacs
 (setq org-dotemacs-default-file "~/.emacs.d/init.org")
