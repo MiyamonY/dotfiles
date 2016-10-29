@@ -502,20 +502,16 @@
           (setq reb-re-syntax 'pcre)))
     #+END_SRC
 
-** visutal-regexp-streoids
+** visual-regexp-steroids
    perl/pythonの正規表現でisearchが可能になる
 *** src
     #+BEGIN_SRC emacs-lisp
-      ;; (use-package visual-regexp-steroids
-      ;;   :disabled t
-      ;;   :bind
-      ;;   (("M-%" . vr/query-replace)
-      ;;    ("C-M-r" . vr/isearch-backward)
-      ;;    (""C-M-s"" . vr/isearch-forward))
-      ;;   :config
-      ;;   (progn
-      ;;     (setq vr/engine 'python)                ;python regexpならばこれ
-      ;;     ))
+      (use-package visual-regexp-steroids
+        :bind
+        (("M-%" . vr/query-replace)
+         ("C-M-%" . vr/query-replace)
+         ("C-M-r" . vr/isearch-backward)
+         ("C-M-s" . vr/isearch-forward)))
     #+END_SRC
 * dired mode
 ** src
