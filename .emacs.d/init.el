@@ -1,4 +1,11 @@
 ;; el-getの設定
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+
 (when load-file-name
   (setq user-emacs-directory (file-name-directory load-file-name)))
 
@@ -24,7 +31,6 @@
   (defvar init-proofgeneral-path "/usr/share/emacs/site-lisp/site-start.d")))
 
 ;; パッケージの設定
-(el-get-bundle auto-complete)
 (el-get-bundle recentf-ext)
 (el-get-bundle sync-recentf)
 (el-get-bundle elscreen)
@@ -45,14 +51,12 @@
 (el-get-bundle gtags)
 (el-get-bundle rst-mode)
 (el-get-bundle multi-term)
-(el-get-bundle pretty-mode)
 (el-get-bundle dracula/emacs :name dracula-theme)
 (el-get-bundle ace-jump-buffer)
 (el-get-bundle ace-isearch)
 (el-get-bundle ace-window)
 (el-get-bundle helm)
 (el-get-bundle helm-git)
-(el-get-bundle ac-helm)
 (el-get-bundle open-junk-file)
 (el-get-bundle cmake-mode)
 (el-get-bundle flycheck)
@@ -82,7 +86,6 @@
 (el-get-bundle helm-ag)
 (el-get-bundle markdown-mode)
 (el-get-bundle tuareg-mode)
-(el-get-bundle ac-html)
 (el-get-bundle emmet-mode)
 (el-get-bundle helm-c-flycheck)
 (el-get-bundle swift-mode)
@@ -99,22 +102,11 @@
 (el-get-bundle py-autopep8)
 (el-get-bundle emacs-fish)
 (el-get-bundle adoc-mode)
+(el-get-bundle auto-complete)
+(el-get-bundle ac-helm)
+(el-get-bundle doc-mode)
 
 ;; load dotemacs
 (setq org-dotemacs-default-file "~/.emacs.d/init.org")
 (when (require 'org-dotemacs nil t)
   (org-dotemacs-load-default))
-
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(org-agenda-files nil))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )

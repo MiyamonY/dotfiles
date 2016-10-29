@@ -72,6 +72,12 @@
            (prefer-coding-system 'utf-8-unix))
           ((eq system-type 'darwin)
            (prefer-coding-system 'utf-8)
+           (set-face-attribute 'default nil :family "Menlo" :height 140)
+           (set-fontset-font (frame-parameter nil 'font)
+                             'japanese-jisx0208
+                             (font-spec :family "Hiragino Kaku Gothic ProN"))
+           (add-to-list 'face-font-rescale-alist
+                        '(".*Hiragino Kaku Gothic ProN.*" . 1.2))
            (when (require 'ucs-normalize nil t)
              (setq file-name-coding-system 'utf-8)
              (setq local-coding-system 'utf-8)))
@@ -79,17 +85,7 @@
            (prefer-coding-system 'sjis-dos)     ; Windows ならコーディングを sjis に
            (set-file-name-coding-system 'cp932) ; ファイル名も sjis
            (setq locale-coding-system 'cp932)))
-
-    (when (eq system-type 'darwin)
-      (set-face-attribute 'default nil :family "Menlo" :height 140)
-      (set-fontset-font (frame-parameter nil 'font)
-                      'japanese-jisx0208
-                      (font-spec :family "Hiragino Kaku Gothic ProN"))
-      (add-to-list 'face-font-rescale-alist
-                   '(".*Hiragino Kaku Gothic ProN.*" . 1.2)))
-
   #+END_SRC
-
 * misc
   雑多な設定
 ** src
@@ -292,6 +288,7 @@
         :init
         (show-paren-mode t))
     #+END_SRC
+
 ** pretty-mode
    lambdaや<=などの文字列をλなどの記号に置き換える.
 *** 内容
@@ -299,19 +296,12 @@
     - ∅(pretty-modeでは:nilのgroup)を表示させない
     - プログラム関係のファイルのフック(prog-mode-hook)に掛ける
 
-*** TODO src
+*** src
     #+BEGIN_SRC emacs-lisp
-      (use-package pretty-mode
-        :init
-        (progn
-          (setq pretty-active-groups
-                '((coq-mode . (:greek))
-                  (racket-mode . ()))))
-        :config
-        (progn
-          (global-pretty-mode 1)))
-
+      (setq prettify-symbols-unprettify-at-point 'right-edge)
+      (global-prettify-symbols-mode)
     #+END_SRC
+
 ** 現在行のハイライト
 *** 参考url
     http://rubikitch.com/2015/05/14/global-hl-line-mode-timer/
@@ -339,6 +329,7 @@
      (bind-key "C-c j" 'split-window-horizontally)
      (bind-key "C-c u" 'split-window-vertically)
      (bind-key "C-c r" 'query-replace)
+     (bind-key "C-x w" 'delete-frame)
 
      (defun init-open-dotemacs ()
        (interactive)
@@ -413,6 +404,17 @@
      (use-package recentf-ext)
      (use-package sync-recentf)
    #+END_SRC
+* auto-comple
+** src
+   #+BEGIN_SRC emacs-lisp
+     (use-package auto-complete
+       :init
+       (ac-config-default)
+       :config
+       (progn
+         (ac-set-trigger-key "TAB")
+         (setq ac-quick-help-delay 0.1)))
+   #+END_SRC
 * auto-insert
   ファイルを開いた際に自動的にテンプレートを挿入するパッケージ
 ** src
@@ -462,24 +464,23 @@
      (use-package undo-tree
        :bind
        (("C-." . undo-tree-redo))
-       :commands
-       (global-undo-tree-mode)
-       :config
-       (global-undo-tree-mode))
+       :init
+       (progn
+         (global-undo-tree-mode)
+         (bind-keys :map undo-tree-visualizer-mode-map
+                    ("C-m" . undo-tree-visualizer-quit))))
    #+END_SRC
 * sequential-command
   同じキーバインドで押下回数によって動作を変えれるパッケージ
 ** src
    #+BEGIN_SRC emacs-lisp
      (use-package sequential-command-config
-        :bind
-        (("C-a" . seq-home)
-         ("C-e" . seq-end))
-        :config
-        (progn
-          (when (require 'org nil t)
-            (define-key org-mode-map (kbd "C-a") 'org-seq-home)
-            (define-key org-mode-map (kbd "C-e") 'org-seq-end))))
+       :init
+       (progn
+         (sequential-command-setup-keys)
+         (define-sequential-command seq-undo undo-tree-undo undo-tree-visualize)
+         (bind-keys :map undo-tree-map
+                    ("C-/" . seq-undo))))
    #+END_SRC
 * 正規表現
 ** pcre2el
@@ -539,12 +540,6 @@
          (setq cua-enable-cua-keys nil))
        :init
        (cua-mode 1))
-   #+END_SRC
-* auto-complete
-** src
-   #+BEGIN_SRC emacs-lisp
-     (global-auto-complete-mode t)
-     (ac-config-default)
    #+END_SRC
 * ace-mode
 ** ace-jump-mode
@@ -606,9 +601,14 @@
           (append-to-list helm-boring-file-regexp-list
                           '("\\.omc$" "\\.o$" "\\.cmx$" "\\.cmi$" "\\.cmt$" "\\.omakedb" "\\.pyc$"
                             "\\.hi$" "\\.DS_Store"))
+
+          (if (eq system-type 'darwin)
+              (progn
+                (setq helm-locate-fuzzy-match nil)
+                (setq helm-locate-command "mdfind -name %s %s")))
+
           (append-to-list helm-boring-buffer-regexp-list
                           '("\\*magit"))))
-
     #+END_SRC
 ** helm-git
 *** src
@@ -871,6 +871,10 @@
         (progn
           (global-flycheck-mode)))
 
+      (use-package flycheck-pos-tip
+        :init
+        (flycheck-pos-tip-mode))
+
       (use-package flycheck-color-mode-line
         :config
         (progn
@@ -923,6 +927,45 @@
           (setq clang-format-style "Google")
           (bind-key "C-c SPC" 'clang-format-region objc-mode-map)))
     #+END_SRC
+** ocaml
+*** opam
+    ocmalのパッケージ管理ツール
+**** src
+     #+BEGIN_SRC emacs-lisp
+       (let ((opam-share (ignore-errors (car (process-lines "opam" "config" "var" "share")))))
+         (when (and opam-share (file-directory-p opam-share))
+           (add-to-list 'load-path (expand-file-name "emacs/site-lisp" opam-share))))
+     #+END_SRC
+*** ocp-indent
+    ocamlのインデントを自動で行なってくれるパッケージ
+**** src
+    #+BEGIN_SRC emacs-lisp
+    (use-package ocp-indent)
+    #+END_SRC
+*** ocp-index
+**** src
+     #+BEGIN_SRC emacs-lisp
+       ;; (use-package ocp-index)
+     #+END_SRC
+*** utop
+**** src
+    #+BEGIN_SRC emacs-lisp
+      (use-package utop)
+    #+END_SRC
+*** merlin
+**** src
+     #+BEGIN_SRC emacs-lisp
+       (use-package merlin
+         :config
+         (progn
+           (defun merlin-show-error (x)
+             (when x
+                 (popup-tip x)))
+           (advice-add 'merlin-show-error-on-current-line :filter-return
+                       'merlin-show-error)
+           (add-hook 'tuareg-mode-hook 'merlin-mode t)
+           (add-hook 'caml-mode-hook 'merlin-mode t)))
+     #+END_SRC
 * popwin
 ** src
    #+BEGIN_SRC emacs-lisp
@@ -938,7 +981,8 @@
                            ("*ack*":height 12 :position bottom)
                            ("^\*Org.+\*$" :height 20 :position bottom :regexp t)
                            ("^\*magit.+\*$" :height 25 :position bottom :regexp t)
-                           ("*ocaml-libraries*" :height 25 :position bottom :regexp t))))
+                           ("*ocaml-libraries*" :height 25 :position bottom :regexp t)
+                           (" *undo-tree*" :width 0.3 :position right))))
        :init
        (popwin-mode 1))
 
@@ -1384,14 +1428,18 @@
 ** src
    #+BEGIN_SRC elisp
      (use-package tramp
+       :init
+       (progn
+         (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash")))
        :config
-       (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))
-       (setq tramp-default-method "scp")
-       (add-to-list 'tramp-default-proxies-alist
-                  '(nil "\\`root\\'" "/ssh:%h:"))
-       (add-to-list 'tramp-default-proxies-alist
-                    '("localhost" nil nil))
-       (add-to-list 'tramp-default-proxies-alist
-                    '((regexp-quote (system-name)) nil nil))
+       (progn
+         (setq tramp-default-method "ssh")
+         (add-to-list 'tramp-default-proxies-alist
+                      '(nil "\\`root\\'" "/ssh:%h:"))
+         (add-to-list 'tramp-default-proxies-alist
+                      '("localhost" nil nil))
+         (add-to-list 'tramp-default-proxies-alist
+                      '((regexp-quote (system-name)) nil nil))
+         )
        )
    #+END_SRC
