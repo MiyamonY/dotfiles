@@ -105,6 +105,7 @@
 (el-get-bundle ac-helm)
 (el-get-bundle doc-mode)
 (el-get-bundle migemo)
+(el-get-bundle victorhge/iedit :iedit)
 
 ;; load dotemacs
 (setq org-dotemacs-default-file "~/.emacs.d/init.org")

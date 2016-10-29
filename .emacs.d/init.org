@@ -122,6 +122,15 @@
       (setq auto-save-file-name-transforms
             `((".*" ,temporary-file-directory t)))
     #+END_SRC
+* iedit
+  選択箇所を同時に修正可能なパッケージ
+
+** src
+   #+BEGIN_SRC emacs-lisp
+     (use-package iedit
+       :bind
+       (("C-]" . iedit-mode)))
+   #+END_SRC
 * elscreen
   emacs上でタブが使えるようになるパッケージ
 
