@@ -1433,6 +1433,7 @@
          (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash")))
        :config
        (progn
+         (setq tramp-persistency-file-name (concat user-emacs-directory "local/.tramp"))
          (setq tramp-default-method "ssh")
          (add-to-list 'tramp-default-proxies-alist
                       '(nil "\\`root\\'" "/ssh:%h:"))
