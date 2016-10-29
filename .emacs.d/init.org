@@ -1272,7 +1272,7 @@
        :config
        (progn
          (setq eww-search-prefix "https://www.google.co.jp/search?q=")
-
+         (setq eww-bookmarks-directory (concat user-emacs-directory "local/"))
          (defun eww-mode-hook--rename-buffer ()
            "Rename eww browser's buffer so sites open in new page."
            (rename-buffer "eww" t))
