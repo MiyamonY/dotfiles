@@ -4,7 +4,7 @@
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
-(package-initialize)
+;; (package-initialize)
 
 (when load-file-name
   (setq user-emacs-directory (file-name-directory load-file-name)))
@@ -106,8 +106,26 @@
 (el-get-bundle doc-mode)
 (el-get-bundle migemo)
 (el-get-bundle victorhge/iedit :iedit)
+(el-get-bundle! speed-type)
+(el-get-bundle web-mode)
+(el-get-bundle rainbow-delimiters)
 
 ;; load dotemacs
 (setq org-dotemacs-default-file "~/.emacs.d/init.org")
 (when (require 'org-dotemacs nil t)
   (org-dotemacs-load-default))
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (typing-practice utop sync-recentf seq pkg-info organic-green-theme org let-alist ipython helm-git company))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

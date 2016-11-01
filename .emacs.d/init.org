@@ -59,7 +59,6 @@
   #+BEGIN_SRC emacs-lisp
     (unless (require 'use-package nil t)
       (defmacro use-package (&rest args)))
-
   #+END_SRC
 
 * 文字コード/ファイル名の設定
@@ -73,9 +72,10 @@
           ((eq system-type 'darwin)
            (prefer-coding-system 'utf-8)
            (set-face-attribute 'default nil :family "Menlo" :height 140)
-           (set-fontset-font (frame-parameter nil 'font)
-                             'japanese-jisx0208
-                             (font-spec :family "Hiragino Kaku Gothic ProN"))
+           (if (display-graphic-p)
+               (set-fontset-font (frame-parameter nil 'font)
+                                 'japanese-jisx0208
+                                 (font-spec :family "Hiragino Kaku Gothic ProN")))
            (add-to-list 'face-font-rescale-alist
                         '(".*Hiragino Kaku Gothic ProN.*" . 1.2))
            (when (require 'ucs-normalize nil t)
@@ -688,7 +688,6 @@
             (progn
               (setq migemo-command "cmigemo")
               (setq migemo-options '("-q" "--emacs"))
-              (migemo-init)
               (helm-migemo-mode 1)))))
     #+END_SRC
 
@@ -712,6 +711,18 @@
           (setq helm-ag-insert-at-point t)))
     #+END_SRC
 * プログラム関連
+** web-mode
+   htmlモードの設定
+*** src
+    #+BEGIN_SRC emacs-lisp
+      (use-package web-mode
+        :mode ("\\.html\\'" . web-mode)
+        :init
+        (progn
+          (setq web-mode-enable-engine-detection t)
+          (setq web-mode-markup-indent-offset 2)
+          (setq web-mode-code-indent-offset 2)))
+    #+END_SRC
 ** tags
 *** ctags
 **** src
@@ -771,6 +782,16 @@
                                   lisp-mode-hook
                                   ielm-mode-hook))))
      #+END_SRC
+*** rainbow-delimiters
+    括弧の対応付けを色で表示させてくれるパッケージ
+**** src
+     #+BEGIN_SRC emacs-lisp
+       (use-package rainbow-delimiters
+         :init
+         (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+         (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode))
+     #+END_SRC
+
 *** eldoc関連
     emacs-lispの関数の情報を表示するパッケージ
 **** src
@@ -918,10 +939,7 @@
               "\n+$" "" (shell-command-to-string
                          "xcrun --show-sdk-path --sdk macosx")))
 
-      (use-package swift-mode
-        :config
-        (progn
-          ))
+      (use-package swift-mode)
     #+END_SRC
 
 ** highlight symbol
