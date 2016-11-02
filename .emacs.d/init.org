@@ -823,15 +823,10 @@
 **** src
     #+BEGIN_SRC emacs-lisp
       (use-package virtualwrapper
-        :init
-        (progn
-          (exec-path-from-shell-copy-envs '("WORKON_HOME"))
-          (setq venv-location (getenv "WORKON_HOME"))
-          (setq venv-executables-dir "/usr/local/bin/")))
         :config
         (progn
           (venv-initialize-interactive-shells)
-          (venv-initialize-eshell))
+          (venv-initialize-eshell)))
 
       (use-package python
         :mode
