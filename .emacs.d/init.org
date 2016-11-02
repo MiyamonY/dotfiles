@@ -1448,17 +1448,15 @@
      (use-package tramp
        :init
        (progn
+         (setq tramp-persistency-file-name (concat user-emacs-directory "local/.tramp"))
          (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash")))
        :config
        (progn
-         (setq tramp-persistency-file-name (concat user-emacs-directory "local/.tramp"))
          (setq tramp-default-method "ssh")
          (add-to-list 'tramp-default-proxies-alist
                       '(nil "\\`root\\'" "/ssh:%h:"))
          (add-to-list 'tramp-default-proxies-alist
                       '("localhost" nil nil))
          (add-to-list 'tramp-default-proxies-alist
-                      '((regexp-quote (system-name)) nil nil))
-         )
-       )
+                      '((regexp-quote (system-name)) nil nil))))
    #+END_SRC
