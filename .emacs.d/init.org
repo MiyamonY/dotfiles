@@ -91,7 +91,6 @@
 ** src
    #+BEGIN_SRC emacs-lisp
      (tool-bar-mode -1)                  ; ツールバーの消去
-     (electric-pair-mode)                ; 自動的に括弧のペアを挿入
      (setq inhibit-startup-message t     ; 起動時の初期バッファーを表示させない
            frame-title-format "%f"       ; タイトルバーにファイルのフルパスを表示
            line-move-visual t            ; 論理行に対し表示行のように扱う
@@ -121,6 +120,13 @@
             `((".*" . ,temporary-file-directory)))
       (setq auto-save-file-name-transforms
             `((".*" ,temporary-file-directory t)))
+    #+END_SRC
+** 括弧の対応付けを行う
+*** src
+    #+BEGIN_SRC emacs-lisp
+      (use-package smartparens
+        :init
+        (smartparens-global-mode))
     #+END_SRC
 * iedit
   選択箇所を同時に修正可能なパッケージ
@@ -761,27 +767,6 @@
            (bind-key "C-c C-d" 'lispxmp lisp-interaction-mode-map)))
      #+END_SRC
 
-*** paredit
-    括弧の対応付けを行ってくれるパッケージ
-**** src
-     #+BEGIN_SRC emacs-lisp
-       (use-package paredit
-         :commands
-         (enable-paredit-mode
-          paredit-wrap-round
-          paredit-splice-sexp)
-         :init
-         (progn
-           (bind-key "M-8" 'paredit-wrap-round emacs-lisp-mode-map)
-           (bind-key "M-9" 'paredit-splice-sexp emacs-lisp-mode-map)
-           ;; paredit-modeが自動で起動するようにhookに追加
-           (init-add-fun-to-hooks 'enable-paredit-mode
-                                '(emacs-lisp-mode-hook
-                                  scheme-mode-hook
-                                  lisp-interaction-mode-hook
-                                  lisp-mode-hook
-                                  ielm-mode-hook))))
-     #+END_SRC
 *** rainbow-delimiters
     括弧の対応付けを色で表示させてくれるパッケージ
 **** src

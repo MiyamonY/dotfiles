@@ -45,7 +45,6 @@
 (el-get-bundle sequential-command)
 (el-get-bundle sequential-command-config)
 (el-get-bundle lispxmp)
-(el-get-bundle paredit)
 (el-get-bundle eldoc-extension)
 (el-get-bundle ctags)
 (el-get-bundle gtags)
@@ -109,6 +108,7 @@
 (el-get-bundle! speed-type)
 (el-get-bundle web-mode)
 (el-get-bundle rainbow-delimiters)
+(el-get-bundle smartparens)
 
 ;; load dotemacs
 (setq org-dotemacs-default-file "~/.emacs.d/init.org")
