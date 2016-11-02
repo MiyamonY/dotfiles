@@ -815,10 +815,11 @@
 
       (use-package python
         :mode
-        (("\\.py\\'" . python-mode)))
-
-      (when (executable-find "ipython")
-        (use-package ipython))
+        (("\\.py\\'" . python-mode))
+        :init
+        (progn
+          (setq python-shell-interpreter "python")))
+      (use-package ein)
     #+END_SRC
 
 *** jedi
