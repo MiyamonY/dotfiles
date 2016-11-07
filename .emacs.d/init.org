@@ -91,6 +91,7 @@
 ** src
    #+BEGIN_SRC emacs-lisp
      (tool-bar-mode -1)                  ; ツールバーの消去
+     (save-place-mode 1)                 ; カーソルの位置を保存する
      (setq inhibit-startup-message t     ; 起動時の初期バッファーを表示させない
            frame-title-format "%f"       ; タイトルバーにファイルのフルパスを表示
            line-move-visual t            ; 論理行に対し表示行のように扱う
