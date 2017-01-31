@@ -945,6 +945,11 @@
         :config
         (progn
           (setq clang-format-style "Google")
+          (defun clang-auto-format-before-save-hook()
+            (when (eq major-mode 'c-mode)
+              (clang-format-buffer)))
+          (add-hook 'before-save-hook 'clang-auto-format-before-save-hook)
+
           (bind-key "C-c SPC" 'clang-format-region objc-mode-map)))
     #+END_SRC
 ** ocaml
