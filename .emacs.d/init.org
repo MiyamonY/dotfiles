@@ -489,15 +489,18 @@
   同じキーバインドで押下回数によって動作を変えれるパッケージ
 ** src
    #+BEGIN_SRC emacs-lisp
-     (use-package sequential-command-config
-       :config
-       (progn
-         (sequential-command-setup-keys))
+     (use-package sequential-command
        :init
        (progn
-         (define-sequential-command seq-undo undo-tree-undo undo-tree-visualize)
-         (bind-keys :map undo-tree-map
-                    ("C-/" . seq-undo))))
+         (use-package sequential-command-config
+           :bind (:map undo-tree-map ("C-/" . seq-undo))
+           :config
+           (progn
+             (sequential-command-setup-keys))))
+       :config
+       (progn
+         (define-sequential-command seq-undo undo-tree-undo undo-tree-visualize)))
+
    #+END_SRC
 * 正規表現
 ** pcre2el
