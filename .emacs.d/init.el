@@ -111,6 +111,8 @@
 (el-get-bundle dockerfile-mode)
 (el-get-bundle cython-mode)
 (el-get-bundle clang-format)
+(el-get-bundle projectile)
+(el-get-bundle yatemplate)
 
 ;; load dotemacs
 (setq org-dotemacs-default-file "~/.emacs.d/init.org")
@@ -124,7 +126,36 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (typing-practice utop sync-recentf seq pkg-info organic-green-theme org let-alist ipython helm-git company))))
+    (typing-practice utop sync-recentf seq pkg-info organic-green-theme org let-alist ipython helm-git company)))
+ '(safe-local-variable-values
+   (quote
+    ((eval setq flycheck-checker
+           (quote pic-xc16-gcc))
+     (eval setq flycheck-pic-xc16-gcc-args "-D__dsPIC33FJ128GP802__")
+     (eval setq flycheck-checker pic-xc16-gcc)
+     (eval setq flycheck-pic-xc16-gcc-include-path
+           (list
+            (file-name-directory buffer-file-name)))
+     (eval setq flycheck-pic-xc16-gcc-include-path
+           (list
+            (expand-file-name "./")))
+     (eval setq flycheck-clang-include-path
+           (list
+            (expand-file-name "./")))
+     (eval setq flycheck-clang-args "-D__dsPIC33FJ128GP802__")
+     (eval setq flycheck-clang-include-path
+           (list
+            (expand-file-name "./")
+            "/Applications/microchip/xc16/v1.30/support/generic/h/" "/Applications/microchip/xc16/v1.30/support/dsPIC33F/h"))
+     (eval setq flycheck-clang-include-path
+           (list
+            (expand-file-name "./")
+            "/Applications/microchip/xc16/v1.30/support/generic/h/"))
+     (eval setq flycheck-clang-include-path
+           (eval
+            (list
+             (expand-file-name "./")
+             "/Applications/microchip/xc16/v1.30/support/generic/h/")))))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

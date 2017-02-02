@@ -438,19 +438,16 @@
 ** src
    #+BEGIN_SRC emacs-lisp
      (use-package autoinsert
-       :commands
-       (auto-insert)
-       :config
-       (progn
-         (setq auto-insert-directory "~/.emacs.d/conf/insert/" ; テンプレートファイルの場所
-               auto-insert-query nil ; テンプレートを挿入するか聞かない
-               auto-insert-alist ; 拡張子とテンプレートを対応づける
-               '(("\\.py$" . "py.template")
-                 ("\\.org$" . "org.template")))
-         (auto-insert-mode 1))
        :init
        (progn
-         (add-hook 'find-file-hooks 'auto-insert)))
+         (setq auto-insert-directory "~/.emacs.d/conf/insert/" ; テンプレートファイルの場所
+               auto-insert-query nil) ; テンプレートを挿入するか聞かない
+         (use-package yatemplate
+           :init
+           (progn
+             (setq yatemplate-dir (locate-user-emacs-file "conf/insert"))
+             (yatemplate-fill-alist)))
+         (auto-insert-mode 1)))
    #+END_SRC
 * multi-term
   シェルモード
@@ -860,12 +857,12 @@
 ** c言語
 *** src
    #+BEGIN_SRC emacs-lisp
-          (defun init-c-mode-common-hook ()
-            (progn
-              (gtags-mode 1)                              ;gtags モードに入るようにする
-              (hide-ifdef-mode)
-              (setq gdb-many-windows t) ; gdbのバッファを良い感じにする
-     ))
+     (defun init-c-mode-common-hook ()
+       (progn
+         (gtags-mode 1)                              ;gtags モードに入るようにする
+         (hide-ifdef-mode)
+         (setq gdb-many-windows t) ; gdbのバッファを良い感じにする
+         ))
      (add-hook 'c-mode-common-hook 'init-c-mode-common-hook)
 
    #+END_SRC
@@ -883,6 +880,24 @@
       (use-package flycheck
         :config
         (progn
+          (flycheck-define-checker pic-xc16-gcc
+            "A C checker using pic gcc."
+            :command ("xc16-gcc" "-Wall" "-Wextra" "-std=gnu99"
+                      "-I/Applications/microchip/xc16/v1.30/support/generic/h/"
+                      "-I/Applications/microchip/xc16/v1.30/support/dsPIC33F/h"
+                      source)
+            :error-patterns
+            ((error line-start
+                    (file-name) ":" line ":" column ":" " Error: " (message)
+                    line-end)
+             (error line-start
+                    (file-name) ":" line ":" column ":" " Fatal Error: " (message)
+                    line-end)
+             (warning line-start
+                      (file-name) ":" line ":" column ":" " Warning: " (message)
+                      line-end))
+            :modes (c-mode))
+
           (flycheck-define-checker python-pyflakes
               "A Python syntax and style checker using the pyflakes utility.
       See URL `http://pypi.python.org/pypi/pyflakes'."
@@ -909,9 +924,7 @@
           (set-face-attribute 'flycheck-color-mode-line-error-face nil
                               :foreground "tomato")
 
-
-          (add-hook 'flycheck-mode-hook 'flycheck-irony-setup)
-          ))
+          (add-hook 'flycheck-mode-hook 'flycheck-irony-setup)))
 
     #+END_SRC
 ** swift
