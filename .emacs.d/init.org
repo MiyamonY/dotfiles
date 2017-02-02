@@ -445,7 +445,7 @@
          (use-package yatemplate
            :init
            (progn
-             (setq yatemplate-dir (locate-user-emacs-file "conf/insert"))
+             (setq yatemplate-dir (locate-user-emacs-file "config/insert"))
              (yatemplate-fill-alist)))
          (auto-insert-mode 1)))
    #+END_SRC
@@ -490,9 +490,11 @@
 ** src
    #+BEGIN_SRC emacs-lisp
      (use-package sequential-command-config
+       :config
+       (progn
+         (sequential-command-setup-keys))
        :init
        (progn
-         (sequential-command-setup-keys)
          (define-sequential-command seq-undo undo-tree-undo undo-tree-visualize)
          (bind-keys :map undo-tree-map
                     ("C-/" . seq-undo))))
