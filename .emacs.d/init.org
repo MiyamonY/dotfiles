@@ -490,7 +490,7 @@
 ** src
    #+BEGIN_SRC emacs-lisp
      (use-package sequential-command-config
-       :init
+       :config
        (progn
          (sequential-command-setup-keys)
          (define-sequential-command seq-undo undo-tree-undo undo-tree-visualize)
@@ -690,11 +690,14 @@
                   $pre-input))))
 
           (use-package migemo
+            :config
+            (progn
+              (migemo-init)
+              (helm-migemo-mode 1))
             :init
             (progn
               (setq migemo-command "cmigemo")
-              (setq migemo-options '("-q" "--emacs"))
-              (helm-migemo-mode 1)))))
+              (setq migemo-options '("-q" "--emacs"))))))
     #+END_SRC
 
 ** helm ls git

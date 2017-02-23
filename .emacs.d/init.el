@@ -46,7 +46,7 @@
 (el-get-bundle emacswiki:sequential-command-config)
 (el-get-bundle lispxmp)
 (el-get-bundle eldoc-extension)
-(el-get-bundle ctags)
+;(el-get-bundle ctags)
 (el-get-bundle gtags)
 (el-get-bundle rst-mode)
 (el-get-bundle multi-term)
