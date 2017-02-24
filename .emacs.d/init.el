@@ -113,6 +113,7 @@
 (el-get-bundle clang-format)
 (el-get-bundle projectile)
 (el-get-bundle yatemplate)
+(el-get-bundle lua-mode)
 
 ;; load dotemacs
 (setq org-dotemacs-default-file "~/.emacs.d/init.org")
