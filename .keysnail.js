@@ -523,4 +523,5 @@ key.setViewKey('c', function (aEvent, aArg) {
 }, 'Hok - Foreground yank hint mode', true);
 
 // KKK
-plugins.options["kkk.sites"] = ["^https?://([0-9a-zA-Z]+\\.)?github\\.com/"];
+plugins.options["kkk.sites"] = ["^https?://([0-9a-zA-Z]+\\.)?github\\.com/",
+                                "^https?://wiki.miyamon.xyz/"];
