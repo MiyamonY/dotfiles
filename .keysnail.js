@@ -521,3 +521,6 @@ key.setViewKey(['C-c', 'C-e'], function (aEvent, aArg) {
 key.setViewKey('c', function (aEvent, aArg) {
     ext.exec("hok-yank-foreground-mode", aArg);
 }, 'Hok - Foreground yank hint mode', true);
+
+// KKK
+plugins.options["kkk.sites"] = ["^https?://([0-9a-zA-Z]+\\.)?github\\.com/"];
