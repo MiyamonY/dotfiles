@@ -524,4 +524,4 @@ key.setViewKey('c', function (aEvent, aArg) {
 
 // KKK
 plugins.options["kkk.sites"] = ["^https?://([0-9a-zA-Z]+\\.)?github\\.com/",
-                                "^https?://wiki.miyamon.xyz/"];
+                                "^https?://([0-9a-zA-Z]+\\.)?miyamon\\.xyz/"];
