@@ -697,11 +697,14 @@
                   $pre-input))))
 
           (use-package migemo
+            :config
+            (progn
+              (migemo-init)
+              (helm-migemo-mode 1))
             :init
             (progn
               (setq migemo-command "cmigemo")
-              (setq migemo-options '("-q" "--emacs"))
-              (helm-migemo-mode 1)))))
+              (setq migemo-options '("-q" "--emacs"))))))
     #+END_SRC
 
 ** helm ls git
