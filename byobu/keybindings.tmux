@@ -1,2 +1,2 @@
-set -g prefix C-;
+set -g prefix C-c
 unbind-key -n C-a
