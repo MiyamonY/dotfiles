@@ -496,7 +496,7 @@
        (progn
          (use-package sequential-command-config
            :bind (:map undo-tree-map ("C-/" . seq-undo))
-           :config
+           :init
            (progn
              (sequential-command-setup-keys))))
        :config
