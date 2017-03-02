@@ -524,4 +524,13 @@ key.setViewKey('c', function (aEvent, aArg) {
 
 // KKK
 plugins.options["kkk.sites"] = ["^https?://([0-9a-zA-Z]+\\.)?github\\.com/",
-                                "^https?://([0-9a-zA-Z]+\\.)?miyamon\\.xyz/"];
+                                "^https?://wiki\\.miyamon\\.xyz/"];
+
+// K2Emacs
+key.setEditKey(["C-c", "e"], function (ev, arg) {
+    ext.exec("edit_text", arg, ev);
+}, "外部エディタで編集", true);
+plugins.options["K2Emacs.editor"]    = "/usr/bin/emacsclient";
+plugins.options["K2Emacs.ext"]    = "html";
+plugins.options["K2Emacs.encode"] = "UTF-8"
+plugins.options["K2Emacs.sep"] = "/";
