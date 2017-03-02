@@ -7,7 +7,5 @@
 [color]
 	status = auto
 	branch = auto
-[http]
-	sslVerify = false
 [ghq]
 	root = ~/src
