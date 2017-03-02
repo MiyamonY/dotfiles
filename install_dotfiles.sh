@@ -17,6 +17,7 @@ ln -s ${CURDIR}/.zshrc ${HOME}/
 ln -s ${CURDIR}/.Xmodmap ${HOME}/
 ln -s ${CURDIR}/.keysnail.js ${HOME}/
 ln -s ${CURDIR}/byobu ${HOME}/.config/
+ln -s ${CURDIR}/.Xresources ${HOM}
 
 if [ ! -e ${HOME}/.gitconfig.local ]; then
    cp ${CURDIR}/.gitconfig.local ${HOME}/
