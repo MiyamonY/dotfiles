@@ -1,4 +1,4 @@
-! Zenkaku_Hankaku -> Alt_L
-keycode 49 = Alt_L Meta_L Alt_L Meta_L
+! Henakn_mode
+keycode 100 = Super_L NoSymbol Super_L
 ! Muhenkan -> Alt_L
 keycode 102 = Alt_L Meta_L Alt_L Meta_L
