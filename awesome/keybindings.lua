@@ -3,6 +3,8 @@ require('awful.spawn')
 local hotkeys_popup = require("awful.hotkeys_popup").widget
 local descs = require("descs")
 local config = require("config")
+local menu = require("menu")
+local menubar = require("menubar")
 
 local keybindings = {}
 
@@ -31,7 +33,7 @@ keybindings.globalkeys = awful.util.table.join(
         end,
         {description = descs.FOCUS_PREV, group = "client"}
     ),
-    awful.key({ modkey,           }, "w", function () mymainmenu:show() end,
+    awful.key({ modkey,           }, "w", function () menu.mymainmenu:show() end,
               {description = "show main menu", group = "awesome"}),
 
     -- Layout manipulation
