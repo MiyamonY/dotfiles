@@ -141,7 +141,7 @@ keybindings.clientkeys = awful.util.table.join(
 -- Be careful: we use keycodes to make it works on any keyboard layout.
 -- This should map on the top row of your keyboard, usually 1 to 9.
 for i = 1, 5 do
-    globalkeys = awful.util.table.join(globalkeys,
+   keybindings.globalkeys = awful.util.table.join(keybindings.globalkeys,
         -- View tag only.
         awful.key({ modkey }, "#" .. i + 9,
                   function ()
