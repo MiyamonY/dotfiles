@@ -1,6 +1,8 @@
 local awful = require("awful")
+require('awful.spawn')
 local hotkeys_popup = require("awful.hotkeys_popup").widget
 local descs = require("descs")
+local config = require("config")
 
 local keybindings = {}
 
@@ -51,7 +53,7 @@ keybindings.globalkeys = awful.util.table.join(
         {description = "go back", group = "client"}),
 
     -- Standard program
-    awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
+    awful.key({ modkey,           }, "Return", function () awful.spawn(config.TERMINAL) end,
               {description = "open a terminal", group = "launcher"}),
     awful.key({ modkey, "Control" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
