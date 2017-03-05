@@ -547,3 +547,8 @@ end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
+
+-- change key repeat speed
+os.execute("xset r rate 200 40")
+awful.util.shell = "/bin/sh"
+awful.util.spawn_with_shell("pgrep nm-applet || nm-applet --sm-diable")
