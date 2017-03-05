@@ -6,6 +6,8 @@ local config = require("config")
 
 local keybindings = {}
 
+modkey = config.MODKEY
+
 -- {{{ Key bindings
 keybindings.globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
