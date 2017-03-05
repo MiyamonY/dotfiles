@@ -368,4 +368,4 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 -- change key repeat speed
 os.execute("xset r rate 200 40")
-awful.spawn("pgrep nm-applet || nm-applet --sm-diable")
+awful.spawn('pgrep nm-applet || "nm-applet --sm-diable"')
