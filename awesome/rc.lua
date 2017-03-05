@@ -2,6 +2,8 @@
 local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
+require('awful.spawn')
+
 -- Widget and layout library
 local wibox = require("wibox")
 -- Theme handling library
@@ -550,5 +552,4 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 -- change key repeat speed
 os.execute("xset r rate 200 40")
-awful.util.shell = "/bin/sh"
-awful.util.spawn_with_shell("pgrep nm-applet || nm-applet --sm-diable")
+awful.spawn = ("pgrep nm-applet || nm-applet --sm-diable")
