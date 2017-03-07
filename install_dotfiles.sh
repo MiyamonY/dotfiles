@@ -21,6 +21,7 @@ ln -s ${CURDIR}/.zshrc ${HOME}/
 ln -s ${CURDIR}/.Xmodmap ${HOME}/
 ln -s ${CURDIR}/.keysnail.js ${HOME}/
 ln -s ${CURDIR}/.Xresources ${HOME}/
+ln -s ${CURDIR}/.gtkrc-2.0 ${HOME}/
 ln -s ${CURDIR}/config.fish ${HOME}/.config/fish/
 ln -s ${CURDIR}/byobu ${HOME}/.config/
 ln -s ${CURDIR}/awesome ${HOME}/.config/
