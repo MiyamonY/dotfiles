@@ -494,14 +494,30 @@
      (use-package sequential-command
        :init
        (progn
-         (use-package sequential-command-config
-           :bind (:map undo-tree-map ("C-/" . seq-undo))
-           :init
-           (progn
-             (sequential-command-setup-keys))))
+
+         (define-sequential-command seq-undo undo-tree-undo undo-tree-visualize))
        :config
        (progn
-         (define-sequential-command seq-undo undo-tree-undo undo-tree-visualize)))
+         (define-sequential-command seq-home
+           beginning-of-line beginning-of-buffer seq-return)
+         (define-sequential-command seq-end
+           end-of-line end-of-buffer seq-return)
+
+         (defun seq-upcase-backward-word ()
+           (interactive)
+           (upcase-word (- (1+ (seq-count*)))))
+         (defun seq-capitalize-backward-word ()
+           (interactive)
+           (capitalize-word (- (1+ (seq-count*)))))
+         (defun seq-downcase-backward-word ()
+           (interactive)
+           (downcase-word (- (1+ (seq-count*)))))
+
+         (when (require 'org nil t)
+           (define-sequential-command org-seq-home
+             org-beginning-of-line beginning-of-buffer seq-return)
+           (define-sequential-command org-seq-end
+             org-end-of-line end-of-buffer seq-return))))
 
    #+END_SRC
 * 正規表現
