@@ -1,0 +1,7 @@
+export GTK_IM_MODULE=uim
+export XMODIFIERS=@im=uim
+export QT_IM_MODULE=uim
+uim-xim &
+uim-toolbar-gtk-systray &
+nm-applet --xim &
+xmodmap .Xmodmap
