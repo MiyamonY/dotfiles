@@ -5,3 +5,4 @@ uim-xim &
 uim-toolbar-gtk-systray &
 nm-applet --xim &
 xmodmap .Xmodmap
+xset r rate 200 40
