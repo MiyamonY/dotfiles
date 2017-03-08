@@ -1,4 +1,7 @@
-! Henakn_mode
+! Henakn_mode -> Super_L
 keycode 100 = Super_L NoSymbol Super_L
 ! Muhenkan -> Alt_L
 keycode 102 = Alt_L Meta_L Alt_L Meta_L
+! change Alt_R from mod1 to mod4
+remove mod1 = Alt_R
+add mod4 = Alt_R
