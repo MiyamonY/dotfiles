@@ -153,13 +153,23 @@ end
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", set_wallpaper)
 
-local menu = require("menu")    -- require must be after beautiful.init
+local menu = require("menu")    -- require function must be called after beautiful.init
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag({ "1", "firefox", "3", "4", "5", }, s, awful.layout.layouts[1])
+
+    local tags = {{"main",awful.layout.suit.tile},
+       {"firefox", awful.layout.suit.max},
+       {"3", awful.layout.suit.float},
+       {"4", awful.layout.suit.float},
+       {"5", awful.layout.suit.float}}
+
+    for i=1, #tags do
+       awful.tag.add(tags[i][1],
+                     {layout = tags[i][2], screen = s})
+    end
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
