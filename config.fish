@@ -22,3 +22,8 @@ if test ! -e $HOME/.Trash
   mkdir $HOME/.Trash
 end
 alias rm='mv --backup=numbered --target-directory=$HOME/.Trash'
+
+function awesome-test
+  Xephyr :1 -ac -br -noreset -screen 1152x720 &
+  env DISPLAY=:1.0 awesome -c ~/.config/awesome/rc.lua
+end
