@@ -43,7 +43,6 @@
 (el-get-bundle undohist)
 (el-get-bundle undo-tree)
 (el-get-bundle sequential-command)
-(el-get-bundle emacswiki:sequential-command-config)
 (el-get-bundle lispxmp)
 (el-get-bundle eldoc-extension)
 ;(el-get-bundle ctags)
