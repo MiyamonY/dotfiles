@@ -162,7 +162,7 @@ awful.screen.connect_for_each_screen(function(s)
 
     local tags = {{"main", awful.layout.layouts[2]},
        {"firefox", awful.layout.layouts[4]},
-       {"3", awful.layout.layouts[1]},
+       {"franz", awful.layout.layouts[1]},
        {"4", awful.layout.layouts[1]},
        {"5", awful.layout.layouts[1]}}
 
