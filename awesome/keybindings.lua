@@ -198,4 +198,10 @@ keybindings.clientbuttons = awful.util.table.join(
     awful.button({ modkey }, 1, awful.mouse.client.move),
     awful.button({ modkey }, 3, awful.mouse.client.resize))
 
+keybindings.mousebuttons = awful.util.table.join(
+    awful.button({ }, 3, function () menu.mymainmenu:toggle() end),
+    awful.button({ }, 4, awful.tag.viewnext),
+    awful.button({ }, 5, awful.tag.viewprev)
+)
+
 return  keybindings
