@@ -1,8 +1,20 @@
+#!/bin/sh
+
+# setting for screen layout(layout.sh is created by arandr)
+[ -f ~/.screenlayout/layout.sh ] && source ~/.screenlayout/layout.sh
+
+# setting for input method
 export GTK_IM_MODULE=uim
 export XMODIFIERS=@im=uim
 export QT_IM_MODULE=uim
 uim-xim &
 uim-toolbar-gtk-systray &
-nm-applet --xim &
+
+# setting for keybind
 xmodmap .Xmodmap
+
+# setting for key repeat
 xset r rate 200 40
+
+# setting for tasktray
+nm-applet --xim &
