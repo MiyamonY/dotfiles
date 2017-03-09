@@ -160,11 +160,11 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- Each screen has its own tag table.
 
-    local tags = {{"main",awful.layout.suit.tile},
-       {"firefox", awful.layout.suit.max},
-       {"3", awful.layout.suit.float},
-       {"4", awful.layout.suit.float},
-       {"5", awful.layout.suit.float}}
+    local tags = {{"main", awful.layout.layouts[2]},
+       {"firefox", awful.layout.layouts[4]},
+       {"3", awful.layout.layouts[1]},
+       {"4", awful.layout.layouts[1]},
+       {"5", awful.layout.layouts[1]}}
 
     for i=1, #tags do
        awful.tag.add(tags[i][1],
