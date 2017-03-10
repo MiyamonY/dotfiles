@@ -23,7 +23,14 @@ if test ! -e $HOME/.Trash
 end
 alias rm='mv --backup=numbered --target-directory=$HOME/.Trash'
 
+### function for awesome test
 function awesome-test
   Xephyr :1 -ac -br -noreset -screen 1152x720 &
   env DISPLAY=:1.0 awesome -c ~/.config/awesome/rc.lua
+end
+
+### OPAM
+# OPAM configuration
+if test -e $HOME/.opam/opam-init/init.fish
+source $HOME/.opam/opam-init/init.fish > /dev/null 2> /dev/null or true
 end
