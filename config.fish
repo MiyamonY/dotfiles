@@ -4,9 +4,6 @@ if test ! -e $HOME/.config/fish/functions/fisher.fish
   curl -Lo ~/.config/fish/functions/fisher.fish --create-dirs git.io/fisher
 end
 
-### change keymap
-xmodmap ~/.Xmodmap
-
 ### setting for golang and ghq
 set -x GOPATH $HOME
 set -x PATH $PATH $GOPATH/bin
