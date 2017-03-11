@@ -38,7 +38,8 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init("~/.config/awesome/theme/theme.lua")
+local home = os.getenv("HOME")
+beautiful.init(home .. "/.config/awesome/theme/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 local config = require("config")
