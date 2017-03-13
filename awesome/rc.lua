@@ -38,7 +38,8 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init("~/.config/awesome/theme/theme.lua")
+local home = os.getenv("HOME")
+beautiful.init(home .. "/.config/awesome/theme/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 local config = require("config")
@@ -154,21 +155,23 @@ end
 screen.connect_signal("property::geometry", set_wallpaper)
 
 local menu = require("menu")    -- require function must be called after beautiful.init
+local tags = require("tags")
+local tag_index = 1
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
+    local screen_index = s.index
+    local _tags = tags.get_tags_at(screen_index)
 
-    local tags = {{"main", awful.layout.layouts[2]},
-       {"firefox", awful.layout.layouts[4]},
-       {"franz", awful.layout.layouts[1]},
-       {"4", awful.layout.layouts[1]},
-       {"5", awful.layout.layouts[1]}}
-
-    for i=1, #tags do
-       awful.tag.add(tags[i][1],
-                     {layout = tags[i][2], screen = s})
+    for i=1, #_tags do
+       local tag_name = tostring(tag_index)
+       if _tags[i][1] ~= "" then
+          tag_name = tag_name .. ":" .. _tags[i][1]
+       end
+       awful.tag.add(tag_name, {layout = _tags[i][2], screen = s})
+       tag_index = tag_index + 1
     end
 
     -- Create a promptbox for each screen

@@ -1,10 +1,11 @@
 local beautiful = require("beautiful")
 local awful = require("awful")
 local keybindings = require("keybindings")
+local tags = require("tags")
 
 local rules = {}
 
-rules.rules = {
+default_rules = {
    -- All clients will match this rule.
    { rule = { },
      properties = { border_width = beautiful.border_width,
@@ -48,12 +49,28 @@ rules.rules = {
    { rule_any = {type = { "normal", "dialog" }
                 }, properties = { titlebars_enabled = true }
    },
-
-   { rule = { class = "Firefox" },
-     properties = { screen = 1, tag = "firefox" } },
-
-   { rule = { class = "Franz"},
-     properties = { screen = 1, tag = "franz"}},
 }
+
+function create_rules_by(app_classes)
+   local ret = {}
+   for _, class in pairs(app_classes) do
+      local s = tags.find_screen_index_by(class)
+      local t = tags.get_tag_name_by(class)
+      if s and t then
+         table.insert(ret, { rule = { class = class },
+                             properties = { screen = s, tag = t } })
+      end
+   end
+   return ret
+end
+
+local app_classes = {"Firefox", "Franz"}
+local app_rules = create_rules_by(app_classes)
+
+for _, rule in pairs(app_rules) do
+   table.insert(default_rules, rule)
+end
+
+rules.rules = default_rules
 
 return rules
