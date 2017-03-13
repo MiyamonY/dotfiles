@@ -85,4 +85,12 @@ function tags.get_tag_name_by(app)
    return nil
 end
 
+function tags.get_tag_count()
+   local ret = 0
+   for s in screen do
+      ret = ret + #s.tags
+   end
+   return ret
+end
+
 return tags

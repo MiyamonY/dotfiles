@@ -146,7 +146,9 @@ keybindings.clientkeys = awful.util.table.join(
 -- Bind all key numbers to tags.
 -- Be careful: we use keycodes to make it works on any keyboard layout.
 -- This should map on the top row of your keyboard, usually 1 to 9.
-for i = 1, 5 do
+local tags = require("tags")
+local tag_count = tags.get_tag_count()
+for i = 1, tag_count do
    keybindings.globalkeys = awful.util.table.join(keybindings.globalkeys,
         -- View tag only.
         awful.key({ modkey }, "#" .. i + 9,
