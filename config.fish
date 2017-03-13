@@ -22,7 +22,7 @@ alias rm='mv --backup=numbered --target-directory=$HOME/.Trash'
 
 ### function for awesome test
 function awesome-test
-  Xephyr :1 -ac -br -noreset -screen 1152x720 &
+  Xephyr +xinerama :1 -ac -br -noreset -screen 1152x720 -screen 1152x720 &
   env DISPLAY=:1.0 awesome -c ~/.config/awesome/rc.lua
 end
 
