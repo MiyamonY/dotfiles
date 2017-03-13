@@ -73,11 +73,11 @@ function tags.find_screen_index_by(tag_name)
    return nil
 end
 
-function tags.get_tag_name_by(app)
+function tags.get_tag_name_by(app_name)
    for s in screen do
       for _, tag in pairs(s.tags) do
          local name = tag.name
-         if string.match(string.lower(name), string.lower(app)) then
+         if string.match(string.lower(name), string.lower(app_name)) then
             return name
          end
       end
