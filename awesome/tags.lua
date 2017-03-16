@@ -85,6 +85,29 @@ function tags.get_tag_name_by(app_name)
    return nil
 end
 
+function tags.get_screen_by_index(index)
+   local count = 0
+   for s in screen do
+      count = count + #s.tags
+      if index <= count then
+         return s
+      end
+   end
+   return nil
+end
+
+function tags.get_tag_by_index(index)
+   local count = 0
+   for s in screen do
+      count = count + #s.tags
+      if index <= count then
+         return s.tags[index]
+      end
+      index = index - #s.tags
+   end
+   return nil
+end
+
 function tags.get_tag_count()
    local ret = 0
    for s in screen do
