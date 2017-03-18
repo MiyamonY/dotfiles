@@ -14,10 +14,10 @@ modkey = config.MODKEY
 keybindings.globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
-    awful.key({ modkey,           }, "Left",   awful.tag.viewprev,
-              {description = "view previous", group = "tag"}),
-    awful.key({ modkey,           }, "Right",  awful.tag.viewnext,
-              {description = "view next", group = "tag"}),
+    awful.key({ modkey,           }, "h",   awful.tag.viewprev,
+              {description = descs.VIEW_PREV_TAG, group = "tag"}),
+    awful.key({ modkey,           }, "l",  awful.tag.viewnext,
+              {description = descs.VIEW_NEXT_TAG, group = "tag"}),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
               {description = "go back", group = "tag"}),
 
@@ -64,9 +64,9 @@ keybindings.globalkeys = awful.util.table.join(
     awful.key({ modkey, "Shift"   }, "q", awesome.quit,
               {description = "quit awesome", group = "awesome"}),
 
-    awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
+    awful.key({ modkey,           }, "Right",     function () awful.tag.incmwfact( 0.05)          end,
               {description = descs.INCREASE_MASTER_WIDTH, group = "layout"}),
-    awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)          end,
+    awful.key({ modkey,           }, "Left",     function () awful.tag.incmwfact(-0.05)          end,
               {description = descs.DECREASE_MASTER_WIDTH, group = "layout"}),
     awful.key({ modkey, "Shift"   }, "h",     function () awful.tag.incnmaster( 1, nil, true) end,
               {description = "increase the number of master clients", group = "layout"}),
@@ -160,40 +160,46 @@ for i = 1, tag_count do
                  tag:view_only()
               end
            end,
-                  {description = "view tag "..tags.get_tag_by_index(i).name, group = "tag"}),
+           {description = descs.VIEW_TAG .. "(".. tags.get_tag_by_index(i).name .. ")",
+            group = "tag"}),
         -- Toggle tag display.
         awful.key({ modkey, "Control" }, "#" .. i + 9,
-                  function ()
-                      local screen = awful.screen.focused()
-                      local tag = screen.tags[i]
-                      if tag then
-                         awful.tag.viewtoggle(tag)
-                      end
-                  end,
-                  {description = "toggle tag #" .. i, group = "tag"}),
+           function ()
+              local _screen = tags.get_screen_by_index(i)
+              local tag = tags.get_tag_by_index(i)
+              if _screen and tag then
+                 awful.tag.viewtoggle(tag)
+              end
+           end,
+           {description = descs.TOGGLE_TAG .. "(" .. tags.get_tag_by_index(i).name .. ")",
+            group = "tag"}),
         -- Move client to tag.
         awful.key({ modkey, "Shift" }, "#" .. i + 9,
-                  function ()
-                      if client.focus then
-                          local tag = client.focus.screen.tags[i]
-                          if tag then
-                              client.focus:move_to_tag(tag)
-                          end
-                     end
-                  end,
-                  {description = "move focused client to tag #"..i, group = "tag"}),
+           function ()
+              if client.focus then
+                 local _screen = tags.get_screen_by_index(i)
+                 local tag = tags.get_tag_by_index(i)
+                 if _screen and tag then
+                    client.focus:move_to_tag(tag)
+                 end
+              end
+           end,
+           {description = descs.MOVE_FOCUSED_CLIENT .. "(" .. tags.get_tag_by_index(i).name .. ")",
+            group = "tag"}),
         -- Toggle tag on focused client.
         awful.key({ modkey, "Control", "Shift" }, "#" .. i + 9,
-                  function ()
-                      if client.focus then
-                          local tag = client.focus.screen.tags[i]
-                          if tag then
-                              client.focus:toggle_tag(tag)
-                          end
-                      end
-                  end,
-                  {description = "toggle focused client on tag #" .. i, group = "tag"})
-    )
+           function ()
+              if client.focus then
+                 local _screen = tags.get_screen_by_index(i)
+                 local tag = tags.get_tag_by_index(i)
+                 if _screen and tag then
+                    client.focus:toggle_tag(tag)
+                 end
+              end
+           end,
+           {description = descs.TOGGLE_FORCUSED_CLIENT .. "(" .. tags.get_tag_by_index(i).name .. ")",
+            group = "tag"})
+   )
 end
 
 keybindings.clientbuttons = awful.util.table.join(
