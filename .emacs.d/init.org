@@ -599,7 +599,9 @@
 
      (use-package ace-window
        :bind
-       (("C-t" . ace-window))
+       (("C-t" . ace-window)
+        :map doc-view-mode-map
+        ("C-t". ace-window))
        :init
        (progn
          (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))))
