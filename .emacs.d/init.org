@@ -335,7 +335,7 @@
             (let ((global-hl-line-mode t))
               (global-hl-line-highlight)))
           (setq global-hl-line-timer
-                (run-with-idle-timer 0.03 t 'global-hl-line-timer-function))))
+                (run-with-idle-timer 0.05 t 'global-hl-line-timer-function))))
     #+END_SRC
 * キーバインドの設定
 ** src
@@ -430,10 +430,10 @@
      (use-package auto-complete
        ;; :init
        ;; (ac-config-default)
-       :config
+       :init
        (progn
          (ac-set-trigger-key "TAB")
-         (setq ac-quick-help-delay 0.1)))
+         (setq ac-quick-help-delay 0.2)))
    #+END_SRC
 * auto-insert
   ファイルを開いた際に自動的にテンプレートを挿入するパッケージ
@@ -935,6 +935,7 @@
           (add-to-list 'flycheck-checkers 'python-pyflakes))
         :init
         (progn
+          (setq flycheck-check-syntax-automatically '(mode-enable save))
           (global-flycheck-mode)))
 
       (use-package flycheck-pos-tip
