@@ -171,7 +171,7 @@ for i = 1, tag_count do
                  awful.tag.viewtoggle(tag)
               end
            end,
-           {description = desks.TOGGLE_TAG .. "(" .. tags.get_tag_by_index(i).name .. ")",
+           {description = descs.TOGGLE_TAG .. "(" .. tags.get_tag_by_index(i).name .. ")",
             group = "tag"}),
         -- Move client to tag.
         awful.key({ modkey, "Shift" }, "#" .. i + 9,
