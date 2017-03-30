@@ -19,6 +19,7 @@ if test ! -e $HOME/.Trash
   mkdir $HOME/.Trash
 end
 alias rm='mv --backup=numbered --target-directory=$HOME/.Trash'
+alias git='hub'
 
 ### function for awesome test
 function awesome-test
