@@ -115,6 +115,7 @@
 (el-get-bundle lua-mode)
 (el-get-bundle k2052/moonscript-mode)
 (el-get-bundle coffee-mode)
+(el-get-bundle arduino-mode)
 
 ;; load dotemacs
 (setq org-dotemacs-default-file "~/.emacs.d/init.org")
