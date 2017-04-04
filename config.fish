@@ -7,6 +7,7 @@ end
 ### setting for golang and ghq
 set -x GOPATH $HOME
 set -x PATH $PATH $GOPATH/bin
+set -x PATH $PATH $HOME/.linuxbrew/bin
 
 ### setting for byobu
 set -x BYOBU_CONFIG_DIR ~/.config/byobu
@@ -30,4 +31,10 @@ end
 # OPAM configuration
 if test -e $HOME/.opam/opam-init/init.fish
 source $HOME/.opam/opam-init/init.fish > /dev/null 2> /dev/null or true
+end
+
+### sync history
+function sync_history --on-event fish_preexec
+  history --save
+  history merge
 end
