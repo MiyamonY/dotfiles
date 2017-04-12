@@ -21,6 +21,7 @@ if test ! -e $HOME/.Trash
 end
 alias rm='mv --backup=numbered --target-directory=$HOME/.Trash'
 alias git='hub'
+alias open='xdg-open'
 
 ### function for awesome test
 function awesome-test
