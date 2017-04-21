@@ -1,6 +1,7 @@
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
+
 require("awful.autofocus")
 require('awful.spawn')
 
@@ -156,6 +157,9 @@ screen.connect_signal("property::geometry", set_wallpaper)
 
 local menu = require("menu")    -- require function must be called after beautiful.init
 local tags = require("tags")
+local volume_control = require("lib.volume-control")
+volumecfg = volume_control({})
+
 local tag_index = 1
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
@@ -207,6 +211,7 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
             mykeyboardlayout,
             wibox.widget.systray(),
+            volumecfg.widget,
             mytextclock,
             s.mylayoutbox,
         },
