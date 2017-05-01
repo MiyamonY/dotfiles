@@ -39,3 +39,9 @@ function sync_history --on-event fish_preexec
   history --save
   history merge
 end
+
+## pyenv
+set -x PATH $PATH $HOME/.pyenv/bin
+if test $HOME/.pyenv/bin/pyenv
+  status --is-interactive; and source (pyenv init -|psub)
+end
