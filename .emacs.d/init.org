@@ -904,7 +904,17 @@
          (gtags-mode 1)                              ;gtags モードに入るようにする
          (hide-ifdef-mode)
          (setq gdb-many-windows t) ; gdbのバッファを良い感じにする
-         ))
+         (setq prettify-symbols-alist
+             '(("->" . 8594)
+               ("<=" . 8804)
+               (">=" . 8805)
+               ("==" . 8801)
+               ("NULL" . 8709)
+               ("&&" . 8743)
+               ("||" . 8744)
+               ("!=" . 8800)
+               ("!" . 172)))))
+
      (add-hook 'c-mode-common-hook 'init-c-mode-common-hook)
 
    #+END_SRC
