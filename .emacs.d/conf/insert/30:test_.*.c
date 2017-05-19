@@ -8,4 +8,6 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#include <criterion/criterion.h>
+
 $0
