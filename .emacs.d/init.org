@@ -317,8 +317,8 @@
         (progn
           (setq show-paren-delay 0.1   ;括弧のハイライトを表示するまでの時間
                 show-paren-style 'expression) ;括弧の中もハイライト
-          (set-face-background 'show-paren-match-face nil) ;バックグランドフェイスを消す
-          (set-face-underline 'show-paren-match-face "red")) ;下線の色をつける
+          (set-face-background 'show-paren-match nil) ;バックグランドフェイスを消す
+          (set-face-underline 'show-paren-match "red")) ;下線の色をつける
         :init
         (show-paren-mode t))
     #+END_SRC
@@ -904,6 +904,11 @@
            (setq flycheck-flake8-maximum-line-length 200)
            (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)))
      #+END_SRC
+** scheme
+*** src
+    #+BEGIN_SRC emacs-lisp
+    (setq scheme-program-name "gosh -i")
+    #+END_SRC
 ** c言語
 *** src
    #+BEGIN_SRC emacs-lisp
