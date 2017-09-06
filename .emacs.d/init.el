@@ -32,6 +32,7 @@
 
 ;; パッケージの設定
 (el-get-bundle recentf-ext)
+(el-get-bundle skewer-mode)
 (el-get-bundle sync-recentf)
 (el-get-bundle elscreen)
 (el-get-bundle magit)
@@ -47,7 +48,6 @@
 (el-get-bundle eldoc-extension)
 ;(el-get-bundle ctags)
 (el-get-bundle gtags)
-(el-get-bundle rst-mode)
 (el-get-bundle multi-term)
 (el-get-bundle dracula/emacs :name dracula-theme)
 (el-get-bundle ace-jump-buffer)
