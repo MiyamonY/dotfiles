@@ -26,6 +26,7 @@ ln -s ${CURDIR}/.xprofile ${HOME}/
 ln -s ${CURDIR}/byobu ${HOME}/.config/
 ln -s ${CURDIR}/awesome ${HOME}/.config/
 ln -s ${CURDIR}/config.fish ${HOME}/.config/fish/
+ln -s ${CURDIR}/.tmux.conf ${HOME}/
 
 if [ ! -e ${HOME}/.gitconfig.local ]; then
    cp ${CURDIR}/.gitconfig.local ${HOME}/
