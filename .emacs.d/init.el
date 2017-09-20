@@ -134,32 +134,32 @@
  '(safe-local-variable-values
    (quote
     ((eval setq flycheck-checker
-           (quote pic-xc16-gcc))
+	   (quote pic-xc16-gcc))
      (eval setq flycheck-pic-xc16-gcc-args "-D__dsPIC33FJ128GP802__")
      (eval setq flycheck-checker pic-xc16-gcc)
      (eval setq flycheck-pic-xc16-gcc-include-path
-           (list
-            (file-name-directory buffer-file-name)))
+	   (list
+	    (file-name-directory buffer-file-name)))
      (eval setq flycheck-pic-xc16-gcc-include-path
-           (list
-            (expand-file-name "./")))
+	   (list
+	    (expand-file-name "./")))
      (eval setq flycheck-clang-include-path
-           (list
-            (expand-file-name "./")))
+	   (list
+	    (expand-file-name "./")))
      (eval setq flycheck-clang-args "-D__dsPIC33FJ128GP802__")
      (eval setq flycheck-clang-include-path
-           (list
-            (expand-file-name "./")
-            "/Applications/microchip/xc16/v1.30/support/generic/h/" "/Applications/microchip/xc16/v1.30/support/dsPIC33F/h"))
+	   (list
+	    (expand-file-name "./")
+	    "/Applications/microchip/xc16/v1.30/support/generic/h/" "/Applications/microchip/xc16/v1.30/support/dsPIC33F/h"))
      (eval setq flycheck-clang-include-path
-           (list
-            (expand-file-name "./")
-            "/Applications/microchip/xc16/v1.30/support/generic/h/"))
+	   (list
+	    (expand-file-name "./")
+	    "/Applications/microchip/xc16/v1.30/support/generic/h/"))
      (eval setq flycheck-clang-include-path
-           (eval
-            (list
-             (expand-file-name "./")
-             "/Applications/microchip/xc16/v1.30/support/generic/h/")))))))
+	   (eval
+	    (list
+	     (expand-file-name "./")
+	     "/Applications/microchip/xc16/v1.30/support/generic/h/")))))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
