@@ -2,26 +2,26 @@
 if test ! -e $HOME/.config/fish/functions/fisher.fish
   echo "fisher not found. Install fisher."
   curl -Lo ~/.config/fish/functions/fisher.fish --create-dirs git.io/fisher
+  fisher omf/emacs
+  fisher nes1247/fish-theme-dracula
+  fisher omf/ghq
 end
 
 ### setting for golang and ghq
+set -x SHELL (which fish)
 set -x GOPATH $HOME
 set -x PATH $PATH $GOPATH/bin
-set -x PATH $PATH $HOME/.linuxbrew/bin
 
-### setting for byobu
-set -x BYOBU_CONFIG_DIR ~/.config/byobu
-if test -e /usr/bin/byobu-launcher
-  status --is-interactive; and env _byobu_sourced=1 /usr/bin/byobu-launcher
+### install fzf
+if test ! -e $HOME/.fzf
+  git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
+  ~/.fzf/install --bin
 end
 
 ### alias
 if test ! -e $HOME/.Trash
   mkdir $HOME/.Trash
 end
-alias rm='mv --backup=numbered --target-directory=$HOME/.Trash'
-alias git='hub'
-alias open='xdg-open'
 
 ### function for awesome test
 function awesome-test
@@ -41,8 +41,17 @@ function sync_history --on-event fish_preexec
   history merge
 end
 
-## pyenv
-set -x PATH $PATH $HOME/.pyenv/bin
-if test $HOME/.pyenv/bin/pyenv
-  status --is-interactive; and source (pyenv init -|psub)
+# anyenv
+if test ! -e $HOME/.anyenv
+  git clone https://github.com/riywo/anyenv ~/.anyenv
 end
+
+if test -e $HOME/.anyenv
+  set -x PATH $HOME/.anyenv/bin $PATH
+  status --is-interactive; and source (anyenv init -|psub)
+end
+
+# alias
+alias rm='mv --backup=numbered --target-directory=$HOME/.Trash'
+alias git='hub'
+alias open='xdg-open'
