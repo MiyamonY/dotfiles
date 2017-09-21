@@ -3,8 +3,8 @@ if test ! -e $HOME/.config/fish/functions/fisher.fish
   echo "fisher not found. Install fisher."
   curl -Lo ~/.config/fish/functions/fisher.fish --create-dirs git.io/fisher
   fisher omf/emacs
-  fisher nes1247/fish-theme-dracula
-  fisher omf/ghq
+  fisher nesl247/fish-theme-dracula
+  fisher decors/ghq
 end
 
 ### setting for golang and ghq
