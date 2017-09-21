@@ -22,6 +22,7 @@ ln -s ${CURDIR}/.Xmodmap ${HOME}/
 ln -s ${CURDIR}/.keysnail.js ${HOME}/
 ln -s ${CURDIR}/.Xresources ${HOME}/
 ln -s ${CURDIR}/.gtkrc-2.0 ${HOME}/
+ln -s ${CURDIR}/.xinitrc ${HOME}/
 ln -s ${CURDIR}/.xprofile ${HOME}/
 ln -s ${CURDIR}/byobu ${HOME}/.config/
 ln -s ${CURDIR}/awesome ${HOME}/.config/
