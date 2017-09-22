@@ -1085,6 +1085,13 @@
            (add-hook 'tuareg-mode-hook 'merlin-mode t)
            (add-hook 'caml-mode-hook 'merlin-mode t)))
      #+END_SRC
+** scheme
+*** src
+    #+BEGIN_SRC emacs-lisp
+      (setq scheme-program-name "gosh -i")
+
+      (use-package scheme-mode)
+    #+END_SRC
 * popwin
 ** src
    #+BEGIN_SRC emacs-lisp
