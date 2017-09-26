@@ -3,8 +3,6 @@ local hotkeys_popup = require("awful.hotkeys_popup").widget
 local config = require("config")
 local beautiful = require("beautiful")
 local menubar = require("menubar")
--- Load Debian menu entries
-require("debian.menu")
 
 local menu = {}
 
@@ -28,7 +26,6 @@ menu.myawesomemenu = {
 
 menu.mymainmenu = awful.menu({ items =
                                   {{ "awesome", menu.myawesomemenu, beautiful.awesome_icon },
-                                  { "apps", debian.menu.Debian_menu.Debian },
                                   { "open terminal", terminal }}})
 
 menu.mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,

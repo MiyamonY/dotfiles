@@ -5,7 +5,7 @@ local color = require("color")
 
 local theme = {}
 
-theme.font          = "sans 10"
+theme.font          = "IPAexGothic 10"
 
 theme.bg_normal     = color.BACKGROUND
 theme.bg_focus      = color.SELECTION
@@ -23,6 +23,12 @@ theme.border_width  = 2
 theme.border_normal = "#000000"
 theme.border_focus  = color.PURPLE
 theme.border_marked = "#91231c"
+
+theme.hotkeys_bg = color.BACKGROUND
+theme.hotkeys_label_fg = color.SELECTION
+theme.hotkeys_modifiers_fg = color.PURPLE
+theme.hotkeys_font = "IPAexGothic 12"
+theme.hotkeys_description_font = "IPAexGothic 12"
 
 -- There are other variable sets
 -- overriding the default one when
