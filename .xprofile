@@ -11,10 +11,8 @@ uim-xim &
 uim-toolbar-gtk-systray &
 
 # setting for keybind
+setxkbmap -layout jp
 xmodmap .Xmodmap
 
 # setting for key repeat
 xset r rate 200 40
-
-# setting for tasktray
-nm-applet --xim &
