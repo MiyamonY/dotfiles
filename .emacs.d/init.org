@@ -1,3 +1,4 @@
+#+STARTUP: showall hidestars
 * マクロ・関数の設定
 ** src
    #+BEGIN_SRC emacs-lisp
