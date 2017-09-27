@@ -1,9 +1,4 @@
 ;; el-getの設定
-
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
 ;; (package-initialize)
 
 (when load-file-name
@@ -120,47 +115,3 @@
 (setq org-dotemacs-default-file "~/.emacs.d/init.org")
 (when (require 'org-dotemacs nil t)
   (org-dotemacs-load-default))
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (typing-practice utop sync-recentf seq pkg-info organic-green-theme org let-alist ipython helm-git company)))
- '(safe-local-variable-values
-   (quote
-    ((eval setq flycheck-checker
-           (quote pic-xc16-gcc))
-     (eval setq flycheck-pic-xc16-gcc-args "-D__dsPIC33FJ128GP802__")
-     (eval setq flycheck-checker pic-xc16-gcc)
-     (eval setq flycheck-pic-xc16-gcc-include-path
-           (list
-            (file-name-directory buffer-file-name)))
-     (eval setq flycheck-pic-xc16-gcc-include-path
-           (list
-            (expand-file-name "./")))
-     (eval setq flycheck-clang-include-path
-           (list
-            (expand-file-name "./")))
-     (eval setq flycheck-clang-args "-D__dsPIC33FJ128GP802__")
-     (eval setq flycheck-clang-include-path
-           (list
-            (expand-file-name "./")
-            "/Applications/microchip/xc16/v1.30/support/generic/h/" "/Applications/microchip/xc16/v1.30/support/dsPIC33F/h"))
-     (eval setq flycheck-clang-include-path
-           (list
-            (expand-file-name "./")
-            "/Applications/microchip/xc16/v1.30/support/generic/h/"))
-     (eval setq flycheck-clang-include-path
-           (eval
-            (list
-             (expand-file-name "./")
-             "/Applications/microchip/xc16/v1.30/support/generic/h/")))))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
