@@ -4,7 +4,7 @@ if test ! -e $HOME/.config/fish/functions/fisher.fish
   curl -Lo ~/.config/fish/functions/fisher.fish --create-dirs git.io/fisher
   fisher omf/emacs
   fisher nesl247/fish-theme-dracula
-  fisher decors/ghq
+  fisher decors/fish-ghq
 end
 
 ### setting for golang and ghq
