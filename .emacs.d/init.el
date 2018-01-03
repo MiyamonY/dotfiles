@@ -110,6 +110,7 @@
 (el-get-bundle coffee-mode)
 (el-get-bundle arduino-mode)
 (el-get-bundle js2-mode)
+(el-get-bundle racket-mode)
 
 ;; load dotemacs
 (setq org-dotemacs-default-file "~/.emacs.d/init.org")
