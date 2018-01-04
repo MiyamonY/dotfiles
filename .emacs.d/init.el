@@ -111,6 +111,7 @@
 (el-get-bundle arduino-mode)
 (el-get-bundle js2-mode)
 (el-get-bundle racket-mode)
+(el-get-bundle aggressive-indent)
 
 ;; load dotemacs
 (setq org-dotemacs-default-file "~/.emacs.d/init.org")
