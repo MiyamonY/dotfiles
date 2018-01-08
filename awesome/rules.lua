@@ -64,7 +64,7 @@ function create_rules_by(app_classes)
    return ret
 end
 
-local app_classes = {"Firefox", "Franz"}
+local app_classes = {"Luakit", "Franz"}
 local app_rules = create_rules_by(app_classes)
 
 for _, rule in pairs(app_rules) do

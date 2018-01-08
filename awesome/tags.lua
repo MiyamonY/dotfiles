@@ -6,7 +6,7 @@ local screen_tags = {
    [1] = {
       [1] = {
          {"main", awful.layout.layouts[2]},
-         {"firefox", awful.layout.layouts[4]},
+         {"luakit", awful.layout.layouts[4]},
          {"franz", awful.layout.layouts[4]},
          {"", awful.layout.layouts[1]},
       }
@@ -19,7 +19,7 @@ local screen_tags = {
          {"", awful.layout.layouts[1]}
       },
       [2] = {
-         {"firefox", awful.layout.layouts[4]},
+         {"luakit", awful.layout.layouts[4]},
          {"franz", awful.layout.layouts[4]},
          {"", awful.layout.layouts[1]},
          {"", awful.layout.layouts[1]},
