@@ -112,6 +112,9 @@
 (el-get-bundle js2-mode)
 (el-get-bundle racket-mode)
 (el-get-bundle aggressive-indent)
+(el-get-bundle go-mode)
+(el-get-bundle gocode)
+(el-get-bundle golint)
 
 ;; load dotemacs
 (setq org-dotemacs-default-file "~/.emacs.d/init.org")
