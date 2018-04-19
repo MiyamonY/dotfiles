@@ -939,6 +939,13 @@
                                  (setq flycheck-clang-language-standard "c++14")
                                  (setq flycheck-gcc-language-standard "c++14")))
     #+END_SRC
+** go言語
+*** src
+    #+BEGIN_SRC emacs-lisp
+      (add-hook 'go-mode-hook (lambda ()
+                                (setq gofmt-command "goimports")
+                                (add-hook 'before-save-hook 'gofmt-before-save)))
+    #+END_SRC
 ** make関連
 *** cmake
 **** src

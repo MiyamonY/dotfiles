@@ -111,7 +111,7 @@
 (el-get-bundle arduino-mode)
 (el-get-bundle js2-mode)
 (el-get-bundle racket-mode)
-(el-get-bundle aggressive-indent)
+(el-get-bundle aggressive-indent-mode)
 (el-get-bundle go-mode)
 (el-get-bundle gocode)
 (el-get-bundle golint)
