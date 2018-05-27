@@ -115,6 +115,7 @@
 (el-get-bundle go-mode)
 (el-get-bundle gocode)
 (el-get-bundle golint)
+(el-get-bundle auto-save-buffers-enhanced)
 
 ;; load dotemacs
 (setq org-dotemacs-default-file "~/.emacs.d/init.org")
