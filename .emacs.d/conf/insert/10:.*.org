@@ -1,5 +1,0 @@
-#+TITLE:
-#+AUTHOR:
-#+STARTUP: showall
-#+LANGUAGE:ja
-#+OPTIONS: \n:nil creator:nil
