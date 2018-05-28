@@ -13,4 +13,3 @@
 
 (load (concat el-get-user-package-directory "/install.el"))
 (load (concat el-get-user-package-directory "/config.el"))
-

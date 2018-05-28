@@ -939,6 +939,13 @@
                                  (setq flycheck-clang-language-standard "c++14")
                                  (setq flycheck-gcc-language-standard "c++14")))
     #+END_SRC
+** go言語
+*** src
+    #+BEGIN_SRC emacs-lisp
+      (add-hook 'go-mode-hook (lambda ()
+                                (setq gofmt-command "goimports")
+                                (add-hook 'before-save-hook 'gofmt-before-save)))
+    #+END_SRC
 ** make関連
 *** cmake
 **** src
@@ -1579,3 +1586,14 @@
          (add-to-list 'tramp-default-proxies-alist
                       '((regexp-quote (system-name)) nil nil))))
    #+END_SRC
+* auto-save-buffer
+** src
+  #+BEGIN_SRC elisp
+    (use-package auto-save-buffers-enhanced
+      :init
+      (progn
+        (setq auto-save-buffers-enhanced-interval 1)
+        (setq auto-save-buffers-enhanced-include-regexps '(".+"))
+        (setq auto-save-buffers-enhanced-quiet-save-p t)
+        (auto-save-buffers-enhanced t)))
+  #+END_SRC
