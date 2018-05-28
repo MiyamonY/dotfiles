@@ -29,16 +29,10 @@ function awesome-test
   env DISPLAY=:1.0 awesome -c ~/.config/awesome/rc.lua
 end
 
-### OPAM
-# OPAM configuration
-if test -e $HOME/.opam/opam-init/init.fish
-source $HOME/.opam/opam-init/init.fish > /dev/null 2> /dev/null or true
-end
-
-### sync history
+sync history
 function sync_history --on-event fish_preexec
-  history --save
-  history merge
+ history --save
+ history merge
 end
 
 # anyenv
