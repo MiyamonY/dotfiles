@@ -1,10 +1,4 @@
+*~
+*.elc
 el-get/*
 elpa/*
-eshell/*
-eww-bookmarks
-local/*
-url/*
-.python-environments/*
-%backup%~
-recentf
-network-security.data
