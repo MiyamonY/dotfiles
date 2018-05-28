@@ -19,6 +19,7 @@
 (el-get-bundle helm-swoop)
 (el-get-bundle nyan-mode)
 (el-get-bundle rainbow-delimiters)
+(el-get-bundle smart-mode-line)
 
 ;; Japansese
 (el-get-bundle ddskk)
