@@ -1,3 +1,4 @@
+;; -*- coding: utf-8 -*-
 (setq gc-cons-threshold (* 2 1024 1024))
 
 (defun init-open-dotemacs ()
@@ -34,17 +35,6 @@
   (progn
     (setq save-place-file (concat init-emacs-local-files "/.places"))))
 (save-place-mode 1)
-
-;; フォントの設定
-(set-face-attribute 'default nil
-                    :family "Ricty Diminished Discord"
-                    :height 120)
-(add-to-list 'default-frame-alist '(font . "Ricty Diminished Discord"))
-
-;; エンコーディングの設定
-(prefer-coding-system 'utf-8)
-(setq coding-system-for-read 'utf-8
-      coding-system-for-write 'utf-8)
 
 (use-package recentf
   :init
@@ -88,3 +78,26 @@
   "When running `quit-window', always kill the buffer."
   (ad-set-arg 0 t))
 (ad-activate 'quit-window)
+
+;; フォントの設定
+(cond ((display-graphic-p)
+       (create-fontset-from-ascii-font
+        "Ricty Diminished Discord-12"
+        nil
+        "Ricty_Diminished_Discord")
+       (set-fontset-font
+        "fontset-Ricty_Diminished_Discord"
+        'unicode
+        "Ricty Diminished Discord-12"
+        nil
+        'append)
+       (add-to-list 'default-frame-alist
+                    '(font . "fontset-Ricty_Diminished_Discord"))
+       (add-to-list 'initial-frame-alist
+                    '(font . "fontset-Ricty_Diminished_Discord"))))
+
+;; エンコーディングの設定(上書きされてしまうので後ろの方で設定する)
+(prefer-coding-system 'utf-8-unix)
+(set-default-coding-systems 'utf-8)
+(setq coding-system-for-read 'utf-8)
+(setq coding-system-for-write 'utf-8)
