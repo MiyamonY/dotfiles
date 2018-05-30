@@ -29,7 +29,7 @@ function awesome-test
   env DISPLAY=:1.0 awesome -c ~/.config/awesome/rc.lua
 end
 
-sync history
+# sync history
 function sync_history --on-event fish_preexec
  history --save
  history merge
