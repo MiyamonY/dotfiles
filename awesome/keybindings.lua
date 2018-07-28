@@ -1,6 +1,7 @@
 local awful = require("awful")
 require('awful.spawn')
 local hotkeys_popup = require("awful.hotkeys_popup").widget
+require("awful.hotkeys_popup.keys.tmux")
 local descs = require("descs")
 local config = require("config")
 local menu = require("menu")
