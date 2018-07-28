@@ -10,6 +10,10 @@ if [ ! -e ${HOME}/.config/fish ]; then
     mkdir ${HOME}/.config/fish
 fi
 
+if [ ! -e ${HOME}/.config/alacritty ]; then
+    mkdir ${HOME}/.config/alacritty
+fi
+
 ln -s ${CURDIR}/.bash_profile ${HOME}/
 ln -s ${CURDIR}/.bashrc ${HOME}/
 ln -s ${CURDIR}/.emacs.d ${HOME}/
@@ -27,6 +31,7 @@ ln -s ${CURDIR}/.xprofile ${HOME}/
 ln -s ${CURDIR}/byobu ${HOME}/.config/
 ln -s ${CURDIR}/awesome ${HOME}/.config/
 ln -s ${CURDIR}/config.fish ${HOME}/.config/fish/
+ln -s ${CURDIR}/alacritty.yml ${HOME}/.config/alacritty/
 ln -s ${CURDIR}/.tmux.conf ${HOME}/
 
 if [ ! -e ${HOME}/.gitconfig.local ]; then
