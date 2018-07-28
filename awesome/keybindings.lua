@@ -101,6 +101,9 @@ keybindings.globalkeys = awful.util.table.join(
    awful.key({ modkey,           }, "z", function () quake:toggle() end,
       {description = descs.TOGGLE_TERMINAL, group = "launcher"}),
 
+   awful.key({ modkey,           }, "b", function () awful.spawn(config.BROWSER) end,
+      {description = descs.OPEN_BROWSER, group = "launcher"}),
+
    awful.key({ modkey }, "x",
       function ()
          awful.prompt.run {

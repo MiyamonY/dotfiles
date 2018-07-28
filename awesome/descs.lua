@@ -12,5 +12,6 @@ descs.MOVE_FOCUSED_CLIENT = "フォーカスしたクライアントをタグに
 descs.TOGGLE_FORCUSED_CLIENT = "フォーカスしたクライントをON/OFFする"
 descs.OPEN_TERMINAL = "ターミナルを開く"
 descs.TOGGLE_TERMINAL = "ターミナルをトグルする"
+descs.OPEN_BROWSER = "ブラウザを開く"
 
 return descs
