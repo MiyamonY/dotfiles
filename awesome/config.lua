@@ -1,6 +1,6 @@
 local config = {}
 
-config.TERMINAL = "sakura"
+config.TERMINAL = "alacritty"
 config.MODKEY = "Mod4"
 
 return config

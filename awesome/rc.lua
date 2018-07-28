@@ -1,6 +1,7 @@
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
+lain = require("lain")
 
 require("awful.autofocus")
 require('awful.spawn')

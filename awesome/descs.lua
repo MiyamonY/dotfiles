@@ -10,5 +10,7 @@ descs.VIEW_TAG = "タグを見る"
 descs.TOGGLE_TAG = "タグをON/OFFする"
 descs.MOVE_FOCUSED_CLIENT = "フォーカスしたクライアントをタグに移動する"
 descs.TOGGLE_FORCUSED_CLIENT = "フォーカスしたクライントをON/OFFする"
+descs.OPEN_TERMINAL = "ターミナルを開く"
+descs.TOGGLE_TERMINAL = "ターミナルをトグルする"
 
 return descs
