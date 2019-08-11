@@ -8,3 +8,5 @@ export PATH="$PATH:/Applications/microchip/xc8/v1.35/bin"
 export XML_CATALOG_FILES=/usr/local/etc/xml/catalog
 
 export PATH="$PATH:/Applications/microchip/xc8/v1.37/bin"
+
+export PATH="$HOME/bin:$PATH"
