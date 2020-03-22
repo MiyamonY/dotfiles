@@ -49,3 +49,6 @@ end
 alias rm='mv --backup=numbered --target-directory=$HOME/.Trash'
 alias git='hub'
 alias open='xdg-open'
+
+# opam configuration
+source /home/ymiyamoto/.opam/opam-init/init.fish > /dev/null 2> /dev/null; or true
