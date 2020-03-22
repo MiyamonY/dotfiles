@@ -33,6 +33,7 @@ ln -s ${CURDIR}/awesome ${HOME}/.config/
 ln -s ${CURDIR}/config.fish ${HOME}/.config/fish/
 ln -s ${CURDIR}/alacritty.yml ${HOME}/.config/alacritty/
 ln -s ${CURDIR}/.tmux.conf ${HOME}/
+ln -s ${CURDIR}/stumpwm ${HOME}/.config/
 
 if [ ! -e ${HOME}/.gitconfig.local ]; then
    cp ${CURDIR}/.gitconfig.local ${HOME}/

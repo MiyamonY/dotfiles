@@ -1,0 +1,39 @@
+(in-package :stumpwm)
+
+;;; key bind for root map
+(set-prefix-key (kbd "s-q"))
+
+;;; key bind for top map
+;; move frame
+(define-key *top-map* (kbd "s-k") "fnext")
+(define-key *top-map* (kbd "s-j") "fprev")
+
+;; select window
+(define-key *top-map* (kbd "s-n") "next")
+(define-key *top-map* (kbd "s-p") "prev")
+(define-key *top-map* (kbd "s-w") "pull-from-windowlist")
+
+;; eval stumppwm command
+(define-key *top-map* (kbd "s-:") "eval")
+
+;; exec shell command
+(define-key *top-map* (kbd "s-!") "exec")
+
+;; reload this file
+(define-key *top-map* (kbd "s-R") "loadrc")
+
+;; run emacs
+(define-key *top-map* (kbd "s-e") "emacs")
+
+;; run terminal
+(defcommand terminal () ()
+  (run-or-raise "alacritty" '(:class "Alacritty")))
+(define-key *top-map* (kbd "s-c") "terminal")
+
+;; mode line
+(mode-line)
+(setf *screen-mode-line-format*
+     (list "%W | %d"))
+(setf *mode-line-background-color* "#282a36")
+(setf *mode-line-foreground-color* "#f8f8f2")
+(setf *mode-line-border-color* "#ff79c6")
