@@ -30,6 +30,11 @@
   (run-or-raise "alacritty" '(:class "Alacritty")))
 (define-key *top-map* (kbd "s-c") "terminal")
 
+;; run browser
+(defcommand browser () ()
+  (run-or-raise "google-chrome-stable" '(:class "Google-chrome")))
+(define-key *top-map* (kbd "s-b") "browser")
+
 ;; mode line
 (mode-line)
 (setf *screen-mode-line-format*
