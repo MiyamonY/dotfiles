@@ -40,12 +40,21 @@
 (define-key *top-map* (kbd "s-b") "browser")
 
 ;; mode line
-(mode-line)
+(defun battery-level ()
+  (let* ((bat (run-shell-command "acpi -bi | head -n 1 | tr -d '\\n'" t)))
+    bat))
+
 (setf *screen-mode-line-format*
-     (list "%W | %d"))
+      (list "%W | "
+      	    '(:eval (battery-level))
+	    " | %d"))
+
 (setf *mode-line-background-color* "#282a36")
 (setf *mode-line-foreground-color* "#f8f8f2")
 (setf *mode-line-border-color* "#ff79c6")
 (setf *window-format* "%m%n%s%c")
+
+(mode-line)
+
 ;; cursor
 (setf *mouse-focus-policy* :click)
