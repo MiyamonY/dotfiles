@@ -25,6 +25,10 @@
 ;; run emacs
 (define-key *top-map* (kbd "s-e") "emacs")
 
+;; frame
+(define-key *top-map* (kbd "s-s") "hspilt")
+(define-key *top-map* (kbd "s-S") "vsplit")
+
 ;; run terminal
 (defcommand terminal () ()
   (run-or-raise "alacritty" '(:class "Alacritty")))
