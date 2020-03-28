@@ -40,6 +40,8 @@
 (define-key *top-map* (kbd "s-b") "browser")
 
 ;; mode line
+(set-font "-xos4-xos4 Terminus-normal-normal-normal-*-14-*-*-*-c-80-iso10646-1")
+
 (defun battery-level ()
   (let* ((bat (run-shell-command "acpi -bi | head -n 1 | tr -d '\\n'" t)))
     bat))
