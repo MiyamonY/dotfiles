@@ -46,3 +46,4 @@
 (setf *mode-line-background-color* "#282a36")
 (setf *mode-line-foreground-color* "#f8f8f2")
 (setf *mode-line-border-color* "#ff79c6")
+(setf *window-format* "%m%n%s%c")
