@@ -35,6 +35,16 @@
 (define-key *top-map* (kbd "s-s") "vsplit")
 (define-key *top-map* (kbd "s-S") "hsplit")
 
+;; brightness
+(defcommand brightness-up () ()
+  (run-shell-command "sudo light -A 10" nil))
+
+(defcommand brightness-down () ()
+  (run-shell-command "sudo light -U 10" nil))
+
+(define-key *top-map* (kbd "XF86MonBrightnessUp") "brightness-up")
+(define-key *top-map* (kbd "XF86MonBrightnessDown") "brightness-down")
+
 ;; help
 (defun my-display-bindings-for-keymap (map)
   (let* ((screen (current-screen))
