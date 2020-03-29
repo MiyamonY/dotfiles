@@ -1,5 +1,9 @@
 (in-package :stumpwm)
 
+(setq *startup-message* nil)
+
+(run-shell-command "emacs --daemon" nil)
+
 ;;; key bind for root map
 (set-prefix-key (kbd "s-q"))
 
