@@ -63,13 +63,20 @@
 ;; mode line
 (set-font "-xos4-xos4 Terminus-normal-normal-normal-*-14-*-*-*-c-80-iso10646-1")
 
-(defun battery-level ()
-  (let* ((bat (run-shell-command "acpi -bi | head -n 1 | tr -d '\\n'" t)))
-    bat))
+(defun battery ()
+  (let* ((bat (run-shell-command "acpi -bi | head -n 1 | tr -d '\\n'" t))
+	 (splited (ppcre:split " " bat)))
+   (format nil "bat:~A ~A" (fourth splited) (fifth splited))))
+
+(defun brightness ()
+  (let ((brightness (run-shell-command "light -G | tr -d '\\n'" t)))
+    (format nil "bright:~A%" brightness)))
 
 (setf *screen-mode-line-format*
       (list "%W | "
-      	    '(:eval (battery-level))
+      	    '(:eval (battery))
+	    " "
+            '(:eval (brightness))
 	    " | %d"))
 
 (setf *mode-line-background-color* "#282a36")
