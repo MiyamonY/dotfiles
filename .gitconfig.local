@@ -2,4 +2,4 @@
 	name = MIYAMOTO Yohei                   # edit me
 	email = y.miyamoto324@gmail.com         # edit me
 [core]
-	excludesfile = <path>/.gitignore_global # edit me
+	excludesfile = ~/.gitignore_global # edit me

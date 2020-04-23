@@ -1,7 +1,7 @@
-(* Added by OPAM. *)
 #use "topfind";;
+#thread;;
+#require "batteries";;
 
-let () =
-  try Topdirs.dir_directory (Sys.getenv "OCAML_TOPLEVEL_PATH")
-  with Not_found -> ()
-;;
+open Batteries;;
+module EnumL = Enum.Labels;;
+module ListL = List.Labels;;
