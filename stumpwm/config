@@ -23,6 +23,8 @@
 (define-key *top-map* (kbd "s-F") "fullscreen")
 (define-key *top-map* (kbd "s-r") "remove")
 
+(define-key *top-map* (kbd "s-K") "kill")
+
 ;; eval stumppwm command
 (define-key *top-map* (kbd "s-:") "eval")
 
