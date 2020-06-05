@@ -1,0 +1,106 @@
+(in-package :stumpwm)
+
+(setq *startup-message* nil)
+
+(run-shell-command "emacs --daemon" nil)
+
+;;; key bind for root map
+(set-prefix-key (kbd "s-q"))
+
+;;; key bind for top map
+;; move frame
+(define-key *top-map* (kbd "s-h") "fnext")
+(define-key *top-map* (kbd "s-l") "fprev")
+
+;; select window
+(define-key *top-map* (kbd "s-n") "next")
+(define-key *top-map* (kbd "s-p") "prev")
+(define-key *top-map* (kbd "s-j") "pull-hidden-next")
+(define-key *top-map* (kbd "s-k") "pull-hidden-next")
+
+(define-key *top-map* (kbd "s-w") "pull-from-windowlist")
+
+(define-key *top-map* (kbd "s-F") "fullscreen")
+(define-key *top-map* (kbd "s-r") "remove")
+
+(define-key *top-map* (kbd "s-K") "kill")
+
+;; eval stumppwm command
+(define-key *top-map* (kbd "s-:") "eval")
+
+;; exec shell command
+(define-key *top-map* (kbd "s-!") "exec")
+
+;; reload this file
+(define-key *top-map* (kbd "s-R") "loadrc")
+
+;; run emacs
+(define-key *top-map* (kbd "s-e") "emacs")
+
+;; frame
+(define-key *top-map* (kbd "s-s") "vsplit")
+(define-key *top-map* (kbd "s-S") "hsplit")
+
+;; brightness
+(defcommand brightness-up () ()
+  (run-shell-command "sudo light -A 10" nil))
+
+(defcommand brightness-down () ()
+  (run-shell-command "sudo light -U 10" nil))
+
+(define-key *top-map* (kbd "XF86MonBrightnessUp") "brightness-up")
+(define-key *top-map* (kbd "XF86MonBrightnessDown") "brightness-down")
+
+;; help
+(defun my-display-bindings-for-keymap (map)
+  (let* ((screen (current-screen))
+         (data (mapcar (lambda (b) (format nil "^5*~5a^n ~a" (print-key (binding-key b)) (binding-command b))) (kmap-bindings map)))
+         (cols (ceiling (1+ (length data))
+                        (truncate (- (head-height (current-head)) (* 2 (screen-msg-border-width screen)))
+                                  (font-height (screen-font screen))))))
+    (message-no-timeout "~{~a~^~%~}"
+                        (or (columnize data cols) '("(EMPTY MAP)")))))
+
+(defcommand display-top-keymap () ()
+  (my-display-bindings-for-keymap *TOP-MAP*))
+
+(define-key *top-map* (kbd "s-?") "display-top-keymap")
+
+;; run terminal
+(defcommand terminal () ()
+  (run-or-raise "alacritty" '(:class "Alacritty")))
+(define-key *top-map* (kbd "s-c") "terminal")
+
+;; run browser
+(defcommand browser () ()
+  (run-or-raise "google-chrome-stable" '(:class "Google-chrome")))
+(define-key *top-map* (kbd "s-b") "browser")
+
+;; mode line
+(set-font "-xos4-xos4 Terminus-normal-normal-normal-*-14-*-*-*-c-80-iso10646-1")
+
+(defun battery ()
+  (let* ((bat (run-shell-command "acpi -bi | head -n 1 | tr -d '\\n'" t))
+	 (splited (ppcre:split " " bat)))
+   (format nil "bat:~A ~A" (fourth splited) (fifth splited))))
+
+(defun brightness ()
+  (let ((brightness (run-shell-command "light -G | tr -d '\\n'" t)))
+    (format nil "bright:~A%" brightness)))
+
+(setf *screen-mode-line-format*
+      (list "%W | "
+      	    '(:eval (battery))
+	    " "
+            '(:eval (brightness))
+	    " | %d"))
+
+(setf *mode-line-background-color* "#282a36")
+(setf *mode-line-foreground-color* "#f8f8f2")
+(setf *mode-line-border-color* "#ff79c6")
+(setf *window-format* "%m%n%s%c")
+
+(mode-line)
+
+;; cursor
+(setf *mouse-focus-policy* :click)

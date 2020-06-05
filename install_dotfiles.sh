@@ -25,10 +25,11 @@ ln -s ${CURDIR}/.Xresources ${HOME}/
 ln -s ${CURDIR}/.gtkrc-2.0 ${HOME}/
 ln -s ${CURDIR}/.xinitrc ${HOME}/
 ln -s ${CURDIR}/.xprofile ${HOME}/
-ln -s ${CURDIR}/awesome ${HOME}/.config/
 ln -s ${CURDIR}/config.fish ${HOME}/.config/fish/
 ln -s ${CURDIR}/alacritty.yml ${HOME}/.config/alacritty/
 ln -s ${CURDIR}/.tmux.conf ${HOME}/
+ln -s ${CURDIR}/stumpwm ${HOME}/.config/
+ln -s ${CURDIR}/.ocamlinit ${HOME}/
 
 if [ ! -e ${HOME}/.gitconfig.local ]; then
    cp ${CURDIR}/.gitconfig.local ${HOME}/
