@@ -4,8 +4,10 @@
 [ -f ~/.screenlayout/layout.sh ] && source ~/.screenlayout/layout.sh
 
 # setting for input method
+export GTK_IM_MODULE='uim'
+export QT_IM_MODULE='uim'
 uim-xim &
-uim-toolbar-gtk-systray &
+export XMODIFIERS='@im=uim'
 
 # setting for keybind
 setxkbmap -layout jp
