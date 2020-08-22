@@ -1,6 +1,3 @@
-[submodule "awesome/lib/volume-control"]
-	path = awesome/lib/volume-control
-	url = git@github.com:deficient/volume-control.git
 [submodule ".emacs.d"]
 	path = .emacs.d
 	url = git@github.com:MiyamonY/dotemacs.git
