@@ -69,7 +69,7 @@
 ;; run terminal
 (defcommand terminal () ()
   (run-or-raise "alacritty" '(:class "Alacritty")))
-(define-key *top-map* (kbd "s-c") "terminal")
+(define-key *top-map* (kbd "s-t") "terminal")
 
 ;; run browser
 (defcommand browser () ()
