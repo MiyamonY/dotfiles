@@ -23,10 +23,14 @@ if test ! -e $HOME/.Trash
   mkdir $HOME/.Trash
 end
 
-### function for awesome test
-function awesome-test
-  Xephyr +xinerama :1 -ac -br -noreset -screen 1152x720 -screen 1152x720 &
-  env DISPLAY=:1.0 awesome -c ~/.config/awesome/rc.lua
+# reload fish config
+function reload
+  exec fish
+end
+
+# right prompt
+function fish_right_prompt
+  date "+%y/%m/%d %T.%3N"
 end
 
 # sync history
