@@ -37,6 +37,11 @@
 ;; run emacs
 (define-key *top-map* (kbd "s-e") "emacs")
 
+;; run code
+(defcommand code () ()
+  (run-or-raise "code" '(:class "code-oss")))
+(define-key *top-map* (kbd "s-c") "code")
+
 ;; frame
 (define-key *top-map* (kbd "s-s") "vsplit")
 (define-key *top-map* (kbd "s-S") "hsplit")
