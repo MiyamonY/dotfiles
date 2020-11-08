@@ -1,3 +1,4 @@
+;; -*- mode: Lisp; fill-column: 75; comment-column: 50; -*-
 (in-package :stumpwm)
 
 (setq *startup-message* nil)
