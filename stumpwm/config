@@ -39,7 +39,7 @@
 
 ;; run code
 (defcommand code () ()
-  (run-or-raise "code" '(:class "code-oss")))
+  (run-or-raise "code" '(:class "code")))
 (define-key *top-map* (kbd "s-c") "code")
 
 ;; frame
