@@ -53,6 +53,8 @@ end
 alias rm='mv --backup=numbered --target-directory=$HOME/.Trash'
 alias git='hub'
 alias open='xdg-open'
+alias pc='git push -u origin HEAD; and gh pr create -w'
+alias pm='gh pr merge --merge -d'
 
 # opam configuration
 source /home/ymiyamoto/.opam/opam-init/init.fish > /dev/null 2> /dev/null; or true
