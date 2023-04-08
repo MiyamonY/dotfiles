@@ -1,7 +1,0 @@
-#use "topfind";;
-#thread;;
-#require "batteries";;
-
-open Batteries;;
-module EnumL = Enum.Labels;;
-module ListL = List.Labels;;
