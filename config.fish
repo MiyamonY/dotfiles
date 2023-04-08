@@ -2,9 +2,12 @@
 if test ! -e $HOME/.config/fish/functions/fisher.fish
   echo "fisher not found. Install fisher."
   curl -Lo ~/.config/fish/functions/fisher.fish --create-dirs git.io/fisher
-  fisher omf/emacs
-  fisher nesl247/fish-theme-dracula
-  fisher decors/fish-ghq
+  fisher install decors/fish-ghq
+end
+
+### install starship
+if test -e /usr/local/bin/starship
+  starship init fish | source
 end
 
 ### setting for golang and ghq
