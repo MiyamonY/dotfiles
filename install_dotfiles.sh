@@ -14,6 +14,8 @@ if [ ! -e ${HOME}/.config/alacritty ]; then
     mkdir ${HOME}/.config/alacritty
 fi
 
+stow -R -v -d . -t ~/.config starship
+
 ln -s ${CURDIR}/.bash_profile ${HOME}/
 ln -s ${CURDIR}/.bashrc ${HOME}/
 ln -s ${CURDIR}/.emacs.d ${HOME}/
