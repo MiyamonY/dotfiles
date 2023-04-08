@@ -1,4 +1,9 @@
-format = '''
-[┌───────────────────>](bold green)
-[│](bold green)$directory$rust$package
-[└─>](bold green) '''
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = '$all'
+
+add_newline = true
+
+[directory]
+truncation_length = 0
+truncate_to_repo = false
