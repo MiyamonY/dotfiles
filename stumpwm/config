@@ -3,8 +3,6 @@
 
 (setq *startup-message* nil)
 
-(run-shell-command "emacs --daemon" nil)
-
 ;;; key bind for root map
 (set-prefix-key (kbd "s-q"))
 
@@ -36,7 +34,10 @@
 (define-key *top-map* (kbd "s-R") "loadrc")
 
 ;; run emacs
-(define-key *top-map* (kbd "s-e") "emacs")
+(defcommand emacs-without-xim () ()
+  (run-or-raise "XMODIFIERS='@im=none' emacs" '(:class "Emacs")))
+
+(define-key *top-map* (kbd "s-e") "emacs-without-xim")
 
 ;; run code
 (defcommand code () ()
