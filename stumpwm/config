@@ -75,7 +75,7 @@
 
 ;; run terminal
 (defcommand terminal () ()
-  (run-or-raise "alacritty" '(:class "Alacritty")))
+  (run-or-raise "st" '(:class "st")))
 (define-key *top-map* (kbd "s-t") "terminal")
 
 ;; run browser
