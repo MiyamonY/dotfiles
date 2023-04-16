@@ -6,14 +6,3 @@ if [ "$color_prompt" = yes ]; then
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
-
-### alias
-if [ "$(uname)" = 'Darwin' ]; then
-    export LSCOLORS=xbfxcxdxbxegedabagacad
-    alias ls='ls -G'
-fi
-
-case $- in
-    *i*) exec fish;;
-    *) return;;
-esac
