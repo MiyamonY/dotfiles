@@ -51,3 +51,9 @@ alias pm='gh pr merge --merge -d'
 
 # opam configuration
 source /home/ymiyamoto/.opam/opam-init/init.fish > /dev/null 2> /dev/null; or true
+
+# mise
+if test ! ~/.local/bin/mise
+  ~/.local/bin/mise activate fish | source
+end
+# mise end
