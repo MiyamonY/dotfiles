@@ -42,16 +42,6 @@ function sync_history --on-event fish_preexec
  history merge
 end
 
-# anyenv
-if test ! -e $HOME/.anyenv
-  git clone https://github.com/riywo/anyenv ~/.anyenv
-end
-
-if test -e $HOME/.anyenv
-  set -x PATH $HOME/.anyenv/bin $PATH
-  status --is-interactive; and source (anyenv init -|psub)
-end
-
 # alias
 alias rm='mv --backup=numbered --target-directory=$HOME/.Trash'
 alias git='hub'
