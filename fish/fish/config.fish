@@ -57,3 +57,10 @@ if test ! ~/.local/bin/mise
   ~/.local/bin/mise activate fish | source
 end
 # mise end
+
+# pnpm
+set -gx PNPM_HOME "/home/ymiyamoto/.local/share/pnpm"
+if not string match -q -- $PNPM_HOME $PATH
+  set -gx PATH "$PNPM_HOME" $PATH
+end
+# pnpm end
