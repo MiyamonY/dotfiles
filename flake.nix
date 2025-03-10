@@ -29,6 +29,8 @@
             emacs
             vim
             ghq
+            # system
+            pavucontrol
             # shell
             tmux
             fish
