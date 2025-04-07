@@ -30,6 +30,7 @@
             vim
             ghq
             # system
+            pulseaudio
             pavucontrol
             # shell
             tmux
@@ -50,12 +51,13 @@
             # commnunication
             slack
             # runtime
-            nodejs_18
+            nodejs_20
             racket
             go
             # aws
             awscli2
             ssm-session-manager-plugin
+            copilot-language-server
           ];
         };
         apps.${system}.upgrade = {
