@@ -58,6 +58,8 @@
             awscli2
             ssm-session-manager-plugin
             copilot-language-server
+            aider-chat
+            python312Packages.boto3
           ];
         };
         apps.${system}.upgrade = {
