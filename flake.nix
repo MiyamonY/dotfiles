@@ -59,7 +59,9 @@
             ssm-session-manager-plugin
             copilot-language-server
             aider-chat
-            python312Packages.boto3
+            (pkgs.python312.withPackages (python-pkgs: with python-pkgs; [
+              boto3
+            ]))
           ];
         };
         apps.${system}.upgrade = {
