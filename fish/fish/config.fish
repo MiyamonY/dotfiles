@@ -64,3 +64,34 @@ if not string match -q -- $PNPM_HOME $PATH
   set -gx PATH "$PNPM_HOME" $PATH
 end
 # pnpm end
+
+function create_tmux_session --description 'create tmux session for current directory'
+  tmux new -s $(basename $(pwd)) -d  -c $(pwd)
+  echo "session created"
+end
+
+
+function select_tmux_session --description 'select tmux session by fzf'
+  if not tmux has-session 2>/dev/null
+    echo "No tmux sessions found."
+    return 1
+  end
+
+  set -l target_session (tmux ls -F '#S' | fzf --reverse --prompt="Select Tmux Session> " --preview="tmux list-windows -t {}")
+
+  if test -z "$target_session"
+    commandline -f repaint
+    return
+  end
+
+  if set -q TMUX
+    tmux switch-client -t "$target_session"
+  else
+    tmux attach-session -t "$target_session"
+  end
+end
+
+function fish_user_key_bindings
+  bind \cn create_tmux_session
+  bind \ck select_tmux_session
+end
