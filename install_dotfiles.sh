@@ -7,6 +7,6 @@ fi
 stow -R -v -d . -t ~/.config starship stumpwm fish
 stow -R -v -d . -t ~ tmux bash bash git xmodmap xwindow utop
 
-ln -s ${CURDIR}/.emacs.d ${HOME}/
+ln -s $(pwd)/.emacs.d ${HOME}/
 
 echo $'\e[1;31m edit .gitconfig.local \e[m'
