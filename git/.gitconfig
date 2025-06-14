@@ -1,7 +1,7 @@
 [include]
 	path = ~/.gitconfig.local
 [core]
-	editor = emacs
+	editor = emacs -nw
 [push]
 	default = simple
 [color]
@@ -9,3 +9,5 @@
 	branch = auto
 [ghq]
 	root = ~/src
+[init]
+	defaultBranch = main
