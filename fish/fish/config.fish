@@ -73,3 +73,14 @@ end
 function fish_user_key_bindings
   bind \cn create_tmux_session
 end
+
+function gc --description "Generate a commit message with AI and commit"
+    set -l commit_title (claude -p "Look at the staged git changes and create a summarizing git commit title. Only respond with the title and no affirmation." | string trim)
+
+    if test -n "$commit_title"
+        git commit -m "$commit_title" $argv
+    else
+        echo "AIによるコミットメッセージの生成に失敗しました。"
+        echo "通常のgit commitを実行してください。"
+    end
+end
