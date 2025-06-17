@@ -2,8 +2,9 @@
 # VERSION: 3.0
 SETUVAR __fish_initialized:3800
 SETUVAR _fisher_decors_2F_fish_2D_ghq_files:\x7e/\x2econfig/fish/functions/__ghq_repository_search\x2efish\x1e\x7e/\x2econfig/fish/conf\x2ed/ghq_key_bindings\x2efish\x1e\x7e/\x2econfig/fish/completions/ghq\x2efish
+SETUVAR _fisher_jorgebucaran_2F_fish_2D_nvm_files:\x7e/\x2econfig/fish/functions/_nvm_index_update\x2efish\x1e\x7e/\x2econfig/fish/functions/_nvm_list\x2efish\x1e\x7e/\x2econfig/fish/functions/_nvm_version_activate\x2efish\x1e\x7e/\x2econfig/fish/functions/_nvm_version_deactivate\x2efish\x1e\x7e/\x2econfig/fish/functions/nvm\x2efish\x1e\x7e/\x2econfig/fish/conf\x2ed/nvm\x2efish\x1e\x7e/\x2econfig/fish/completions/nvm\x2efish
 SETUVAR _fisher_lilyball_2F_nix_2D_env_2E_fish_files:\x7e/\x2econfig/fish/conf\x2ed/nix\x2denv\x2efish
-SETUVAR _fisher_plugins:decors/fish\x2dghq\x1elilyball/nix\x2denv\x2efish
+SETUVAR _fisher_plugins:decors/fish\x2dghq\x1elilyball/nix\x2denv\x2efish\x1ejorgebucaran/fish\x2dnvm
 SETUVAR _fisher_upgraded_to_4_4:\x1d
 SETUVAR fish_color_autosuggestion:brblack
 SETUVAR fish_color_cancel:\x2dr
