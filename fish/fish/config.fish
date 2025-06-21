@@ -70,7 +70,7 @@ function create_tmux_session --description 'create tmux session for current dire
 end
 
 function fish_user_key_bindings
-  bind \cn create_tmux_session
+  bind \cu create_tmux_session
 end
 
 function gc --description "Generate a commit message with AI and commit"
