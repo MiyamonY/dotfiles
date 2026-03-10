@@ -27,14 +27,15 @@ else
     echo "--------------------------------------------------"
 fi
 
+echo "o) PR View          r) PR Ready"
+echo "s) PR Merge(Squash) m) PR Merge(Rebase)"
+echo "q) Quit"
 echo "--------------------------------------------------"
-echo "o) PR View (Web)   s) PR Merge(Squash)"
-echo "m) PR Merge(Rebase)"
-echo "r) PR Ready        q) Quit"
-echo "--------------------------------------------------"
+echo ""
 
 read -n 1 -p "Select option: " sel
 echo ""
+
 case $sel in
     o)
         gh pr view -w
