@@ -47,6 +47,7 @@ alias rm='mv --backup=numbered --target-directory=$HOME/.Trash'
 alias open='xdg-open'
 alias pc='git push -u origin HEAD; and gh pr create -w'
 alias pm='gh pr merge --merge -d'
+alias po='gh pr view -w'
 
 # opam configuration
 source /home/ymiyamoto/.opam/opam-init/init.fish > /dev/null 2> /dev/null; or true
@@ -83,3 +84,4 @@ function gc --description "Generate a commit message with AI and commit"
         echo "通常のgit commitを実行してください。"
     end
 end
+mise activate fish | source
