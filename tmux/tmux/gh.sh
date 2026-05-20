@@ -41,9 +41,11 @@ case $sel in
         gh pr view -w
         ;;
     s)
+        gh pr merge -s --auto -d
         gh pr merge -s -d
         ;;
     m)
+        gh pr merge -r --auto -d
         gh pr merge -r -d
         ;;
     r)
