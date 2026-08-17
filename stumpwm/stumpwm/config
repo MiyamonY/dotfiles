@@ -75,7 +75,7 @@
 
 ;; run terminal
 (defcommand terminal () ()
-  (run-or-raise "st" '(:class "st")))
+  (run-or-raise "env XMODIFIERS=@im=none st" '(:class "st")))
 (define-key *top-map* (kbd "s-t") "terminal")
 
 ;; run browser
