@@ -1,0 +1,28 @@
+[bootstrap.packages]
+"pacman:emacs" = "latest"
+"pacman:fzf" = "latest"
+"pacman:ghq" = "latest"
+"pacman:git" = "latest"
+"pacman:stumpwm" = "latest"
+"pacman:rg" = "latest"
+"pacman:" = "latest"
+
+[dotfiles]
+"~/.emacs.d" = { source = ".emacs.d", mode = "symlink" }
+"~/.config/starship.toml" = { source = "starship/starship.toml", mode = "symlink" }
+"~/.config/stumpwm" = { source = "stumpwm/stumpwm", mode = "symlink" }
+"~/.config/fish" = { source = "fish/fish", mode = "symlink" }
+"~/.config/tmux" = { source = "tmux/tmux", mode = "symlink" }
+"~/.bashrc" = { source = "bash/.bashrc", mode = "symlink" }
+"~/.bash_profile" = { source = "bash/.bash_profile", mode = "symlink" }
+"~/.gitconfig" = { source = "git/.gitconfig", mode = "symlink" }
+"~/.gitconfig.local" = { source = "git/.gitconfig.local", mode = "symlink" }
+"~/.gitignore" = { source = "git/.gitignore", mode = "symlink" }
+"~/.Xmodmap" = { source = "xmodmap/.Xmodmap", mode = "symlink" }
+"~/.xinitrc" = { source = "xwindow/.xinitrc", mode = "symlink" }
+"~/.xprofile" = { source = "xwindow/.xprofile", mode = "symlink" }
+"~/.Xresources" = { source = "xwindow/.Xresources", mode = "symlink" }
+"~/.utoprc" = { source = "utop/.utoprc", mode = "symlink" }
+
+[bootstrap.hooks]
+post-dotfiles = "printf '\\033[1;31m edit .gitconfig.local \\033[m\\n'"
