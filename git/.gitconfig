@@ -2,6 +2,8 @@
 	path = ~/.gitconfig.local
 [core]
 	editor = emacs -nw
+	preloadindex = true
+	fscache = true
 [push]
 	default = simple
 [color]
@@ -11,7 +13,13 @@
 	root = ~/src
 [init]
 	defaultBranch = main
+[github]
+	user = MiyamonY
 [credential "https://github.com"]
 	helper = !/usr/bin/gh auth git-credential
 [credential "https://gist.github.com"]
 	helper = !/usr/bin/gh auth git-credential
+[gc]
+	auto = 256
+[rebase]
+	autoStash = true
