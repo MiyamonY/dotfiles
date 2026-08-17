@@ -4,8 +4,21 @@
 "pacman:ghq" = "latest"
 "pacman:git" = "latest"
 "pacman:stumpwm" = "latest"
-"pacman:rg" = "latest"
-"pacman:" = "latest"
+"pacman:ripgrep" = "latest"
+"pacman:docker" = "latest"
+"pacman:jq" = "latest"
+"pacman:fish" = "latest"
+"pacman:tmux" = "latest"
+"pacman:xorg-server" = "latest"
+"pacman:xorg-xmodmap" = "latest"
+"pacman:xorg-xset" = "latest"
+"pacman:xorg-xinit" = "latest"
+"pacman:racket" = "latest"
+"pacman:arandr" = "latest"
+"pacman:atop" = "latest"
+"pacman:zram-generator" = "latest"
+"pacman:earlyoom" = "latest"
+"pacman:gh" = "latest"
 
 [dotfiles]
 "~/.emacs.d" = { source = ".emacs.d", mode = "symlink" }
@@ -24,5 +37,36 @@
 "~/.Xresources" = { source = "xwindow/.Xresources", mode = "symlink" }
 "~/.utoprc" = { source = "utop/.utoprc", mode = "symlink" }
 
-[bootstrap.hooks]
-post-dotfiles = "printf '\\033[1;31m edit .gitconfig.local \\033[m\\n'"
+[bootstrap.services.docker]
+state = "running"
+enabled = true
+
+[bootstrap.services.earlyoom]
+state = "running"
+enabled = true
+
+[bootstrap.hooks.post-dotfiles]
+run = "printf '\\033[1;31m edit .gitconfig.local \\033[m\\n'"
+
+[bootstrap.hooks.post-packages]
+run = [
+  """
+if ! command -v yay &> /dev/null; then
+  echo "=== Installing yay ==="
+  git clone https://archlinux.org /tmp/yay-bin
+  cd /tmp/yay-bin && makepkg -si --noconfirm
+  rm -rf /tmp/yay-bin
+fi""",
+"""
+yay -S --noconfirm --needed \
+  google-chrome \
+  slack-desktop \
+  noto-fonts \
+  noto-fonts-cjk \
+  uim \
+  starship
+"""
+]
+
+[tasks.bootstrap]
+run = "gh auth status || gh auth login"
