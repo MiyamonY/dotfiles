@@ -1,4 +1,5 @@
 [bootstrap.packages]
+"pacman:base-devel" = "latest"
 "pacman:emacs" = "latest"
 "pacman:fzf" = "latest"
 "pacman:ghq" = "latest"
