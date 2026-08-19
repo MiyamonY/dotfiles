@@ -27,6 +27,7 @@
 "~/.config/stumpwm" = { source = "stumpwm/stumpwm", mode = "symlink" }
 "~/.config/fish" = { source = "fish/fish", mode = "symlink" }
 "~/.config/tmux" = { source = "tmux/tmux", mode = "symlink" }
+"~/.uim.d/customs" = { source = "uim", mode = "symlink" }
 "~/.bashrc" = { source = "bash/.bashrc", mode = "symlink" }
 "~/.bash_profile" = { source = "bash/.bash_profile", mode = "symlink" }
 "~/.gitconfig" = { source = "git/.gitconfig", mode = "symlink" }
