@@ -1,3 +1,6 @@
 [submodule ".emacs.d"]
 	path = .emacs.d
 	url = git@github.com:MiyamonY/dotemacs.git
+[submodule "tmux/tmux/plugins/tpm"]
+	path = tmux/tmux/plugins/tpm
+	url = https://github.com/tmux-plugins/tpm.git
