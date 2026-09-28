@@ -111,3 +111,17 @@
 
 ;; cursor
 (setf *mouse-focus-policy* :click)
+
+;; launcher
+(defcommand my-launcher () ()
+  ;; 各要素は (表示名 コマンド)。select-from-menu は選ばれた要素（リスト）を返す
+  (let ((sel (select-from-menu (current-screen)
+                               '(("chrome" "google-chrome-stable")
+                                 ("emacs" "emacs")
+                                 ("pavucontrol" "pavucontrol")
+                                 ("htop" "st -e htop"))
+                               "Run: ")))
+    (when sel
+      (run-shell-command (second sel)))))
+
+(define-key *top-map* (kbd "s-f") "my-launcher")
