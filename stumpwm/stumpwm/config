@@ -74,8 +74,11 @@
 (define-key *top-map* (kbd "s-?") "display-top-keymap")
 
 ;; run terminal
+;; st 自体は XIM を使わない（日本語入力は tmux 内の uim-fep で行う）ため @im=none で起動し、
+;; st の中で起動するシェル（tmux やそこから起動するアプリ）は @im=uim に戻す
 (defcommand terminal () ()
-  (run-or-raise "env XMODIFIERS=@im=none st" '(:class "st")))
+  (run-or-raise "env XMODIFIERS=@im=none st -e env XMODIFIERS=@im=uim sh -c 'exec \"$SHELL\"'"
+                '(:class "st")))
 (define-key *top-map* (kbd "s-t") "terminal")
 
 ;; run browser
