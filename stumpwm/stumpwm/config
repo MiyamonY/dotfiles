@@ -87,7 +87,27 @@
 (define-key *top-map* (kbd "s-b") "browser")
 
 ;; mode line
-(set-font "-xos4-xos4 Terminus-normal-normal-normal-*-14-*-*-*-c-80-iso10646-1")
+;; font
+;; 日本語のウィンドウタイトルをアンチエイリアス付きで表示するため、ttf-fonts(clx-truetype)でHackGenを使う。
+;; clx-truetypeはQuicklispから削除されたので ~/quicklisp/local-projects に clone して使う。
+;; 読み込みに失敗した場合はXコアフォントのHackGenにフォールバックする。
+(set-module-dir "/usr/share/stumpwm/contrib/")
+(handler-case
+    (progn
+      (load "~/quicklisp/setup.lisp")
+      ;; StumpWM本体に組み込み済みのclxをQuicklisp側のclxで上書きロードさせない
+      (asdf:register-immutable-system :clx)
+      (asdf:register-immutable-system :stumpwm)
+      (uiop:symbol-call :ql :quickload :clx-truetype :silent t)
+      (load-module "ttf-fonts")
+      ;; フォント探索を/usr/share/fonts全体にすると遅いのでHackGenのあるディレクトリに限定
+      (setf (symbol-value (uiop:find-symbol* :*font-dirs* :xft)) '("/usr/share/fonts/TTF/"))
+      (uiop:symbol-call :xft :cache-fonts)
+      (set-font (make-instance (uiop:find-symbol* :font :xft)
+                               :family "HackGen Console" :subfamily "Regular" :size 9)))
+  (error (e)
+    (format *error-output* "ttf-fonts load failed: ~a~%" e)
+    (set-font "-misc-hackgen console-medium-r-normal--14-*-*-*-*-*-iso10646-1")))
 
 (defun battery ()
   (let* ((bat (run-shell-command "acpi -bi | head -n 1 | tr -d '\\n'" t))
@@ -108,7 +128,8 @@
 (setf *mode-line-background-color* "#282a36")
 (setf *mode-line-foreground-color* "#f8f8f2")
 (setf *mode-line-border-color* "#ff79c6")
-(setf *window-format* "%m%n%s%c")
+;; %c(クラス名)だとchromeが全て同名になるので、%t(タイトル=表示中タブ名)を40文字で切り詰めて表示
+(setf *window-format* "%m%n%s%40t")
 
 (mode-line)
 
